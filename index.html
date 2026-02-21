@@ -4,6 +4,75 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Woyymasjems — Your Playlist, Professionally Done</title>
+
+<!-- CUSTOM CURSOR -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<style>
+  #cursor-dot {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--red);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, background 0.2s, width 0.2s, height 0.2s;
+  }
+  #cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1.5px solid rgba(227,24,54,0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: left 0.12s ease-out, top 0.12s ease-out, width 0.2s, height 0.2s, border-color 0.2s;
+  }
+
+  /* hide default cursor on all elements */
+  *, a, button, input, textarea, select { cursor: none !important; }
+
+  /* expanded state on hover */
+  body.cursor-hover #cursor-ring {
+    width: 56px; height: 56px;
+    border-color: var(--red);
+    background: rgba(227,24,54,0.07);
+  }
+  body.cursor-hover #cursor-dot {
+    width: 4px; height: 4px;
+  }
+</style>
+
+<script>
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+
+  document.addEventListener('mousemove', e => {
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  });
+
+  // Expand on hoverable elements
+  const hoverables = document.querySelectorAll('a, button, .playlist-card, .pricing-card, .step-card, input, textarea, select');
+  hoverables.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+
+  // Hide cursor when leaving window
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity = '0';
+    ring.style.opacity = '0';
+  });
+  document.addEventListener('mouseenter', () => {
+    dot.style.opacity = '1';
+    ring.style.opacity = '1';
+  });
+</script>
   
 <!-- ── FAVICON ── -->
 <link rel="icon" type="image/png" href="./assets/WMJICON.png">
@@ -56,6 +125,7 @@
     background: var(--bg);
     color: var(--text);
     overflow-x: hidden;
+    cursor: none;
   }
 
   /* ── NOISE OVERLAY ── */
