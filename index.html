@@ -430,45 +430,61 @@
     overflow: hidden;
     background: var(--white);
     transition: background 0.2s;
+    display: flex;
+    flex-direction: column;
   }
   .playlist-card:last-child { border-right: none; }
 
-  .playlist-card-top {
-    background: var(--concrete);
-    padding: 40px 32px 32px;
-    border-bottom: var(--border);
-    position: relative;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
-  .playlist-icon {
-    font-size: 64px;
-    margin-bottom: 16px;
+  /* COVER IMAGE */
+  .playlist-cover {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
     display: block;
-    filter: grayscale(0.3);
-    position: relative;
-    z-index: 1;
+    border-bottom: var(--border);
+    filter: grayscale(0.25) contrast(1.05);
+    transition: filter 0.3s;
+  }
+  .playlist-card:hover .playlist-cover {
+    filter: grayscale(0) contrast(1.1);
   }
 
-  .playlist-num {
+  /* COVER FALLBACK (if no image) */
+  .playlist-cover-fallback {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: var(--border);
+    font-size: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .playlist-cover-fallback .playlist-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 160px;
+    font-size: 200px;
     position: absolute;
-    top: -30px; right: -10px;
+    top: -40px; right: -20px;
     color: rgba(255,255,255,0.05);
     line-height: 1;
   }
 
+  .playlist-card-label {
+    background: var(--black);
+    padding: 20px 28px 16px;
+    border-bottom: var(--border);
+    position: relative;
+  }
+
   .playlist-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 30px;
+    font-size: 26px;
     letter-spacing: 0.05em;
     color: var(--white);
     position: relative;
     z-index: 1;
+    line-height: 1;
   }
 
   .playlist-subtitle {
@@ -477,21 +493,43 @@
     letter-spacing: 0.2em;
     color: var(--gold);
     text-transform: uppercase;
-    margin-top: 4px;
+    margin-top: 5px;
     position: relative;
     z-index: 1;
   }
 
+  .playlist-class-badge {
+    position: absolute;
+    top: 16px; right: 20px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: rgba(255,255,255,0.08);
+    line-height: 1;
+  }
+
+  /* SPOTIFY EMBED */
+  .spotify-wrap {
+    border-bottom: var(--border);
+    line-height: 0;
+    background: #000;
+  }
+  .spotify-wrap iframe {
+    display: block;
+    width: 100%;
+    border: none;
+  }
+
   .playlist-card-body {
-    padding: 32px;
+    padding: 28px;
+    flex: 1;
   }
 
   .playlist-corp-desc {
     font-family: 'Space Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
     line-height: 1.9;
     color: var(--mid);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .playlist-truth {
@@ -502,6 +540,7 @@
     padding: 12px;
     border: 1px dashed var(--light);
     line-height: 1.7;
+    transition: all 0.2s;
   }
   .playlist-card:hover .playlist-truth {
     background: var(--neon);
@@ -511,9 +550,9 @@
   }
 
   .playlist-meta {
-    margin-top: 20px;
+    margin-top: 16px;
     display: flex;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
@@ -531,6 +570,25 @@
   .playlist-card:hover .tag {
     background: var(--black);
     color: var(--neon);
+  }
+
+  .playlist-open-btn {
+    display: block;
+    margin-top: 16px;
+    background: #1DB954;
+    color: #000;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    border: 2px solid #000;
+    transition: all 0.15s;
+  }
+  .playlist-open-btn:hover {
+    background: var(--neon);
+    border-color: var(--black);
   }
 
   /* NOTICE BAR */
@@ -962,7 +1020,83 @@
     50% { transform: scale(1.1); opacity: 1; }
   }
 
-  /* RESPONSIVE TWEAKS */
+  .playlist-cover-wrap {
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 180px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+    border: 3px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.4);
+  }
+  .playlist-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(0.2) contrast(1.05);
+    transition: filter 0.3s;
+  }
+  .playlist-card:hover .playlist-cover { filter: grayscale(0) contrast(1.1); }
+  .playlist-cover-fallback {
+    display: none;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    background: #444;
+    min-height: 120px;
+  }
+
+  .spotify-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    background: transparent;
+    border: 2px solid var(--black);
+    color: var(--black);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    padding: 12px 16px;
+    text-transform: uppercase;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .spotify-btn::after {
+    content: '';
+    position: absolute;
+    top: 4px; left: 4px;
+    right: -4px; bottom: -4px;
+    border: 2px solid var(--black);
+    z-index: -1;
+    transition: all 0.1s;
+  }
+  .spotify-btn:hover {
+    background: #1DB954;
+    color: var(--white);
+    border-color: #1DB954;
+  }
+  .spotify-btn:hover::after { border-color: #1DB954; top: 6px; left: 6px; }
+
+  .social-btn-live {
+    cursor: pointer !important;
+    border-color: #444 !important;
+    color: #888 !important;
+  }
+  .social-btn-live:hover {
+    background: #111 !important;
+    border-color: var(--gold) !important;
+    color: var(--gold) !important;
+  }
+
+
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; }
     .hero-sidebar { display: none; }
@@ -1097,8 +1231,11 @@
     <div class="playlist-card">
       <div class="playlist-card-top">
         <div class="playlist-num">I</div>
-        <span class="playlist-icon">🎵</span>
-        <div class="playlist-title">AMBIENT VIBES FOR PRODUCTIVITY</div>
+        <div class="playlist-cover-wrap">
+          <img src="assets/playlist1.png" alt="Class A Cover" class="playlist-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="playlist-cover-fallback">🎵</div>
+        </div>
+        <div class="playlist-title">CLASS A</div>
         <div class="playlist-subtitle">Strategic Sonic Enhancement Module Alpha</div>
       </div>
       <div class="playlist-card-body">
@@ -1109,10 +1246,19 @@
           ← HOVER TRUTH → It is elevator music. It is the most elevator music that has ever elevated. There is a pan flute. We don't know whose pan flute it is.
         </div>
         <div class="playlist-meta">
-          <span class="tag">43 Tracks</span>
           <span class="tag">Internal Only</span>
           <span class="tag">87% Pan Flute</span>
         </div>
+        <div class="spotify-embed-wrap">
+          <iframe style="border-radius:0;display:block;width:100%;border:none;border-top:2px solid var(--black)"
+                  src="https://open.spotify.com/embed/playlist/45XWeej3Tg12mwu9hdKLJX?utm_source=generator&theme=0"
+                  height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"></iframe>
+        </div>
+        <a href="https://open.spotify.com/playlist/45XWeej3Tg12mwu9hdKLJX?si=2ae0283c01224318" target="_blank" class="spotify-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          LISTEN ON SPOTIFY <span style="font-size:8px;opacity:0.6">(we can't stop you)</span>
+        </a>
       </div>
     </div>
 
@@ -1120,8 +1266,11 @@
     <div class="playlist-card">
       <div class="playlist-card-top" style="background:#1a1a1a">
         <div class="playlist-num">II</div>
-        <span class="playlist-icon">⚡</span>
-        <div class="playlist-title">EPIC ANTHEMS FOR HEROES</div>
+        <div class="playlist-cover-wrap">
+          <img src="assets/playlist2.png" alt="Class B Cover" class="playlist-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="playlist-cover-fallback">⚡</div>
+        </div>
+        <div class="playlist-title">CLASS B</div>
         <div class="playlist-subtitle">Motivational Paradigm Accelerator Suite B</div>
       </div>
       <div class="playlist-card-body">
@@ -1132,10 +1281,19 @@
           ← HOVER TRUTH → It's 80s rock. Exclusively. Someone added two Bonnie Tyler songs and we are at peace with this. Eyes closed, fist raised, no regrets.
         </div>
         <div class="playlist-meta">
-          <span class="tag">62 Tracks</span>
           <span class="tag">Internal Only</span>
           <span class="tag">2x Bonnie Tyler</span>
         </div>
+        <div class="spotify-embed-wrap">
+          <iframe style="border-radius:0;display:block;width:100%;border:none;border-top:2px solid var(--black)"
+                  src="https://open.spotify.com/embed/playlist/0RYMdI4CWm0HqpBPQl0p6K?utm_source=generator&theme=0"
+                  height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"></iframe>
+        </div>
+        <a href="https://open.spotify.com/playlist/0RYMdI4CWm0HqpBPQl0p6K?si=71ed57b228ea45e2" target="_blank" class="spotify-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          LISTEN ON SPOTIFY <span style="font-size:8px;opacity:0.6">(we can't stop you)</span>
+        </a>
       </div>
     </div>
 
@@ -1143,8 +1301,11 @@
     <div class="playlist-card">
       <div class="playlist-card-top" style="background:#222">
         <div class="playlist-num">III</div>
-        <span class="playlist-icon">🌿</span>
-        <div class="playlist-title">MYSTICAL MELODIES</div>
+        <div class="playlist-cover-wrap">
+          <img src="assets/playlist3.png" alt="Class C Cover" class="playlist-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="playlist-cover-fallback">🌿</div>
+        </div>
+        <div class="playlist-title">CLASS C</div>
         <div class="playlist-subtitle">Transcendental Resonance Framework Gamma</div>
       </div>
       <div class="playlist-card-body">
@@ -1155,10 +1316,19 @@
           ← HOVER TRUTH → It is bird sounds. Forty-seven consecutive minutes of bird sounds. Someone thought they heard a prophecy in the middle. We have not verified this.
         </div>
         <div class="playlist-meta">
-          <span class="tag">1 Track</span>
           <span class="tag">Internal Only</span>
           <span class="tag">47 min bird</span>
         </div>
+        <div class="spotify-embed-wrap">
+          <iframe style="border-radius:0;display:block;width:100%;border:none;border-top:2px solid var(--black)"
+                  src="https://open.spotify.com/embed/playlist/4PpIlJiTPoxaKodXE58bj7?utm_source=generator&theme=0"
+                  height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"></iframe>
+        </div>
+        <a href="https://open.spotify.com/playlist/4PpIlJiTPoxaKodXE58bj7?si=4229bdf6007d44f4" target="_blank" class="spotify-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          LISTEN ON SPOTIFY <span style="font-size:8px;opacity:0.6">(we can't stop you)</span>
+        </a>
       </div>
     </div>
 
@@ -1329,10 +1499,10 @@
     <div class="footer-col">
       <div class="footer-col-title">REACH US (DON'T)</div>
       <div class="social-icons">
-        <a href="#" class="social-btn" onclick="alert('Our WhatsApp channel exists for urgent non-complaints only. If you are complaining: goodbye.'); return false;">WHATSAPP<br>(non-complaints)</a>
-        <a href="#" class="social-btn" onclick="alert('Welcome to our Discord server. There are currently 0 members. You are the first. You are also the last. Please leave.'); return false;">DISCORD<br>(echo chamber)</a>
-        <a href="#" class="social-btn" title="Goes nowhere">TWITTER<br>(abandoned)</a>
-        <a href="#" class="social-btn" title="Also goes nowhere">INSTAGRAM<br>(3 posts)</a>
+        <a href="https://whatsapp.com/channel/0029VbBf38LB4hdSqbyGC51e" target="_blank" class="social-btn social-btn-live">WHATSAPP<br><span style="color:var(--neon);font-size:8px">(non-complaints only)</span></a>
+        <a href="https://discord.com/invite/CQFPydd9Wx" target="_blank" class="social-btn social-btn-live">DISCORD<br><span style="color:var(--neon);font-size:8px">(our echo chamber)</span></a>
+        <a href="#" class="social-btn" title="Goes nowhere" onclick="alert('This link goes nowhere. Much like our company vision.'); return false;">TWITTER<br>(abandoned)</a>
+        <a href="#" class="social-btn" title="Also goes nowhere" onclick="alert('3 posts. 2 are the same photo. We regret nothing.'); return false;">INSTAGRAM<br>(3 posts)</a>
       </div>
     </div>
   </div>
