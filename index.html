@@ -3,1294 +3,1385 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Woyymasjems — Your Playlist, Professionally Done</title>
-
-<!-- CUSTOM CURSOR -->
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
-
-<style>
-  #cursor-dot {
-    position: fixed;
-    width: 8px; height: 8px;
-    background: var(--red);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s, background 0.2s, width 0.2s, height 0.2s;
-  }
-  #cursor-ring {
-    position: fixed;
-    width: 36px; height: 36px;
-    border: 1.5px solid rgba(227,24,54,0.6);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: left 0.12s ease-out, top 0.12s ease-out, width 0.2s, height 0.2s, border-color 0.2s;
-  }
-
-  /* hide default cursor on all elements */
-  *, a, button, input, textarea, select { cursor: none !important; }
-
-  /* expanded state on hover */
-  body.cursor-hover #cursor-ring {
-    width: 56px; height: 56px;
-    border-color: var(--red);
-    background: rgba(227,24,54,0.07);
-  }
-  body.cursor-hover #cursor-dot {
-    width: 4px; height: 4px;
-  }
-</style>
-
-<script>
-  const dot = document.getElementById('cursor-dot');
-  const ring = document.getElementById('cursor-ring');
-
-  document.addEventListener('mousemove', e => {
-    dot.style.left = e.clientX + 'px';
-    dot.style.top = e.clientY + 'px';
-    ring.style.left = e.clientX + 'px';
-    ring.style.top = e.clientY + 'px';
-  });
-
-  // Expand on hoverable elements
-  const hoverables = document.querySelectorAll('a, button, .playlist-card, .pricing-card, .step-card, input, textarea, select');
-  hoverables.forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-  });
-
-  // Hide cursor when leaving window
-  document.addEventListener('mouseleave', () => {
-    dot.style.opacity = '0';
-    ring.style.opacity = '0';
-  });
-  document.addEventListener('mouseenter', () => {
-    dot.style.opacity = '1';
-    ring.style.opacity = '1';
-  });
-</script>
-  
-<!-- ── FAVICON ── -->
-<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/awfgduaqgithub/woyymasjems/refs/heads/main/assets/WMJICON.png">
-<link rel="apple-touch-icon" href="https://raw.githubusercontent.com/awfgduaqgithub/woyymasjems/refs/heads/main/assets/WMJICON.png">
-
-<!-- ── OPEN GRAPH (WhatsApp, Telegram, Facebook, iMessage) ── -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://woyymasjems.vercel.app">
-<meta property="og:title" content="Woyymasjems — Your Playlist, Professionally Done">
-<meta property="og:description" content="Custom Spotify playlists curated by real humans who take your vibe very seriously. Probably too seriously.">
-<meta property="og:image" content="https://woyymasjems.vercel.app/assets/WMJHEADER.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name" content="Woyymasjems">
-<meta property="og:locale" content="en_US">
-
-<!-- ── TWITTER / X CARD ── -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://woyymasjems.vercel.app">
-<meta name="twitter:title" content="Woyymasjems — Your Playlist, Professionally Done">
-<meta name="twitter:description" content="Custom Spotify playlists curated by real humans who take your vibe very seriously. Probably too seriously.">
-<meta name="twitter:image" content="https://woyymasjems.vercel.app/assets/WMJHEADER.png">
-
-<!-- ── GENERAL SEO ── -->
-<meta name="description" content="Custom Spotify playlists curated by real humans who take your vibe very seriously. Probably too seriously.">
-<meta name="theme-color" content="#e31836">
-  
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>WOYYMASJEMS — Elite Music Curation Solutions™</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,700;1,400&family=Anton&display=swap" rel="stylesheet">
 <style>
   :root {
-    --red: #e31836;
-    --red-dim: rgba(227,24,54,0.15);
-    --red-glow: rgba(227,24,54,0.35);
-    --bg: #0a0a0a;
-    --bg2: #111111;
-    --bg3: #181818;
-    --bg4: #222222;
-    --text: #f0f0f0;
-    --muted: #888;
-    --border: rgba(255,255,255,0.07);
-    --card-radius: 16px;
+    --black: #0a0a0a;
+    --white: #f0ede8;
+    --gray: #2a2a2a;
+    --mid: #555;
+    --light: #999;
+    --gold: #c9a84c;
+    --neon: #ffdd00;
+    --concrete: #3a3a3a;
+    --border: 3px solid #0a0a0a;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    background-color: var(--white);
+    color: var(--black);
+    font-family: 'Space Mono', monospace;
     overflow-x: hidden;
-    cursor: none;
+    cursor: crosshair;
   }
 
-  /* ── NOISE OVERLAY ── */
+  /* NOISE OVERLAY */
   body::before {
     content: '';
     position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
     pointer-events: none;
-    z-index: 999;
-    opacity: 0.4;
+    z-index: 9999;
+    opacity: 0.5;
   }
 
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 12px; }
+  ::-webkit-scrollbar-track { background: var(--white); border-left: 2px solid var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--black); }
 
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
+  /* MARQUEE */
+  .marquee-bar {
+    background: var(--black);
+    color: var(--gold);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    padding: 8px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-bottom: 2px solid var(--gold);
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 28s linear infinite;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(100vw); }
+    100% { transform: translateX(-100%); }
+  }
+
+  /* HEADER / NAV */
+  header {
+    background: var(--white);
+    border-bottom: var(--border);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: stretch;
+    position: sticky;
+    top: 0;
     z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 5vw;
-    height: 68px;
-    background: rgba(10,10,10,0.88);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
   }
 
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.3rem;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--red); }
-
-  .nav-links {
-    display: flex;
-    gap: 2.2rem;
-    list-style: none;
-  }
-  .nav-links a {
-    font-size: 0.88rem;
-    font-weight: 500;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--text); }
-
-  .nav-cta {
-    background: var(--red);
-    color: #fff !important;
-    padding: 0.5rem 1.2rem;
-    border-radius: 50px;
-    font-weight: 600 !important;
-    transition: transform 0.2s, box-shadow 0.2s !important;
-  }
-  .nav-cta:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 20px var(--red-glow);
-    color: #fff !important;
-  }
-
-  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-  .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
-
-  /* ── HERO ── */
-  #home {
-    min-height: 100vh;
-    padding: 120px 5vw 80px;
+  .logo-block {
+    border-right: var(--border);
+    padding: 16px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
+    gap: 4px;
+    background: var(--white);
+    transition: background 0.2s;
+  }
+  .logo-block:hover { background: var(--black); }
+  .logo-block:hover .logo-text, .logo-block:hover .logo-sub { color: var(--gold); }
+  .logo-block:hover .apollo-bust { filter: invert(1) sepia(1) saturate(3) hue-rotate(10deg); }
+
+  .apollo-bust {
+    font-size: 36px;
+    line-height: 1;
+    image-rendering: pixelated;
+    transition: filter 0.2s;
   }
 
-  .hero-glow {
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--black);
+    transition: color 0.2s;
+  }
+  .logo-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 0.3em;
+    color: var(--mid);
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+  }
+
+  nav a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    border-left: 2px solid var(--black);
+    transition: all 0.15s;
+    position: relative;
+  }
+  nav a:hover {
+    background: var(--black);
+    color: var(--neon);
+  }
+  nav a .hover-reveal {
+    display: none;
     position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 700px; height: 400px;
-    background: radial-gradient(ellipse at center top, rgba(227,24,54,0.18) 0%, transparent 70%);
+    bottom: -32px;
+    left: 0;
+    background: var(--neon);
+    color: var(--black);
+    font-size: 9px;
+    padding: 4px 8px;
+    white-space: nowrap;
+    border: 2px solid var(--black);
+    z-index: 200;
+  }
+  nav a:hover .hover-reveal { display: block; }
+
+  /* HERO */
+  .hero {
+    min-height: 92vh;
+    background: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    border-bottom: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(0,0,0,0.04) 39px,
+      rgba(0,0,0,0.04) 40px
+    );
     pointer-events: none;
   }
 
-  .hero-tag {
-    display: inline-block;
-    background: var(--red-dim);
-    border: 1px solid rgba(227,24,54,0.3);
-    color: var(--red);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
+  .hero-content {
+    padding: 80px 60px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
     text-transform: uppercase;
-    padding: 0.35rem 1rem;
-    border-radius: 50px;
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s ease both;
+    color: var(--mid);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
   }
 
   .hero-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.8rem, 7vw, 5.5rem);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    text-align: center;
-    max-width: 820px;
-    animation: fadeUp 0.7s 0.1s ease both;
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(52px, 8vw, 110px);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    color: var(--black);
+    margin-bottom: 16px;
   }
-  .hero-title em { font-style: normal; color: var(--red); }
+  .hero-title span {
+    display: block;
+    -webkit-text-stroke: 2px var(--black);
+    color: transparent;
+  }
 
   .hero-sub {
-    margin-top: 1.4rem;
-    color: var(--muted);
-    font-size: 1.05rem;
-    font-weight: 300;
-    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--mid);
     max-width: 520px;
-    line-height: 1.7;
-    animation: fadeUp 0.7s 0.2s ease both;
+    margin-bottom: 48px;
+    border-left: 4px solid var(--gold);
+    padding-left: 20px;
   }
 
-  .hero-sub em {
-    font-style: italic;
-    color: #aaa;
+  .hero-cta {
+    display: inline-block;
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.2em;
+    padding: 20px 40px;
+    text-decoration: none;
+    border: 3px solid var(--black);
+    position: relative;
+    transition: all 0.1s;
+    max-width: fit-content;
+  }
+  .hero-cta::after {
+    content: '';
+    position: absolute;
+    top: 6px; left: 6px;
+    right: -6px; bottom: -6px;
+    border: 3px solid var(--black);
+    z-index: -1;
+    transition: all 0.1s;
+  }
+  .hero-cta:hover {
+    background: var(--neon);
+    color: var(--black);
+    transform: translate(-3px, -3px);
+  }
+  .hero-cta:hover::after { top: 9px; left: 9px; }
+
+  .cta-fine {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--light);
+    margin-top: 10px;
+    letter-spacing: 0.05em;
   }
 
-  /* ── FEATURED PLAYLISTS ── */
-  .section-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
+  .hero-sidebar {
+    background: var(--black);
+    padding: 60px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-stat {
+    border-bottom: 1px solid #333;
+    padding-bottom: 28px;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #777;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 0.6rem;
+    margin-top: 4px;
+  }
+  .stat-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #555;
+    margin-top: 8px;
+    font-style: italic;
+    line-height: 1.6;
   }
 
-  .featured-heading {
-    width: 100%;
-    max-width: 1100px;
-    margin-top: 4rem;
-    margin-bottom: 1.8rem;
-    animation: fadeUp 0.7s 0.3s ease both;
+  .sunburst {
+    font-size: 80px;
+    opacity: 0.15;
+    text-align: center;
+    animation: spin-slow 20s linear infinite;
+    display: block;
+  }
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 
-  .featured-heading h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text);
+  /* DIVIDER */
+  .section-divider {
+    background: var(--black);
+    color: var(--gold);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    text-align: center;
+    padding: 12px;
+    border-bottom: var(--border);
+    text-transform: uppercase;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: var(--border);
+  }
+  .about-cell {
+    padding: 48px 36px;
+    border-right: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-cell:last-child { border-right: none; }
+  .about-cell-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 120px;
+    color: rgba(0,0,0,0.06);
+    position: absolute;
+    top: -20px; right: -10px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .about-cell h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.08em;
+    color: var(--black);
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .about-cell p {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    line-height: 1.9;
+    color: var(--mid);
+    position: relative;
+  }
+  .about-cell:hover {
+    background: var(--black);
+  }
+  .about-cell:hover h3, .about-cell:hover p { color: var(--white); }
+  .about-cell:hover .about-cell-num { color: rgba(255,255,255,0.05); }
+  .about-cell:hover .reveal-text { display: block; }
+  .reveal-text {
+    display: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--neon);
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  /* PLAYLISTS */
+  .playlists-header {
+    padding: 80px 60px 40px;
+    border-bottom: var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    background: var(--black);
+  }
+
+  .playlists-header h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(40px, 6vw, 80px);
+    color: var(--white);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+  }
+  .playlists-header h2 em {
+    font-style: normal;
+    -webkit-text-stroke: 1px var(--white);
+    color: transparent;
+  }
+
+  .playlist-count-badge {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 100px;
+    color: var(--gold);
+    line-height: 1;
+    opacity: 0.6;
   }
 
   .playlists-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 1100px;
-    animation: fadeUp 0.7s 0.4s ease both;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: var(--border);
   }
 
   .playlist-card {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: var(--card-radius);
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-    cursor: pointer;
-  }
-  .playlist-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(227,24,54,0.2);
-    border-color: rgba(227,24,54,0.3);
-  }
-
-  .playlist-cover {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s;
-  }
-  .playlist-card:hover .playlist-cover { transform: scale(1.04); }
-
-  .playlist-cover-wrap {
-    overflow: hidden;
-    position: relative;
-  }
-
-  .playlist-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    display: flex;
-    align-items: flex-end;
-    padding: 1rem;
-  }
-  .playlist-card:hover .playlist-overlay { opacity: 1; }
-
-  .play-btn-overlay {
-    width: 46px; height: 46px;
-    border-radius: 50%;
-    background: var(--red);
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 16px var(--red-glow);
-    transition: transform 0.2s;
-  }
-  .play-btn-overlay:hover { transform: scale(1.1); }
-  .play-btn-overlay svg { fill: #fff; margin-left: 2px; }
-
-  .playlist-info {
-    padding: 1.2rem 1.3rem 1.4rem;
-  }
-
-  .playlist-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 0.4rem;
-    letter-spacing: -0.01em;
-  }
-
-  .playlist-desc {
-    font-size: 0.82rem;
-    color: var(--muted);
-    line-height: 1.55;
-    margin-bottom: 1.1rem;
-  }
-
-  .btn-listen {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: transparent;
-    border: 1px solid var(--red);
-    color: var(--red);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 600;
-    padding: 0.5rem 1.1rem;
-    border-radius: 50px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s, transform 0.2s;
-    letter-spacing: 0.02em;
-  }
-  .btn-listen:hover {
-    background: var(--red);
-    color: #fff;
-    transform: translateY(-1px);
-  }
-  .btn-listen svg { width: 14px; height: 14px; fill: currentColor; }
-
-  /* ── GENERIC SECTION ── */
-  section {
-    padding: 90px 5vw;
-  }
-
-  .section-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .section-header {
-    margin-bottom: 3rem;
-  }
-
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-  }
-  .section-title em { font-style: normal; color: var(--red); }
-
-  .section-subtitle {
-    color: var(--muted);
-    font-size: 0.95rem;
-    font-weight: 300;
-    line-height: 1.7;
-    max-width: 480px;
-    margin-top: 0.6rem;
-  }
-
-  /* ── HOW IT WORKS ── */
-  #services { background: var(--bg2); }
-
-  .steps-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-  }
-
-  .step-card {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: var(--card-radius);
-    padding: 1.8rem 1.5rem;
+    border-right: var(--border);
     position: relative;
     overflow: hidden;
-    transition: border-color 0.3s;
+    background: var(--white);
+    transition: background 0.2s;
   }
-  .step-card:hover { border-color: rgba(227,24,54,0.3); }
-  .step-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--red), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .step-card:hover::before { opacity: 1; }
+  .playlist-card:last-child { border-right: none; }
 
-  .step-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--red-dim);
-    line-height: 1;
-    margin-bottom: 0.8rem;
-    border: 1px solid rgba(227,24,54,0.2);
-    width: 56px; height: 56px;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 12px;
-    font-size: 1.4rem;
-    color: var(--red);
-    background: var(--red-dim);
-  }
-
-  .step-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .step-desc {
-    font-size: 0.84rem;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-  
-  /* ── PRICING ── */
-  #pricing { background: var(--bg2); }
-
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    align-items: start;
-  }
-
-  .pricing-card {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: var(--card-radius);
-    padding: 2rem 1.8rem;
+  .playlist-card-top {
+    background: var(--concrete);
+    padding: 40px 32px 32px;
+    border-bottom: var(--border);
     position: relative;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  .pricing-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 50px rgba(0,0,0,0.4);
-  }
-
-  .pricing-card.featured {
-    border-color: var(--red);
-    background: linear-gradient(160deg, rgba(227,24,54,0.08) 0%, var(--bg3) 60%);
-  }
-
-  .pricing-badge {
-    position: absolute;
-    top: -13px; left: 50%;
-    transform: translateX(-50%);
-    background: var(--red);
-    color: #fff;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.9rem;
-    border-radius: 50px;
-    white-space: nowrap;
-  }
-
-  .pricing-tier {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 0.5rem;
-  }
-
-  .pricing-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 800;
-    margin-bottom: 0.3rem;
-  }
-
-  .pricing-tagline {
-    font-size: 0.82rem;
-    color: var(--muted);
-    font-style: italic;
-    margin-bottom: 1.5rem;
-    line-height: 1.5;
-  }
-
-  .pricing-price {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.8rem;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    margin-bottom: 0.2rem;
-  }
-  .pricing-price sup { font-size: 1.2rem; vertical-align: top; margin-top: 0.6rem; display: inline-block; }
-  .pricing-period { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.8rem; }
-
-  .pricing-features {
-    list-style: none;
-    margin-bottom: 1.8rem;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    justify-content: flex-end;
   }
-  .pricing-features li {
+
+  .playlist-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    display: block;
+    filter: grayscale(0.3);
+    position: relative;
+    z-index: 1;
+  }
+
+  .playlist-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 160px;
+    position: absolute;
+    top: -30px; right: -10px;
+    color: rgba(255,255,255,0.05);
+    line-height: 1;
+  }
+
+  .playlist-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    position: relative;
+    z-index: 1;
+  }
+
+  .playlist-subtitle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-top: 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .playlist-card-body {
+    padding: 32px;
+  }
+
+  .playlist-corp-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    line-height: 1.9;
+    color: var(--mid);
+    margin-bottom: 20px;
+  }
+
+  .playlist-truth {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--light);
+    font-style: italic;
+    padding: 12px;
+    border: 1px dashed var(--light);
+    line-height: 1.7;
+  }
+  .playlist-card:hover .playlist-truth {
+    background: var(--neon);
+    color: var(--black);
+    border-style: solid;
+    border-color: var(--black);
+  }
+
+  .playlist-meta {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1.5px solid var(--black);
+    background: transparent;
+    color: var(--black);
+    transition: all 0.15s;
+  }
+  .playlist-card:hover .tag {
+    background: var(--black);
+    color: var(--neon);
+  }
+
+  /* NOTICE BAR */
+  .notice-bar {
+    background: var(--neon);
+    border-top: var(--border);
+    border-bottom: var(--border);
+    padding: 16px 40px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    font-size: 0.86rem;
-    color: #ccc;
+    gap: 16px;
   }
-  .pricing-features li::before {
-    content: '';
-    width: 16px; height: 16px;
-    border-radius: 50%;
-    background: var(--red-dim);
-    border: 1px solid rgba(227,24,54,0.3);
-    display: flex; align-items: center; justify-content: center;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%23e31836' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-size: 10px;
-    background-repeat: no-repeat;
-    background-position: center;
-    flex-shrink: 0;
+  .notice-bar::before { content: '⚠'; font-size: 18px; }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    padding: 80px 0;
+    background: var(--white);
+    border-bottom: var(--border);
+    overflow: hidden;
   }
 
-  .btn-primary {
-    display: block;
-    width: 100%;
+  .testimonials-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--light);
     text-align: center;
-    background: var(--red);
-    color: #fff;
-    border: none;
-    padding: 0.85rem 1.5rem;
-    border-radius: 50px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-    text-decoration: none;
-    letter-spacing: 0.02em;
+    margin-bottom: 48px;
   }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px var(--red-glow);
-    background: #ff1f3d;
-  }
-
-  .btn-outline {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-  }
-  .btn-outline:hover {
-    background: var(--bg4);
-    color: var(--text);
-    box-shadow: none;
-  }
-
-  /* ── TESTIMONIALS ── */
-  #about { background: var(--bg); }
 
   .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 0;
+    border-top: var(--border);
+    border-left: var(--border);
   }
 
-  .testi-card {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: var(--card-radius);
-    padding: 1.8rem;
-    transition: border-color 0.3s;
-  }
-  .testi-card:hover { border-color: rgba(227,24,54,0.2); }
-
-  .testi-stars {
-    color: var(--red);
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    letter-spacing: 2px;
+  .testimonial {
+    padding: 40px 32px;
+    border-right: var(--border);
+    border-bottom: var(--border);
+    position: relative;
   }
 
-  .testi-quote {
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: #ccc;
-    font-style: italic;
-    margin-bottom: 1.3rem;
+  .testimonial-quote {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: rgba(0,0,0,0.06);
+    line-height: 0.8;
+    margin-bottom: 12px;
   }
 
-  .testi-author {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
+  .testimonial-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--black);
+    margin-bottom: 20px;
   }
 
-  .testi-avatar {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: var(--bg4);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: var(--red);
-    flex-shrink: 0;
-    border: 1px solid var(--border);
-  }
-
-  .testi-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.88rem;
-  }
-  .testi-role { font-size: 0.76rem; color: var(--muted); margin-top: 0.1rem; }
-
-  /* ── CONTACT ── */
-  #contact { background: var(--bg2); }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-
-  .contact-blurb {
-    font-size: 0.95rem;
-    color: var(--muted);
-    line-height: 1.7;
-    font-weight: 300;
-    margin-bottom: 2rem;
-  }
-  .contact-blurb strong { color: var(--text); }
-
-  .contact-detail {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    margin-bottom: 1rem;
-    font-size: 0.88rem;
-    color: var(--muted);
-  }
-  .contact-detail-icon {
-    width: 36px; height: 36px;
-    background: var(--red-dim);
-    border: 1px solid rgba(227,24,54,0.2);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .contact-detail-icon svg { width: 16px; height: 16px; fill: var(--red); }
-
-  .form-group {
-    margin-bottom: 1.2rem;
-  }
-
-  .form-group label {
-    display: block;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+  .testimonial-author {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 0.5rem;
+    color: var(--light);
   }
 
-  .form-control {
-    width: 100%;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 0.85rem 1.1rem;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    resize: vertical;
+  .testimonial-disclaimer {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    color: var(--neon);
+    background: var(--black);
+    padding: 4px 8px;
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: none;
   }
-  .form-control:focus {
-    border-color: var(--red);
-    box-shadow: 0 0 0 3px var(--red-dim);
+  .testimonial:hover { background: #f5f2ed; }
+  .testimonial:hover .testimonial-disclaimer { display: block; }
+
+  /* SCROLLING CHAOS SECTION */
+  .chaos-section {
+    padding: 80px 60px;
+    border-bottom: var(--border);
+    background: var(--black);
+    position: relative;
   }
-  .form-control::placeholder { color: #444; }
 
-  textarea.form-control { min-height: 120px; }
+  .chaos-section h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    color: var(--white);
+    margin-bottom: 48px;
+    line-height: 1;
+  }
 
-  .form-row {
+  .chaos-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 2px;
   }
 
-  /* ── FOOTER ── */
+  .chaos-item {
+    background: var(--gray);
+    padding: 32px;
+    border: 1px solid #333;
+    transition: background 0.15s;
+  }
+  .chaos-item:hover { background: #1a1a1a; }
+
+  .chaos-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--white);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+
+  .chaos-body {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    line-height: 1.8;
+    color: #888;
+  }
+
+  s { color: #555; }
+  .chaos-item:hover s { color: var(--neon); text-decoration-color: var(--gold); }
+
+  .chaos-item:hover .chaos-body { color: #aaa; }
+
+  .redacted {
+    background: #555;
+    color: transparent;
+    padding: 0 4px;
+    user-select: none;
+    transition: all 0.15s;
+  }
+  .chaos-item:hover .redacted {
+    background: var(--neon);
+    color: var(--black);
+  }
+
+  /* FINE PRINT */
+  .fine-print-section {
+    padding: 60px;
+    background: var(--white);
+    border-bottom: var(--border);
+  }
+
+  .fine-print-section h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+
+  .fine-print-body {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    line-height: 2;
+    color: var(--mid);
+    columns: 3;
+    column-gap: 40px;
+  }
+
+  .fine-print-body strong {
+    color: var(--black);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* TYPO SECTION */
+  .typo-section {
+    padding: 80px 60px;
+    background: var(--white);
+    border-bottom: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .typo-section::before {
+    content: 'WHY';
+    font-family: 'Anton', sans-serif;
+    font-size: 400px;
+    color: rgba(0,0,0,0.03);
+    position: absolute;
+    top: -80px;
+    left: -40px;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .typo-content { position: relative; z-index: 1; }
+
+  .typo-large {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: 1.1;
+    color: var(--black);
+    margin-bottom: 32px;
+  }
+
+  .glitch {
+    position: relative;
+    display: inline-block;
+  }
+  .glitch:hover::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 2px;
+    color: var(--neon);
+    clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+    animation: glitch 0.2s steps(2) infinite;
+  }
+  .glitch:hover::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: -2px;
+    color: #ff3030;
+    clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+    animation: glitch 0.3s steps(2) infinite reverse;
+  }
+  @keyframes glitch {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
+
+  .typo-body {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    line-height: 2;
+    color: var(--mid);
+    max-width: 700px;
+    margin-bottom: 24px;
+  }
+
+  .typo-error {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--light);
+    font-style: italic;
+  }
+  .typo-error span { color: var(--black); font-weight: 700; }
+
+  /* FOOTER */
   footer {
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-    padding: 3rem 5vw;
+    background: var(--black);
+    border-top: var(--border);
   }
 
-  .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    border-bottom: 2px solid #222;
+  }
+
+  .footer-col {
+    padding: 48px 32px;
+    border-right: 2px solid #222;
+  }
+  .footer-col:last-child { border-right: none; }
+
+  .footer-col-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .footer-about {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    line-height: 1.9;
+    color: #666;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .footer-links li a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #666;
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-links li a::before {
+    content: '→';
+    color: #333;
+    transition: color 0.15s;
+  }
+  .footer-links li a:hover { color: var(--neon); }
+  .footer-links li a:hover::before { color: var(--neon); }
+
+  .social-icons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .social-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 8px 12px;
+    border: 1px solid #333;
+    color: #555;
+    text-decoration: none;
+    display: block;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    cursor: not-allowed;
+  }
+  .social-btn:hover {
+    background: #1a1a1a;
+    color: #888;
+    border-color: #555;
+  }
+
+  .footer-bottom {
+    padding: 20px 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 2rem;
-    flex-wrap: wrap;
+    border-top: 2px solid #111;
   }
 
-  .footer-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.2rem;
-    color: var(--text);
-    text-decoration: none;
+  .copyright {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #444;
+    letter-spacing: 0.1em;
   }
-  .footer-logo span { color: var(--red); }
 
   .footer-tagline {
-    font-size: 0.8rem;
-    color: var(--muted);
-    margin-top: 0.3rem;
-    font-style: italic;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    color: #333;
   }
 
-  .footer-copy {
-    font-size: 0.78rem;
-    color: #444;
+  /* POPUP */
+  #popup {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--neon);
+    border: 3px solid var(--black);
+    padding: 20px 24px;
+    z-index: 9000;
+    max-width: 300px;
+    box-shadow: 6px 6px 0 var(--black);
+  }
+  #popup.show { display: block; }
+  .popup-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .popup-body {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .popup-close {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    background: var(--black);
+    color: var(--neon);
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: opacity 0.15s;
+  }
+  .popup-close:hover { opacity: 0.8; }
+
+  /* ORACLE BAND */
+  .oracle-band {
+    background: repeating-linear-gradient(
+      45deg,
+      var(--black) 0px,
+      var(--black) 10px,
+      #111 10px,
+      #111 20px
+    );
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    border-bottom: var(--border);
+  }
+  .oracle-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
     text-align: center;
   }
-
-  .social-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    color: var(--text);
-    text-decoration: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 50px;
-    font-size: 0.83rem;
-    font-weight: 500;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  .lyre-icon {
+    font-size: 28px;
+    opacity: 0.7;
+    animation: pulse-lyre 3s ease-in-out infinite;
   }
-  .social-link:hover {
-    background: var(--bg4);
-    border-color: rgba(255,255,255,0.15);
-    transform: translateY(-1px);
-  }
-  .social-link svg { width: 18px; height: 18px; fill: #25D366; }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
+  @keyframes pulse-lyre {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
   }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
-  }
-
-  /* ── MOBILE ── */
+  /* RESPONSIVE TWEAKS */
   @media (max-width: 900px) {
-    .playlists-grid { grid-template-columns: 1fr 1fr; }
-    .steps-grid { grid-template-columns: 1fr 1fr; }
-    .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
-    .testimonials-grid { grid-template-columns: 1fr 1fr; }
-    .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    nav .nav-links { display: none; }
-    .hamburger { display: flex; }
-    nav .nav-links.open {
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 68px; left: 0; right: 0;
-      background: rgba(10,10,10,0.97);
-      padding: 2rem 5vw;
-      gap: 1.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-    nav .nav-links.open a { font-size: 1rem; }
-  }
-
-  @media (max-width: 580px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-sidebar { display: none; }
+    .about-strip { grid-template-columns: 1fr; }
     .playlists-grid { grid-template-columns: 1fr; }
-    .steps-grid { grid-template-columns: 1fr; }
     .testimonials-grid { grid-template-columns: 1fr; }
-    .form-row { grid-template-columns: 1fr; }
-    .footer-inner { flex-direction: column; text-align: center; }
-    .hero-title { font-size: 2.4rem; }
-    .all-playlists-grid { grid-template-columns: 1fr; }
+    .chaos-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .fine-print-body { columns: 1; }
+    nav a .hover-reveal { display: none !important; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#home" class="nav-logo" style="display:flex;align-items:center;">
-  <svg height="32" viewBox="0 0 1469 185" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:auto;display:block;">
-    <path d="M395.922 73.3838L422.925 32.377H480.485L505.962 73.3838L532.965 32.377H565.605L503.269 120.696H471.909L491.099 94.7119L451.672 37.8926L393.229 120.696H361.869L381.059 94.7119L337.805 32.377H370.445L395.922 73.3838ZM285.28 30.457C298.763 30.457 309.942 31.6091 318.816 33.9131C327.776 36.1318 334.475 39.7158 338.912 44.665C343.349 49.5289 345.568 55.9286 345.568 63.8643C345.568 71.8002 343.349 78.2005 338.912 83.0645C334.475 87.9284 327.776 91.4698 318.816 93.6885C309.942 95.9071 298.763 97.0166 285.28 97.0166C271.712 97.0166 260.406 95.9071 251.36 93.6885C242.4 91.4698 235.658 87.9285 231.136 83.0645C226.699 78.2005 224.48 71.8001 224.48 63.8643C224.481 55.9286 226.699 49.5289 231.136 44.665C235.658 39.7157 242.4 36.1318 251.36 33.9131C260.406 31.6091 271.712 30.457 285.28 30.457ZM68.5273 76.9922L98.8164 13.0967H137.473L167.761 76.9922L200.192 13.0967H235.776L190.465 95.0166H147.2L118.144 38.2725L89.0889 95.0166H45.8242L0 13.0967H36.0967L68.5273 76.9922ZM285.28 49.0166C278.966 49.0166 273.59 49.5714 269.152 50.6807C264.8 51.79 261.472 53.4542 259.168 55.6729C256.949 57.8061 255.84 60.5365 255.84 63.8643C255.84 67.1069 256.949 69.838 259.168 72.0566C261.387 74.19 264.672 75.8116 269.024 76.9209C273.462 77.9448 278.88 78.457 285.28 78.457C291.595 78.457 296.886 77.9449 301.152 76.9209C305.419 75.8116 308.661 74.1899 310.88 72.0566C313.099 69.838 314.208 67.1069 314.208 63.8643C314.208 60.6218 313.098 57.8914 310.88 55.6729C308.747 53.4542 305.547 51.79 301.28 50.6807C297.014 49.5713 291.68 49.0166 285.28 49.0166Z" fill="white"/>
-    <path d="M1043.83 109H1043.8C1043.8 128.891 1035.9 147.968 1021.84 162.033C1007.77 176.098 981.84 184.097 961.949 184.097C942.058 184.097 914.532 176.195 900.467 162.13C886.402 148.065 878.5 128.988 878.5 109.097H909.097C909.097 120.873 913.775 132.167 922.103 140.494C930.43 148.821 950.173 153.5 961.949 153.5C973.726 153.5 991.873 148.725 1000.2 140.397C1008.53 132.07 1013.21 120.776 1013.21 109H1013.11V32.8965H1043.83V109Z" fill="#E21937"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M1111.57 30.3291C1124.54 30.3291 1135.16 31.4812 1143.44 33.7852C1151.72 36.0892 1157.82 39.8436 1161.74 45.0488C1165.67 50.1688 1167.55 57.1238 1167.38 65.9131H1080.34C1080.76 68.1316 1081.96 70.1794 1083.92 72.0566C1085.97 73.9339 1089.08 75.4704 1093.26 76.665C1097.53 77.7744 1103.21 78.3291 1110.29 78.3291C1117.63 78.3291 1123.64 77.8169 1128.34 76.793C1133.11 75.769 1135.97 74.3178 1136.91 72.4404H1167.12C1166.35 77.3898 1163.88 81.6998 1159.7 85.3691C1155.6 89.0384 1149.58 91.8964 1141.65 93.9443C1133.8 95.907 1123.77 96.8887 1111.57 96.8887C1098.68 96.8887 1087.55 95.8644 1078.16 93.8164C1068.86 91.7685 1061.69 88.313 1056.66 83.4492C1051.62 78.5852 1049.1 72.0137 1049.1 63.7363C1049.1 55.5445 1051.54 49.0163 1056.4 44.1523C1061.35 39.2032 1068.48 35.6616 1077.78 33.5283C1087.08 31.3951 1098.34 30.3291 1111.57 30.3291ZM1110.29 48.8887C1101.24 48.8887 1094.33 49.8703 1089.55 51.833C1084.86 53.7956 1082.09 55.7581 1081.23 57.7207H1137.55C1136.95 55.5021 1134.57 53.4971 1130.38 51.7051C1126.2 49.8278 1119.5 48.8887 1110.29 48.8887Z" fill="#E21937"/>
-    <path d="M1420.49 30.3291C1431.24 30.3291 1440.03 31.4386 1446.86 33.6572C1453.68 35.7905 1458.72 38.6912 1461.96 42.3604C1465.2 46.0296 1466.78 50.1685 1466.7 54.7764H1439.18C1438.24 52.5579 1436.44 51.0222 1433.8 50.1689C1431.24 49.3157 1426.8 48.8887 1420.49 48.8887C1414.51 48.8887 1410.16 49.3582 1407.43 50.2969C1404.79 51.1502 1403.46 52.5581 1403.46 54.5205C1403.46 55.8005 1404.1 56.7822 1405.38 57.4648C1406.75 58.0622 1409.27 58.4891 1412.94 58.7451C1416.69 59.0011 1422.15 59.1289 1429.32 59.1289C1434.27 59.1289 1439.09 59.2993 1443.78 59.6406C1448.56 59.982 1452.83 60.7071 1456.58 61.8164C1460.42 62.9257 1463.45 64.6326 1465.67 66.9365C1467.89 69.2405 1469 72.3985 1469 76.4092C1469 81.2728 1466.99 85.2406 1462.98 88.3125C1459.06 91.2992 1453.47 93.4755 1446.22 94.8408C1438.96 96.2061 1430.39 96.8887 1420.49 96.8887C1411.87 96.8887 1404.57 96.3339 1398.6 95.2246C1392.71 94.1153 1387.89 92.665 1384.14 90.873C1380.38 88.9957 1377.48 86.9898 1375.43 84.8564C1373.47 82.638 1372.15 80.4622 1371.46 78.3291C1370.87 76.1104 1370.65 74.1471 1370.82 72.4404H1399.11C1400.31 74.659 1402.57 76.1955 1405.9 77.0488C1409.31 77.9022 1414.17 78.3291 1420.49 78.3291C1425.35 78.3291 1428.94 78.0725 1431.24 77.5605C1433.63 77.0486 1435.16 76.3659 1435.85 75.5127C1436.62 74.6595 1437 73.7637 1437 72.8252C1437 71.3746 1436.19 70.3929 1434.57 69.8809C1433.03 69.2835 1430.39 68.9418 1426.63 68.8564C1422.88 68.6858 1417.71 68.6006 1411.14 68.6006C1404.91 68.6006 1399.33 68.345 1394.38 67.833C1389.51 67.2357 1385.37 66.3392 1381.96 65.1445C1378.55 63.8645 1375.94 62.1151 1374.15 59.8965C1372.36 57.6779 1371.46 54.905 1371.46 51.5771C1371.46 47.4813 1372.79 44.0675 1375.43 41.3369C1378.08 38.521 1381.66 36.3446 1386.18 34.8086C1390.71 33.1873 1395.91 32.0352 1401.8 31.3525C1407.77 30.6699 1414 30.3291 1420.49 30.3291Z" fill="#E21937"/>
-    <path d="M961.949 30.457C972.701 30.457 981.491 31.5665 988.317 33.7852C995.144 35.9185 1000.18 38.8199 1003.42 42.4893C1006.66 46.1585 1008.24 50.2975 1008.16 54.9053H980.638C979.699 52.6867 977.907 51.1502 975.262 50.2969C972.702 49.4435 968.264 49.0166 961.949 49.0166C955.976 49.0166 951.624 49.4862 948.894 50.4248C946.248 51.2781 944.926 52.686 944.926 54.6484C944.926 55.9284 945.566 56.9101 946.846 57.5928C948.211 58.1901 950.728 58.6171 954.397 58.873C958.152 59.129 963.613 59.2568 970.781 59.2568C975.73 59.2568 980.552 59.4272 985.245 59.7686C990.024 60.1099 994.291 60.835 998.046 61.9443C1001.89 63.0537 1004.92 64.7605 1007.13 67.0645C1009.35 69.3685 1010.46 72.5264 1010.46 76.5371C1010.46 81.4009 1008.46 85.3685 1004.45 88.4404C1000.52 91.4271 994.931 93.6034 987.678 94.9688C980.424 96.3341 971.848 97.0166 961.949 97.0166C953.331 97.0166 946.035 96.4619 940.062 95.3525C934.174 94.2432 929.352 92.7929 925.598 91.001C921.843 89.1236 918.942 87.1177 916.894 84.9844C914.931 82.7659 913.608 80.5902 912.926 78.457C912.328 76.2384 912.114 74.275 912.285 72.5684H940.573C941.768 74.787 944.029 76.3234 947.357 77.1768C950.771 78.0301 955.635 78.457 961.949 78.457C966.813 78.457 970.397 78.2004 972.701 77.6885C975.091 77.1765 976.627 76.494 977.31 75.6406C978.077 74.7874 978.462 73.8916 978.462 72.9531C978.462 71.5025 977.651 70.5208 976.029 70.0088C974.493 69.4115 971.848 69.0697 968.094 68.9844C964.339 68.8137 959.176 68.7285 952.605 68.7285C946.376 68.7285 940.787 68.4729 935.838 67.9609C930.974 67.3636 926.835 66.4671 923.422 65.2725C920.009 63.9925 917.405 62.2431 915.613 60.0244C913.822 57.8059 912.926 55.0328 912.926 51.7051C912.926 47.6091 914.248 44.1955 916.894 41.4648C919.539 38.6489 923.123 36.4725 927.646 34.9365C932.168 33.3152 937.374 32.1631 943.262 31.4805C949.235 30.7978 955.464 30.457 961.949 30.457Z" fill="#E21937"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M832.225 30.457C842.465 30.457 851.297 31.8647 858.721 34.6807C866.23 37.4113 871.989 41.2945 876 46.3291C877.453 48.0849 878.647 49.9484 879.585 51.9189V32.377H910.305V95.0967H881.377C881.376 95.0913 881.205 94.1096 880.864 92.1523C880.608 90.1898 880.31 87.374 879.969 83.7051C879.797 81.2464 879.684 78.5001 879.627 75.4668C879.338 76.0881 879.028 76.7019 878.688 77.3047C876.384 81.3154 873.056 84.8141 868.704 87.8008C864.352 90.702 859.105 92.9637 852.961 94.585C846.817 96.121 839.905 96.8887 832.225 96.8887C823.009 96.8887 814.816 95.6088 807.648 93.0488C800.48 90.4035 794.805 86.6065 790.624 81.6572C786.528 76.7079 784.48 70.7337 784.48 63.7363C784.481 56.3979 786.528 50.2539 790.624 45.3047C794.805 40.3554 800.48 36.6436 807.648 34.1689C814.816 31.6943 823.009 30.457 832.225 30.457ZM843.744 50.041C835.04 50.041 828.299 51.1931 823.521 53.4971C818.742 55.7157 816.353 59.1286 816.353 63.7363C816.353 66.723 817.419 69.2411 819.553 71.2891C821.686 73.3369 824.801 74.8725 828.896 75.8965C832.992 76.9205 837.942 77.4326 843.744 77.4326C850.229 77.4326 856.16 77.0492 861.536 76.2812C866.997 75.4279 871.35 74.0193 874.593 72.0566C877.921 70.094 879.585 67.3202 879.585 63.7363C879.585 60.0673 877.92 57.2516 874.593 55.2891C871.35 53.3264 866.997 51.9604 861.536 51.1924C856.16 50.4244 850.229 50.041 843.744 50.041Z" fill="#E21937"/>
-    <path d="M1329.44 30.3291C1334.48 30.3291 1339.34 30.8839 1344.03 31.9932C1348.73 33.0172 1352.91 34.8092 1356.58 37.3691C1360.33 39.9291 1363.32 43.428 1365.54 47.8652C1367.76 52.3025 1368.87 57.8917 1368.87 64.6328V94.9688H1338.15V68.4727C1338.15 62.0727 1336.48 57.5496 1333.15 54.9043C1329.83 52.1737 1323.81 50.8086 1315.11 50.8086C1310.5 50.8086 1306.02 51.3207 1301.67 52.3447C1297.4 53.3687 1293.56 54.6061 1290.15 56.0566C1288 56.9147 1286.14 57.7728 1284.57 58.6309C1284.79 60.5182 1284.9 62.5189 1284.9 64.6328V94.9688H1254.18V68.4727C1254.18 62.0727 1252.51 57.5496 1249.19 54.9043C1245.86 52.1736 1239.84 50.8086 1231.14 50.8086C1226.53 50.8086 1222.05 51.3208 1217.7 52.3447C1213.43 53.3687 1209.59 54.606 1206.18 56.0566C1203.46 57.1457 1201.19 58.2352 1199.39 59.3242V94.9688H1168.67V32.249H1199.39V51.8008C1199.91 50.9204 1200.55 49.9494 1201.31 48.8887C1203.36 46.0727 1206.31 43.2564 1210.15 40.4404C1213.99 37.6246 1218.81 35.2351 1224.61 33.2725C1230.5 31.3099 1237.45 30.3291 1245.47 30.3291C1250.51 30.3291 1255.37 30.8838 1260.07 31.9932C1264.76 33.0172 1268.94 34.8092 1272.61 37.3691C1276.36 39.9291 1279.35 43.428 1281.57 47.8652C1282.15 49.0187 1282.65 50.2504 1283.07 51.5596C1283.71 50.6105 1284.58 49.5073 1285.67 48.249C1287.88 45.689 1291 43.0431 1295.01 40.3125C1299.11 37.5818 1304.01 35.2351 1309.73 33.2725C1315.53 31.3099 1322.1 30.3291 1329.44 30.3291Z" fill="#E21937"/>
-    <path d="M735.769 31.0732C740.803 31.0733 745.667 31.628 750.36 32.7373C755.054 33.7613 759.235 35.5533 762.904 38.1133C766.659 40.6733 769.646 44.1721 771.864 48.6094C774.083 53.0466 775.192 58.6358 775.192 65.377V95.7129H744.473V69.2168C744.473 62.8168 742.808 58.2938 739.48 55.6484C736.152 52.9179 730.136 51.5528 721.433 51.5527C716.825 51.5527 712.344 52.0649 707.992 53.0889C703.726 54.1128 699.886 55.3502 696.473 56.8008C694.328 57.6588 692.469 58.517 690.896 59.375C691.115 61.2624 691.225 63.263 691.225 65.377V95.7129H660.504V69.2168C660.504 62.8169 658.841 58.2938 655.513 55.6484C652.185 52.9178 646.168 51.5527 637.464 51.5527C632.856 51.5528 628.376 52.0649 624.024 53.0889C619.758 54.1129 615.917 55.3501 612.504 56.8008C609.781 57.8898 607.52 58.9793 605.721 60.0684V95.7129H575V32.9932H605.721V52.5449C606.238 51.6645 606.878 50.6935 607.641 49.6328C609.689 46.8169 612.633 44.0005 616.473 41.1846C620.313 38.3687 625.134 35.9792 630.937 34.0166C636.824 32.054 643.779 31.0733 651.8 31.0732C656.834 31.0732 661.699 31.628 666.393 32.7373C671.086 33.7613 675.267 35.5533 678.937 38.1133C682.691 40.6733 685.678 44.1722 687.896 48.6094C688.473 49.7628 688.974 50.9946 689.4 52.3037C690.037 51.3547 690.902 50.2514 691.992 48.9932C694.211 46.4332 697.325 43.7873 701.336 41.0566C705.432 38.326 710.339 35.9793 716.057 34.0166C721.859 32.054 728.43 31.0732 735.769 31.0732Z" fill="#E21937"/>
-    <path d="M1044.73 19.2002H1012.22V0H1044.73V19.2002Z" fill="#E21937"/>
-  </svg>
-</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact" class="nav-cta">Contact</a></li>
-  </ul>
-  <div class="hamburger" id="hamburger" onclick="toggleNav()">
-    <span></span><span></span><span></span>
+<!-- POPUP -->
+<div id="popup">
+  <div class="popup-title">STILL HERE?</div>
+  <div class="popup-body">We have exactly 3 playlists.<br>You've been scrolling for a while.<br>We admire the dedication.<br>We don't reciprocate it.</div>
+  <button class="popup-close" onclick="document.getElementById('popup').classList.remove('show')">DISMISS (WE DON'T CARE)</button>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <span class="marquee-inner">
+    ✦ WOYYMASJEMS™ — ELITE CURATORS OF EXACTLY THREE PLAYLISTS SINCE THE DAWN OF INDIFFERENCE ✦ NO CUSTOMER ACCESS ✦ NO EXPANSIONS ✦ NO APOLOGIES ✦ APOLLO APPROVED (ALLEGEDLY) ✦ SPOTIFY IS THAT WAY → ✦ BY APPOINTMENT ONLY (WE DON'T TAKE APPOINTMENTS) ✦ REVOLUTIONIZING MUSIC FOR OURSELVES ✦ ALL RIGHTS HOARDED ✦ DIVINE PLAYLISTS FROM THE MOUNT OLYMPUS OF MEDIOCRITY ✦ THREE PLAYLISTS. THAT'S IT. THAT'S THE WHOLE BUSINESS. ✦ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </span>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-block">
+    <span class="apollo-bust">𓂀</span>
+    <div class="logo-text">WOYYMASJEMS</div>
+    <div class="logo-sub">Music Curation™ / Internal Only</div>
   </div>
-</nav>
+  <nav>
+    <a href="#">OUR SERVICES <span style="font-size:8px;opacity:0.5">(LTD.)</span>
+      <span class="hover-reveal">We have 3. Count them. Three.</span>
+    </a>
+    <a href="#">ABOUT US <span style="font-size:8px;opacity:0.5">(BARELY)</span>
+      <span class="hover-reveal">A company. Sort of.</span>
+    </a>
+    <a href="#">THE PLAYLISTS <span style="font-size:8px;opacity:0.5">(ALL 3)</span>
+      <span class="hover-reveal">Not for you. But scroll down.</span>
+    </a>
+    <a href="#" onclick="alert('Customer service is not a service we provide. Please contact Spotify, a licensed therapist, or Apollo himself.'); return false;">CONTACT <span style="font-size:8px;opacity:0.5">(DON\'T)</span>
+      <span class="hover-reveal">Ha.</span>
+    </a>
+  </nav>
+</header>
 
-<!-- HERO + FEATURED PLAYLISTS -->
-<section id="home">
-  <div class="hero-glow"></div>
-  <div class="hero-tag">🎧 Professional Playlist Curation Since Last Tuesday</div>
-  <h1 class="hero-title">We Make Playlists.<br>Very <em>WOW</em> Playlists.</h1>
-  <p class="hero-sub">Woyymasjems curates bespoke Spotify playlists for discerning listeners who are <em>absolutely</em> too busy to press shuffle themselves.</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">⊹ Apollo's Echo Internal Division ⊹ Est. Whenever</div>
+    <h1 class="hero-title">
+      REVOLUTIONIZING
+      <span>MUSIC</span>
+      CURATION...
+      FOR US ALONE
+    </h1>
+    <p class="hero-sub">
+      At Woyymasjems, we have pioneered a groundbreaking paradigm in sonic experience architecture. Our proprietary curation methodology leverages decades of <em>made-up expertise</em> to deliver three—precisely three—elite listening experiences.<br><br>
+      These playlists are ours. They will remain ours. They will never be yours. We are deeply sorry. We are not sorry at all.
+    </p>
+    <a href="#playlists" class="hero-cta">EXPLORE OUR 3 PLAYLISTS<br><small style="font-size:12px;letter-spacing:0.05em">(NO REFUNDS. NO EXPANSIONS.)</small></a>
+    <p class="cta-fine">* Button is decorative. The playlists are also decorative. Everything is fine.</p>
+  </div>
+  <div class="hero-sidebar">
+    <div class="hero-stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Total Playlists. Ever.</div>
+      <div class="stat-desc">This number will not change. We have peaked. We have accepted this.</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Customer playlists delivered</div>
+      <div class="stat-desc">We interpret this as a 100% internal satisfaction rate.</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Years we plan to hoard them</div>
+      <div class="stat-desc">Apollo is eternal. So is our indifference to your music needs.</div>
+    </div>
+    <span class="sunburst">☀</span>
+  </div>
+</section>
 
-  <div class="featured-heading">
-    <div class="section-label">⭐ Featured Playlists</div>
-    <h2>Our Most Acclaimed Works</h2>
+<!-- ORACLE BAND -->
+<div class="oracle-band">
+  <span class="lyre-icon">𝄞</span>
+  <div class="oracle-text">DIVINE PLAYLISTS FROM THE MOUNT OLYMPUS OF MEDIOCRITY™</div>
+  <span class="lyre-icon">𝄞</span>
+</div>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip">
+  <div class="about-cell">
+    <div class="about-cell-num">I</div>
+    <h3>OUR VISION</h3>
+    <p>We envision a world where elite sonic curation is reserved exclusively for those who created it—namely, us. Our client-focused approach<br> focuses on zero clients.</p>
+    <div class="reveal-text">⟶ THE VISION IS TO LISTEN TO MUSIC AND CALL IT A BUSINESS.</div>
+  </div>
+  <div class="about-cell">
+    <div class="about-cell-num">II</div>
+    <h3>OUR MISSION</h3>
+    <p>To curate, perfect, and internally consume exactly three musical compositions of grouped audio files, also known as playlists, with zero intention of external distribution. Ever.</p>
+    <div class="reveal-text">⟶ THE MISSION IS VIBES. THAT'S IT. GO HOME.</div>
+  </div>
+  <div class="about-cell">
+    <div class="about-cell-num">III</div>
+    <h3>OUR VALUES</h3>
+    <p>Exclusivity. Integrity. Restraint. A deeply-held corporate conviction that three is both a perfect number and a perfectly convenient excuse not to make more.</p>
+    <div class="reveal-text">⟶ WE ARE LAZY. THIS IS OUR CORE VALUE.</div>
+  </div>
+</div>
+
+<!-- SECTION DIVIDER -->
+<div class="section-divider">— THE SACRED CATALOGUE — THREE PLAYLISTS — FINAL COUNT — DO NOT PETITION FOR MORE —</div>
+
+<!-- PLAYLISTS -->
+<div id="playlists" style="background:var(--black)">
+  <div class="playlists-header">
+    <h2>OUR <em>ENTIRE</em><br>CATALOGUE</h2>
+    <div class="playlist-count-badge">3</div>
   </div>
 
   <div class="playlists-grid">
 
-    <!-- Playlist 1 -->
+    <!-- PLAYLIST 1 -->
     <div class="playlist-card">
-      <div class="playlist-cover-wrap">
-        <img class="playlist-cover" src="./assets/playlist1.png" alt="Chill Vibes Cover">
-        <div class="playlist-overlay">
-          <a href="https://open.spotify.com/playlist/45XWeej3Tg12mwu9hdKLJX" target="_blank" class="play-btn-overlay" title="Listen on Spotify">
-            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z"/></svg>
-          </a>
-        </div>
+      <div class="playlist-card-top">
+        <div class="playlist-num">I</div>
+        <span class="playlist-icon">🎵</span>
+        <div class="playlist-title">AMBIENT VIBES FOR PRODUCTIVITY</div>
+        <div class="playlist-subtitle">Strategic Sonic Enhancement Module Alpha</div>
       </div>
-      <div class="playlist-info">
-        <div class="playlist-name">Woyymasjems Playlist</div>
-        <p class="playlist-desc">Lagu untuk para jammers yang suka rap kelas a, bagus didengar saat mandi</p>
-        <a href="https://open.spotify.com/playlist/45XWeej3Tg12mwu9hdKLJX" target="_blank" class="btn-listen">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          Listen Now
-        </a>
+      <div class="playlist-card-body">
+        <p class="playlist-corp-desc">
+          Our flagship cognitive-amplification soundscape leverages proprietary frequency harmonics to synergize cross-departmental output velocity. Engineered for peak neuro-acoustic performance during high-stakes deliverable execution windows.
+        </p>
+        <div class="playlist-truth">
+          ← HOVER TRUTH → It is elevator music. It is the most elevator music that has ever elevated. There is a pan flute. We don't know whose pan flute it is.
+        </div>
+        <div class="playlist-meta">
+          <span class="tag">43 Tracks</span>
+          <span class="tag">Internal Only</span>
+          <span class="tag">87% Pan Flute</span>
+        </div>
       </div>
     </div>
 
-    <!-- Playlist 2 -->
+    <!-- PLAYLIST 2 -->
     <div class="playlist-card">
-      <div class="playlist-cover-wrap">
-        <img class="playlist-cover" src="./assets/playlist3.png" alt="Hype Mode Cover">
-        <div class="playlist-overlay">
-          <a href="https://open.spotify.com/playlist/0RYMdI4CWm0HqpBPQl0p6K" target="_blank" class="play-btn-overlay" title="Listen on Spotify">
-            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z"/></svg>
-          </a>
-        </div>
+      <div class="playlist-card-top" style="background:#1a1a1a">
+        <div class="playlist-num">II</div>
+        <span class="playlist-icon">⚡</span>
+        <div class="playlist-title">EPIC ANTHEMS FOR HEROES</div>
+        <div class="playlist-subtitle">Motivational Paradigm Accelerator Suite B</div>
       </div>
-      <div class="playlist-info">
-        <div class="playlist-name">Woyymasjems Class B</div>
-        <p class="playlist-desc">Lagu untuk para jammers yang suka rap kelas b, bagus didengar saat belajar di teras</p>
-        <a href="https://open.spotify.com/playlist/0RYMdI4CWm0HqpBPQl0p6K" target="_blank" class="btn-listen">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          Listen Now
-        </a>
+      <div class="playlist-card-body">
+        <p class="playlist-corp-desc">
+          A dynamically-curated high-velocity auditory experience designed to catalyze cross-functional momentum and empower stakeholder-facing initiatives with maximum sonic fortitude and guitar-forward leadership.
+        </p>
+        <div class="playlist-truth">
+          ← HOVER TRUTH → It's 80s rock. Exclusively. Someone added two Bonnie Tyler songs and we are at peace with this. Eyes closed, fist raised, no regrets.
+        </div>
+        <div class="playlist-meta">
+          <span class="tag">62 Tracks</span>
+          <span class="tag">Internal Only</span>
+          <span class="tag">2x Bonnie Tyler</span>
+        </div>
       </div>
     </div>
 
-    <!-- Playlist 3 -->
+    <!-- PLAYLIST 3 -->
     <div class="playlist-card">
-      <div class="playlist-cover-wrap">
-        <img class="playlist-cover" src="./assets/playlist2.png" alt="Dinner Party Cover">
-        <div class="playlist-overlay">
-          <a href="https://open.spotify.com/playlist/4PpIlJiTPoxaKodXE58bj7" target="_blank" class="play-btn-overlay" title="Listen on Spotify">
-            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z"/></svg>
-          </a>
-        </div>
+      <div class="playlist-card-top" style="background:#222">
+        <div class="playlist-num">III</div>
+        <span class="playlist-icon">🌿</span>
+        <div class="playlist-title">MYSTICAL MELODIES</div>
+        <div class="playlist-subtitle">Transcendental Resonance Framework Gamma</div>
       </div>
-      <div class="playlist-info">
-        <div class="playlist-name">Woyymasjems Class C</div>
-        <p class="playlist-desc">Lagu untuk para jammers yang suka rap kelas c, bagus didengar saat disekolah, tepatnya dikelas 7A</p>
-        <a href="https://open.spotify.com/playlist/4PpIlJiTPoxaKodXE58bj7" target="_blank" class="btn-listen">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          Listen Now
-        </a>
+      <div class="playlist-card-body">
+        <p class="playlist-corp-desc">
+          An avant-garde auditory portfolio channelling the oracular frequencies of the divine. Inspired by Apollo's prophetic gift, this suite pushes the boundary of what music can be—and perhaps what music should be.
+        </p>
+        <div class="playlist-truth">
+          ← HOVER TRUTH → It is bird sounds. Forty-seven consecutive minutes of bird sounds. Someone thought they heard a prophecy in the middle. We have not verified this.
+        </div>
+        <div class="playlist-meta">
+          <span class="tag">1 Track</span>
+          <span class="tag">Internal Only</span>
+          <span class="tag">47 min bird</span>
+        </div>
       </div>
     </div>
 
   </div>
-</section>
+</div>
 
-<!-- HOW IT WORKS -->
-<section id="services">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-label">How It Works</div>
-      <h2 class="section-title">Four Steps to <em>Audio Nirvana</em></h2>
-      <p class="section-subtitle">Our rigorous curation process ensures your playlist is nothing short of a certified masterpiece.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card reveal">
-        <div class="step-num">01</div>
-        <div class="step-title">Tell Us Your Vibe</div>
-        <p class="step-desc">Fill out our 47-question mood questionnaire. Just kidding — it's 6 questions. But we read them very seriously.</p>
-      </div>
-      <div class="step-card reveal">
-        <div class="step-num">02</div>
-        <div class="step-title">Our Experts Deliberate</div>
-        <p class="step-desc">Our team of highly trained music philosophers (okay, enthusiasts) argues passionately about your soundtrack for up to 72 hours.</p>
-      </div>
-      <div class="step-card reveal">
-        <div class="step-num">03</div>
-        <div class="step-title">Playlist is Crafted</div>
-        <p class="step-desc">Each track is hand-selected, sequenced with surgical precision, and blessed by our Head of Vibes before delivery.</p>
-      </div>
-      <div class="step-card reveal">
-        <div class="step-num">04</div>
-        <div class="step-title">You Ascend</div>
-        <p class="step-desc">Your new playlist lands in your inbox. You press play. Your life improves measurably. You refer us to your friends.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-label">Packages</div>
-      <h2 class="section-title">Invest in Your <em>Ears</em></h2>
-      <p class="section-subtitle">Premium pricing for premium playlists. Or so we keep telling ourselves.</p>
-    </div>
-    <div class="pricing-grid">
-
-      <div class="pricing-card reveal">
-        <div class="pricing-tier">Starter</div>
-        <div class="pricing-name">The Casual Listener</div>
-        <p class="pricing-tagline">"I just want something for the drive to work, don't make it weird."</p>
-        <div class="pricing-price"><sup>$</sup>9</div>
-        <div class="pricing-period">one-time delivery</div>
-        <ul class="pricing-features">
-          <li>1 custom playlist (20–30 tracks)</li>
-          <li>Basic mood questionnaire</li>
-          <li>48-hour delivery</li>
-          <li>1 revision round</li>
-          <li>Email support (we read every one)</li>
-        </ul>
-        <a href="#contact" class="btn-primary btn-outline">Get Started</a>
-      </div>
-
-      <div class="pricing-card featured reveal">
-        <div class="pricing-badge">Most Popular</div>
-        <div class="pricing-tier">Professional</div>
-        <div class="pricing-name">The Connoisseur</div>
-        <p class="pricing-tagline">"I have opinions about music. Strong, largely unsolicited opinions."</p>
-        <div class="pricing-price"><sup>$</sup>29</div>
-        <div class="pricing-period">one-time delivery</div>
-        <ul class="pricing-features">
-          <li>3 custom playlists (30–50 tracks each)</li>
-          <li>In-depth style consultation</li>
-          <li>24-hour priority delivery</li>
-          <li>3 revision rounds</li>
-          <li>Dedicated curator assigned</li>
-          <li>Bonus: "Hidden Gems" bonus track pack</li>
-        </ul>
-        <a href="#contact" class="btn-primary">Get Started</a>
-      </div>
-
-      <div class="pricing-card reveal">
-        <div class="pricing-tier">Enterprise</div>
-        <div class="pricing-name">The Audiophile</div>
-        <p class="pricing-tagline">"I own $4,000 headphones and I will be heard about it."</p>
-        <div class="pricing-price"><sup>$</sup>79</div>
-        <div class="pricing-period">monthly subscription</div>
-        <ul class="pricing-features">
-          <li>Unlimited custom playlists</li>
-          <li>Weekly refreshes & updates</li>
-          <li>Same-day delivery</li>
-          <li>Unlimited revisions</li>
-          <li>Personal Head of Vibes assigned</li>
-          <li>Monthly music report card</li>
-          <li>Priority WhatsApp access</li>
-        </ul>
-        <a href="#contact" class="btn-primary btn-outline">Get Started</a>
-      </div>
-
-    </div>
-  </div>
-</section>
+<!-- NOTICE BAR -->
+<div class="notice-bar">
+  IMPORTANT CORPORATE NOTICE: These playlists are so elite, we have decided to hoard them forever. Any attempt to request access will be met with dignified silence and possibly a passive-aggressive FAQ.
+</div>
 
 <!-- TESTIMONIALS -->
-<section id="about">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-label">Testimonials</div>
-      <h2 class="section-title">Real People. <em>Real Playlists.</em></h2>
-      <p class="section-subtitle">These are completely legitimate reviews from actual customers and not from our moms.</p>
+<section class="testimonials">
+  <div class="testimonials-label">⊹ What Our Non-Clients Didn't Say ⊹</div>
+  <div class="testimonials-grid">
+
+    <div class="testimonial">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-text">
+        "Woyymasjems completely revolutionized my relationship with music. Their three playlists changed everything about my life, my career, and my understanding of the human condition."
+      </div>
+      <div class="testimonial-author">— J. Pemberton, Fictional Client, Definitely Real</div>
+      <div class="testimonial-disclaimer">THIS PERSON DOES NOT EXIST</div>
     </div>
-    <div class="testimonials-grid">
 
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"I asked for 'something chill for a Sunday morning.' What I received changed my relationship with brunch entirely. My eggs have never tasted better."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">WV</div>
-          <div><div class="testi-name">William V.</div><div class="testi-role">Police (Steady Watching), Michigan</div></div>
-        </div>
+    <div class="testimonial">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-text">
+        "I asked for a custom playlist. They sent me a PDF explaining why that wasn't going to happen. It was the most well-formatted rejection I've ever received. Five stars."
       </div>
+      <div class="testimonial-author">— Anonymous, Location Unknown</div>
+      <div class="testimonial-disclaimer">THE PDF WAS ALSO FAKE</div>
+    </div>
 
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"My productivity is up 60%. My coworkers are suspicious. My boss gave me a raise. I'm crediting Woyymasjems and I'm not taking questions."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">JK</div>
-          <div><div class="testi-name">James K.</div><div class="testi-role">Senior Something, Little St. James</div></div>
-        </div>
+    <div class="testimonial">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-text">
+        "The bird sounds playlist cured my anxiety, aligned my chakras, and taught me three new species of warbler. I have never spoken to anyone at Woyymasjems. I never will."
       </div>
+      <div class="testimonial-author">— Dr. P. Laurel, Ornithology Enthusiast</div>
+      <div class="testimonial-disclaimer">SAID NO ONE. EVER.</div>
+    </div>
 
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★☆</div>
-        <p class="testi-quote">"I gave 4 stars because I don't know what is rap and who is rapper, i ask them what it is to James K. in the library about Jeffrey Epstein."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">GB</div>
-          <div><div class="testi-name">Nicholas O.</div><div class="testi-role">Contrarian, Surabaya</div></div>
-        </div>
+    <div class="testimonial">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-text">
+        "I tried to contact their customer service department. The auto-reply said: 'We don't do that here. Try Spotify.' I respect the honesty. Truly a visionary company."
       </div>
+      <div class="testimonial-author">— H. Thrace, Former Optimist</div>
+      <div class="testimonial-disclaimer">THE AUTO-REPLY IS REAL THOUGH</div>
+    </div>
 
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"My dinner party with ██████████ is suprisingly really good in terms of many things with this music played. Worth every single rupiah."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">GP</div>
-          <div><div class="testi-name">Genta P.</div><div class="testi-role">Producer, Chicago</div></div>
-        </div>
+    <div class="testimonial">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-text">
+        "As a god of music myself, I find Woyymasjems' restraint deeply offensive yet paradoxically admirable. The elevator music, however, must be destroyed."
       </div>
+      <div class="testimonial-author">— Apollo, Greek Deity, Olympus Heights</div>
+      <div class="testimonial-disclaimer">WE CANNOT CONFIRM APOLLO'S ENDORSEMENT</div>
+    </div>
 
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"The Class A playlist they made me actually made me finish my workout. I have never finished a workout in my life. I cried white tear a little. Heroic stuff."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">RG</div>
-          <div><div class="testi-name">Romeo G.</div><div class="testi-role">Reluctant Gym-Goer, Yogyakarta</div></div>
-        </div>
+    <div class="testimonial">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-text">
+        "This changed my life—" [TESTIMONIAL ENDS HERE. WE RAN OUT OF ENTHUSIASM. PLEASE SEE SPOTIFY FOR CONTINUED SERVICE.]
       </div>
+      <div class="testimonial-author">— Unknown, Somewhere</div>
+      <div class="testimonial-disclaimer">...SAID NO ONE EVER</div>
+    </div>
 
-      <div class="testi-card reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"I described my vibe as 'existential but make it funky' and they delivered. I don't know how. I don't want to know. Some mysteries must remain."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">RE</div>
-          <div><div class="testi-name">Regan E.</div><div class="testi-role">Philosopher-at-Large, Jambi</div></div>
-        </div>
+  </div>
+</section>
+
+<!-- CHAOS SECTION -->
+<section class="chaos-section">
+  <h2>WHY CHOOSE US<br><span style="color:var(--gold);-webkit-text-stroke:1px var(--gold);color:transparent">GREAT QUESTION</span></h2>
+
+  <div class="chaos-grid">
+    <div class="chaos-item">
+      <div class="chaos-title">WORLD-CLASS SERVICE</div>
+      <div class="chaos-body">
+        We deliver <s>customer support</s> a dignified redirect to Spotify. Our team is <s>standing by 24/7</s> not standing by at all. Customer satisfaction is our <s>top priority</s> <span class="redacted">none of our priorities</span>.
       </div>
-
+    </div>
+    <div class="chaos-item">
+      <div class="chaos-title">INNOVATIVE SOLUTIONS</div>
+      <div class="chaos-body">
+        Our <s>cutting-edge AI curation technology</s> guy with a laptop selected these songs over a long weekend. We use <s>machine learning</s> <span class="redacted">a YouTube shuffle button</span> to ensure optimal sonic alignment.
+      </div>
+    </div>
+    <div class="chaos-item">
+      <div class="chaos-title">SCALABLE INFRASTRUCTURE</div>
+      <div class="chaos-body">
+        Our platform is <s>infinitely scalable</s> a shared folder. We are <s>prepared for enterprise-level demand</s> deeply unprepared. Our <s>robust pipeline</s> <span class="redacted">has three playlists in it. Please stop asking.</span>
+      </div>
+    </div>
+    <div class="chaos-item">
+      <div class="chaos-title">CLIENT-FOCUSED CURATION</div>
+      <div class="chaos-body">
+        Every playlist is crafted with <s>our clients' needs at heart</s> no clients in mind whatsoever. We are <s>listening to your feedback</s> <span class="redacted">aggressively not reading our emails</span>.
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-inner">
-    <div class="contact-grid">
-      <div class="reveal">
-        <div class="section-label">Get In Touch</div>
-        <h2 class="section-title">Let's Build Your<br><em>Perfect Playlist</em></h2>
-        <p class="contact-blurb" style="margin-top:1rem;">
-          Ready to stop settling for the algorithm's suggestions? <strong>Tell us about yourself</strong> — your mood, your moment, your questionable taste in early 2000s pop — and we'll craft something genuinely special.
-        </p>
-        <div class="contact-detail">
-          <div class="contact-detail-icon">
-            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          </div>
-          <span>woyymasjems@gmail.com</span>
-        </div>
-        <div class="contact-detail">
-          <div class="contact-detail-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-          </div>
-          <span>Jambi City, ID (and everywhere via internet)</span>
-        </div>
-        <div class="contact-detail">
-          <div class="contact-detail-icon">
-            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.126 1.528 5.874L0 24l6.305-1.5A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.7-.5-5.2-1.4L2 22l1.4-4.7C2.5 15.8 2 13.95 2 12 2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
-          </div>
-          <a href="https://whatsapp.com/channel/0029VbBf38LB4hdSqbyGC51e" target="_blank" style="color:var(--muted);text-decoration:none;">WhatsApp Channel</a>
-        </div>
-      </div>
-      <div class="reveal">
-        <form onsubmit="handleSubmit(event)">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name">Your Name</label>
-              <input type="text" id="name" class="form-control" placeholder="e.g. Cool Person">
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" class="form-control" placeholder="you@somewhere.com">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="package">Package Interest</label>
-            <select id="package" class="form-control" style="appearance:none;cursor:pointer;">
-              <option value="">Select a package...</option>
-              <option>The Casual Listener — $9</option>
-              <option>The Connoisseur — $29</option>
-              <option>The Audiophile — $79/mo</option>
-              <option>Just vibing, no commitment</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="vibe">Describe Your Vibe</label>
-            <textarea id="vibe" class="form-control" placeholder="e.g. 'Melancholic but still employable' or 'Gym but make it philosophical' — no judgment here."></textarea>
-          </div>
-          <button type="submit" class="btn-primary" id="submitBtn">Send My Vibe →</button>
-        </form>
-      </div>
-    </div>
+<!-- TYPO SECTION -->
+<section class="typo-section">
+  <div class="typo-content">
+    <h2 class="typo-large">
+      <span class="glitch" data-text="EXCELLENCE">EXCELLENCE</span> IN EVERYTHING
+      <br>WE <span class="glitch" data-text="DO FOR OURSELVES">DO FOR OURSELVES</span>
+    </h2>
+    <p class="typo-body">
+      As a company, we have committed fully to a philosophy of selective excellence—excellent for us, nonexistent for everyone else. We beleive [<em>sic</em>] in the power of muzik [<em>sic</em>] to transform the internall [<em>sic</em>] corporate environment.
+      <br><br>
+      Our qualety [<em>sic</em>] assurance team has reviewd [<em>sic</em>] all three playlists and confirms: they are fine. They're fine. The birds are fine. The elevator is fine. Bonnie Tyler is eternal.
+    </p>
+    <p class="typo-error">
+      ERROR: Additional playlists were attempted in Q3 2024.<br>
+      <span>STATUS: Abandoned. We got tired.</span><br>
+      ERROR: Customer-facing version planned for 2025.<br>
+      <span>STATUS: Postponed indefinitely. See Apollo for ETA.</span>
+    </p>
+  </div>
+</section>
+
+<!-- FINE PRINT -->
+<section class="fine-print-section">
+  <h3>IMPORTANT DISCLAIMERS</h3>
+  <div class="fine-print-body">
+    <strong>PLAYLIST EXCLUSIVITY NOTICE:</strong> By viewing this website you acknowledge that the playlists described herein are the exclusive intellectual and spiritual property of Woyymasjems LLC and Apollo's Echo Internal Division, a fictional subsidiary. Any attempt to request, license, stream, hum, or spiritually access these playlists without written authorization (which will not be granted) constitutes a breach of vibes. <strong>REGARDING CUSTOMER SERVICE:</strong> Woyymasjems does not provide, offer, imply, or dream about customer service. If you are experiencing a music emergency, please contact Spotify, Apple Music, or the nearest oracle. We are not responsible for oracle accuracy. <strong>REGARDING THE PLAYLISTS THEMSELVES:</strong> Playlist 1 (Ambient Vibes) contains a pan flute of unknown origin. We have accepted this. Playlist 2 (Epic Anthems) was tested on zero focus groups because we have no groups to focus. Playlist 3 (Mystical Melodies) consists of 47 minutes of recorded birdsong. At minute 31, something unusual was captured. We do not discuss this. <strong>DIVINE ENDORSEMENT NOTICE:</strong> Any reference to Apollo, Greek deity of music, sun, and prophecy, is satirical and does not constitute divine endorsement of our services. However, we remain open to the possibility. <strong>EXPANSION POLICY:</strong> There will be no Playlist 4. This is final. This is policy. This is also frankly a relief. <strong>DATA POLICY:</strong> We collect your data. We then ignore it entirely. It sits in a folder next to Playlist 3. No one opens either. <strong>BY READING THIS:</strong> You agree to nothing. Absolutely nothing. This is legally meaningless. Have a good day. Or don't. We're a playlist company. What do you want from us.
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <div>
-      <a href="#home" class="footer-logo" style="display:flex;align-items:center;">
-  <svg height="32" viewBox="0 0 1469 185" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:auto;display:block;">
-    <path d="M395.922 73.3838L422.925 32.377H480.485L505.962 73.3838L532.965 32.377H565.605L503.269 120.696H471.909L491.099 94.7119L451.672 37.8926L393.229 120.696H361.869L381.059 94.7119L337.805 32.377H370.445L395.922 73.3838ZM285.28 30.457C298.763 30.457 309.942 31.6091 318.816 33.9131C327.776 36.1318 334.475 39.7158 338.912 44.665C343.349 49.5289 345.568 55.9286 345.568 63.8643C345.568 71.8002 343.349 78.2005 338.912 83.0645C334.475 87.9284 327.776 91.4698 318.816 93.6885C309.942 95.9071 298.763 97.0166 285.28 97.0166C271.712 97.0166 260.406 95.9071 251.36 93.6885C242.4 91.4698 235.658 87.9285 231.136 83.0645C226.699 78.2005 224.48 71.8001 224.48 63.8643C224.481 55.9286 226.699 49.5289 231.136 44.665C235.658 39.7157 242.4 36.1318 251.36 33.9131C260.406 31.6091 271.712 30.457 285.28 30.457ZM68.5273 76.9922L98.8164 13.0967H137.473L167.761 76.9922L200.192 13.0967H235.776L190.465 95.0166H147.2L118.144 38.2725L89.0889 95.0166H45.8242L0 13.0967H36.0967L68.5273 76.9922ZM285.28 49.0166C278.966 49.0166 273.59 49.5714 269.152 50.6807C264.8 51.79 261.472 53.4542 259.168 55.6729C256.949 57.8061 255.84 60.5365 255.84 63.8643C255.84 67.1069 256.949 69.838 259.168 72.0566C261.387 74.19 264.672 75.8116 269.024 76.9209C273.462 77.9448 278.88 78.457 285.28 78.457C291.595 78.457 296.886 77.9449 301.152 76.9209C305.419 75.8116 308.661 74.1899 310.88 72.0566C313.099 69.838 314.208 67.1069 314.208 63.8643C314.208 60.6218 313.098 57.8914 310.88 55.6729C308.747 53.4542 305.547 51.79 301.28 50.6807C297.014 49.5713 291.68 49.0166 285.28 49.0166Z" fill="white"/>
-    <path d="M1043.83 109H1043.8C1043.8 128.891 1035.9 147.968 1021.84 162.033C1007.77 176.098 981.84 184.097 961.949 184.097C942.058 184.097 914.532 176.195 900.467 162.13C886.402 148.065 878.5 128.988 878.5 109.097H909.097C909.097 120.873 913.775 132.167 922.103 140.494C930.43 148.821 950.173 153.5 961.949 153.5C973.726 153.5 991.873 148.725 1000.2 140.397C1008.53 132.07 1013.21 120.776 1013.21 109H1013.11V32.8965H1043.83V109Z" fill="#E21937"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M1111.57 30.3291C1124.54 30.3291 1135.16 31.4812 1143.44 33.7852C1151.72 36.0892 1157.82 39.8436 1161.74 45.0488C1165.67 50.1688 1167.55 57.1238 1167.38 65.9131H1080.34C1080.76 68.1316 1081.96 70.1794 1083.92 72.0566C1085.97 73.9339 1089.08 75.4704 1093.26 76.665C1097.53 77.7744 1103.21 78.3291 1110.29 78.3291C1117.63 78.3291 1123.64 77.8169 1128.34 76.793C1133.11 75.769 1135.97 74.3178 1136.91 72.4404H1167.12C1166.35 77.3898 1163.88 81.6998 1159.7 85.3691C1155.6 89.0384 1149.58 91.8964 1141.65 93.9443C1133.8 95.907 1123.77 96.8887 1111.57 96.8887C1098.68 96.8887 1087.55 95.8644 1078.16 93.8164C1068.86 91.7685 1061.69 88.313 1056.66 83.4492C1051.62 78.5852 1049.1 72.0137 1049.1 63.7363C1049.1 55.5445 1051.54 49.0163 1056.4 44.1523C1061.35 39.2032 1068.48 35.6616 1077.78 33.5283C1087.08 31.3951 1098.34 30.3291 1111.57 30.3291ZM1110.29 48.8887C1101.24 48.8887 1094.33 49.8703 1089.55 51.833C1084.86 53.7956 1082.09 55.7581 1081.23 57.7207H1137.55C1136.95 55.5021 1134.57 53.4971 1130.38 51.7051C1126.2 49.8278 1119.5 48.8887 1110.29 48.8887Z" fill="#E21937"/>
-    <path d="M1420.49 30.3291C1431.24 30.3291 1440.03 31.4386 1446.86 33.6572C1453.68 35.7905 1458.72 38.6912 1461.96 42.3604C1465.2 46.0296 1466.78 50.1685 1466.7 54.7764H1439.18C1438.24 52.5579 1436.44 51.0222 1433.8 50.1689C1431.24 49.3157 1426.8 48.8887 1420.49 48.8887C1414.51 48.8887 1410.16 49.3582 1407.43 50.2969C1404.79 51.1502 1403.46 52.5581 1403.46 54.5205C1403.46 55.8005 1404.1 56.7822 1405.38 57.4648C1406.75 58.0622 1409.27 58.4891 1412.94 58.7451C1416.69 59.0011 1422.15 59.1289 1429.32 59.1289C1434.27 59.1289 1439.09 59.2993 1443.78 59.6406C1448.56 59.982 1452.83 60.7071 1456.58 61.8164C1460.42 62.9257 1463.45 64.6326 1465.67 66.9365C1467.89 69.2405 1469 72.3985 1469 76.4092C1469 81.2728 1466.99 85.2406 1462.98 88.3125C1459.06 91.2992 1453.47 93.4755 1446.22 94.8408C1438.96 96.2061 1430.39 96.8887 1420.49 96.8887C1411.87 96.8887 1404.57 96.3339 1398.6 95.2246C1392.71 94.1153 1387.89 92.665 1384.14 90.873C1380.38 88.9957 1377.48 86.9898 1375.43 84.8564C1373.47 82.638 1372.15 80.4622 1371.46 78.3291C1370.87 76.1104 1370.65 74.1471 1370.82 72.4404H1399.11C1400.31 74.659 1402.57 76.1955 1405.9 77.0488C1409.31 77.9022 1414.17 78.3291 1420.49 78.3291C1425.35 78.3291 1428.94 78.0725 1431.24 77.5605C1433.63 77.0486 1435.16 76.3659 1435.85 75.5127C1436.62 74.6595 1437 73.7637 1437 72.8252C1437 71.3746 1436.19 70.3929 1434.57 69.8809C1433.03 69.2835 1430.39 68.9418 1426.63 68.8564C1422.88 68.6858 1417.71 68.6006 1411.14 68.6006C1404.91 68.6006 1399.33 68.345 1394.38 67.833C1389.51 67.2357 1385.37 66.3392 1381.96 65.1445C1378.55 63.8645 1375.94 62.1151 1374.15 59.8965C1372.36 57.6779 1371.46 54.905 1371.46 51.5771C1371.46 47.4813 1372.79 44.0675 1375.43 41.3369C1378.08 38.521 1381.66 36.3446 1386.18 34.8086C1390.71 33.1873 1395.91 32.0352 1401.8 31.3525C1407.77 30.6699 1414 30.3291 1420.49 30.3291Z" fill="#E21937"/>
-    <path d="M961.949 30.457C972.701 30.457 981.491 31.5665 988.317 33.7852C995.144 35.9185 1000.18 38.8199 1003.42 42.4893C1006.66 46.1585 1008.24 50.2975 1008.16 54.9053H980.638C979.699 52.6867 977.907 51.1502 975.262 50.2969C972.702 49.4435 968.264 49.0166 961.949 49.0166C955.976 49.0166 951.624 49.4862 948.894 50.4248C946.248 51.2781 944.926 52.686 944.926 54.6484C944.926 55.9284 945.566 56.9101 946.846 57.5928C948.211 58.1901 950.728 58.6171 954.397 58.873C958.152 59.129 963.613 59.2568 970.781 59.2568C975.73 59.2568 980.552 59.4272 985.245 59.7686C990.024 60.1099 994.291 60.835 998.046 61.9443C1001.89 63.0537 1004.92 64.7605 1007.13 67.0645C1009.35 69.3685 1010.46 72.5264 1010.46 76.5371C1010.46 81.4009 1008.46 85.3685 1004.45 88.4404C1000.52 91.4271 994.931 93.6034 987.678 94.9688C980.424 96.3341 971.848 97.0166 961.949 97.0166C953.331 97.0166 946.035 96.4619 940.062 95.3525C934.174 94.2432 929.352 92.7929 925.598 91.001C921.843 89.1236 918.942 87.1177 916.894 84.9844C914.931 82.7659 913.608 80.5902 912.926 78.457C912.328 76.2384 912.114 74.275 912.285 72.5684H940.573C941.768 74.787 944.029 76.3234 947.357 77.1768C950.771 78.0301 955.635 78.457 961.949 78.457C966.813 78.457 970.397 78.2004 972.701 77.6885C975.091 77.1765 976.627 76.494 977.31 75.6406C978.077 74.7874 978.462 73.8916 978.462 72.9531C978.462 71.5025 977.651 70.5208 976.029 70.0088C974.493 69.4115 971.848 69.0697 968.094 68.9844C964.339 68.8137 959.176 68.7285 952.605 68.7285C946.376 68.7285 940.787 68.4729 935.838 67.9609C930.974 67.3636 926.835 66.4671 923.422 65.2725C920.009 63.9925 917.405 62.2431 915.613 60.0244C913.822 57.8059 912.926 55.0328 912.926 51.7051C912.926 47.6091 914.248 44.1955 916.894 41.4648C919.539 38.6489 923.123 36.4725 927.646 34.9365C932.168 33.3152 937.374 32.1631 943.262 31.4805C949.235 30.7978 955.464 30.457 961.949 30.457Z" fill="#E21937"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M832.225 30.457C842.465 30.457 851.297 31.8647 858.721 34.6807C866.23 37.4113 871.989 41.2945 876 46.3291C877.453 48.0849 878.647 49.9484 879.585 51.9189V32.377H910.305V95.0967H881.377C881.376 95.0913 881.205 94.1096 880.864 92.1523C880.608 90.1898 880.31 87.374 879.969 83.7051C879.797 81.2464 879.684 78.5001 879.627 75.4668C879.338 76.0881 879.028 76.7019 878.688 77.3047C876.384 81.3154 873.056 84.8141 868.704 87.8008C864.352 90.702 859.105 92.9637 852.961 94.585C846.817 96.121 839.905 96.8887 832.225 96.8887C823.009 96.8887 814.816 95.6088 807.648 93.0488C800.48 90.4035 794.805 86.6065 790.624 81.6572C786.528 76.7079 784.48 70.7337 784.48 63.7363C784.481 56.3979 786.528 50.2539 790.624 45.3047C794.805 40.3554 800.48 36.6436 807.648 34.1689C814.816 31.6943 823.009 30.457 832.225 30.457ZM843.744 50.041C835.04 50.041 828.299 51.1931 823.521 53.4971C818.742 55.7157 816.353 59.1286 816.353 63.7363C816.353 66.723 817.419 69.2411 819.553 71.2891C821.686 73.3369 824.801 74.8725 828.896 75.8965C832.992 76.9205 837.942 77.4326 843.744 77.4326C850.229 77.4326 856.16 77.0492 861.536 76.2812C866.997 75.4279 871.35 74.0193 874.593 72.0566C877.921 70.094 879.585 67.3202 879.585 63.7363C879.585 60.0673 877.92 57.2516 874.593 55.2891C871.35 53.3264 866.997 51.9604 861.536 51.1924C856.16 50.4244 850.229 50.041 843.744 50.041Z" fill="#E21937"/>
-    <path d="M1329.44 30.3291C1334.48 30.3291 1339.34 30.8839 1344.03 31.9932C1348.73 33.0172 1352.91 34.8092 1356.58 37.3691C1360.33 39.9291 1363.32 43.428 1365.54 47.8652C1367.76 52.3025 1368.87 57.8917 1368.87 64.6328V94.9688H1338.15V68.4727C1338.15 62.0727 1336.48 57.5496 1333.15 54.9043C1329.83 52.1737 1323.81 50.8086 1315.11 50.8086C1310.5 50.8086 1306.02 51.3207 1301.67 52.3447C1297.4 53.3687 1293.56 54.6061 1290.15 56.0566C1288 56.9147 1286.14 57.7728 1284.57 58.6309C1284.79 60.5182 1284.9 62.5189 1284.9 64.6328V94.9688H1254.18V68.4727C1254.18 62.0727 1252.51 57.5496 1249.19 54.9043C1245.86 52.1736 1239.84 50.8086 1231.14 50.8086C1226.53 50.8086 1222.05 51.3208 1217.7 52.3447C1213.43 53.3687 1209.59 54.606 1206.18 56.0566C1203.46 57.1457 1201.19 58.2352 1199.39 59.3242V94.9688H1168.67V32.249H1199.39V51.8008C1199.91 50.9204 1200.55 49.9494 1201.31 48.8887C1203.36 46.0727 1206.31 43.2564 1210.15 40.4404C1213.99 37.6246 1218.81 35.2351 1224.61 33.2725C1230.5 31.3099 1237.45 30.3291 1245.47 30.3291C1250.51 30.3291 1255.37 30.8838 1260.07 31.9932C1264.76 33.0172 1268.94 34.8092 1272.61 37.3691C1276.36 39.9291 1279.35 43.428 1281.57 47.8652C1282.15 49.0187 1282.65 50.2504 1283.07 51.5596C1283.71 50.6105 1284.58 49.5073 1285.67 48.249C1287.88 45.689 1291 43.0431 1295.01 40.3125C1299.11 37.5818 1304.01 35.2351 1309.73 33.2725C1315.53 31.3099 1322.1 30.3291 1329.44 30.3291Z" fill="#E21937"/>
-    <path d="M735.769 31.0732C740.803 31.0733 745.667 31.628 750.36 32.7373C755.054 33.7613 759.235 35.5533 762.904 38.1133C766.659 40.6733 769.646 44.1721 771.864 48.6094C774.083 53.0466 775.192 58.6358 775.192 65.377V95.7129H744.473V69.2168C744.473 62.8168 742.808 58.2938 739.48 55.6484C736.152 52.9179 730.136 51.5528 721.433 51.5527C716.825 51.5527 712.344 52.0649 707.992 53.0889C703.726 54.1128 699.886 55.3502 696.473 56.8008C694.328 57.6588 692.469 58.517 690.896 59.375C691.115 61.2624 691.225 63.263 691.225 65.377V95.7129H660.504V69.2168C660.504 62.8169 658.841 58.2938 655.513 55.6484C652.185 52.9178 646.168 51.5527 637.464 51.5527C632.856 51.5528 628.376 52.0649 624.024 53.0889C619.758 54.1129 615.917 55.3501 612.504 56.8008C609.781 57.8898 607.52 58.9793 605.721 60.0684V95.7129H575V32.9932H605.721V52.5449C606.238 51.6645 606.878 50.6935 607.641 49.6328C609.689 46.8169 612.633 44.0005 616.473 41.1846C620.313 38.3687 625.134 35.9792 630.937 34.0166C636.824 32.054 643.779 31.0733 651.8 31.0732C656.834 31.0732 661.699 31.628 666.393 32.7373C671.086 33.7613 675.267 35.5533 678.937 38.1133C682.691 40.6733 685.678 44.1722 687.896 48.6094C688.473 49.7628 688.974 50.9946 689.4 52.3037C690.037 51.3547 690.902 50.2514 691.992 48.9932C694.211 46.4332 697.325 43.7873 701.336 41.0566C705.432 38.326 710.339 35.9793 716.057 34.0166C721.859 32.054 728.43 31.0732 735.769 31.0732Z" fill="#E21937"/>
-    <path d="M1044.73 19.2002H1012.22V0H1044.73V19.2002Z" fill="#E21937"/>
-  </svg>
-</a>
-      <div class="footer-tagline">Professional Playlist Curation™ · Since Last Tuesday</div>
+  <div class="footer-top">
+    <div class="footer-col">
+      <div class="footer-col-title">WOYYMASJEMS™</div>
+      <p class="footer-about">
+        Apollo's Echo Internal Division.<br>
+        Curators of Exactly Three Things.<br>
+        Not For You. Not For Anyone.<br>
+        Deeply Sorry. Not Sorry.<br><br>
+        ☀ Blessed by an indifferent sun.<br>
+        𝄞 Endorsed by a lyre that won't tune.<br>
+        𓂀 Watched over by a pixelated bust.
+      </p>
     </div>
-    <div class="footer-copy">
-      © 2025 Woyymasjems. All vibes reserved.<br>
-      <span style="font-size:0.72rem;">No algorithms were used in the making of these playlists.*<br>
-      <span style="color:#333;">*We use some algorithms. Shh.</span></span>
+    <div class="footer-col">
+      <div class="footer-col-title">QUICK LINKS</div>
+      <ul class="footer-links">
+        <li><a href="#">The 3 Playlists</a></li>
+        <li><a href="#">About (Barely)</a></li>
+        <li><a href="#" onclick="alert('We do not offer services to the public. We barely offer them to ourselves.'); return false;">Services (Ha)</a></li>
+        <li><a href="#" onclick="alert('FAQ: Q: Can I access the playlists? A: No. Q: Will you ever make more? A: No. Q: Why not? A: Three is enough. Three is everything.'); return false;">FAQ (1 Answer)</a></li>
+      </ul>
     </div>
-    <a href="https://discord.gg/CQFPydd9Wx" target="_blank" class="social-link">
-  <img src="./assets/discord.png" style="width:18px;height:18px;object-fit:contain;">
-  Join our Discord
-</a>
-<a href="https://whatsapp.com/channel/0029VbBf38LB4hdSqbyGC51e" target="_blank" class="social-link">
-  <img src="./assets/whatsapp.png" style="width:18px;height:18px;object-fit:contain;">
-  Follow on WhatsApp
-</a>
+    <div class="footer-col">
+      <div class="footer-col-title">LEGAL (SORT OF)</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="alert('Privacy Policy: We don\'t care about your data. It\'s in a folder. We haven\'t opened it. Thank you for your privacy.'); return false;">Privacy Policy (We Don't Care)</a></li>
+        <li><a href="#" onclick="alert('TERMS OF SERVICE: By reading this, you agree to nothing. Nothing at all. Good day.'); return false;">Terms of Service (Nothing)</a></li>
+        <li><a href="#">Refund Policy (Impossible)</a></li>
+        <li><a href="#">Cookie Policy (What Cookies)</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">REACH US (DON'T)</div>
+      <div class="social-icons">
+        <a href="#" class="social-btn" onclick="alert('Our WhatsApp channel exists for urgent non-complaints only. If you are complaining: goodbye.'); return false;">WHATSAPP<br>(non-complaints)</a>
+        <a href="#" class="social-btn" onclick="alert('Welcome to our Discord server. There are currently 0 members. You are the first. You are also the last. Please leave.'); return false;">DISCORD<br>(echo chamber)</a>
+        <a href="#" class="social-btn" title="Goes nowhere">TWITTER<br>(abandoned)</a>
+        <a href="#" class="social-btn" title="Also goes nowhere">INSTAGRAM<br>(3 posts)</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copyright">© 2026 Apollo's Echo — All Rights Reserved (To Ourselves) — Woyymasjems™ is a registered trademark of Not Your Business Inc.</div>
+    <div class="footer-tagline">THREE PLAYLISTS. ZERO REGRETS. INFINITE INDIFFERENCE.</div>
   </div>
 </footer>
 
 <script>
-  // NAV TOGGLE
-  function toggleNav() {
-    document.getElementById('navLinks').classList.toggle('open');
-  }
-
-  // CLOSE NAV ON LINK CLICK
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', () => {
-      document.getElementById('navLinks').classList.remove('open');
-    });
+  // POPUP on scroll depth
+  let popupShown = false;
+  let popup2Shown = false;
+  window.addEventListener('scroll', () => {
+    const scrollPct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    if (scrollPct > 0.45 && !popupShown) {
+      popupShown = true;
+      document.getElementById('popup').classList.add('show');
+    }
+    if (scrollPct > 0.85 && !popup2Shown) {
+      popup2Shown = true;
+      document.querySelector('#popup .popup-title').textContent = 'YOU\'RE STILL HERE?';
+      document.querySelector('#popup .popup-body').textContent = 'We respect the commitment. We do not share it. There is nothing more to see. There never was. Go listen to Spotify.';
+      document.getElementById('popup').classList.add('show');
+    }
   });
 
-  // SCROLL REVEAL
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
+  // RANDOM GLITCH on logo
+  setInterval(() => {
+    const logo = document.querySelector('.logo-text');
+    if (Math.random() > 0.92) {
+      logo.style.letterSpacing = '0.3em';
+      logo.style.color = '#ffdd00';
+      setTimeout(() => {
+        logo.style.letterSpacing = '0.12em';
+        logo.style.color = '';
+      }, 120);
+    }
+  }, 2000);
 
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // FORM SUBMIT
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    const name = document.getElementById('name').value.trim();
-    if (!name) { alert('Please tell us your name!'); return; }
-    btn.textContent = '✓ Vibe Received. We\'ll be in touch!';
-    btn.style.background = '#1a6b3a';
-    btn.disabled = true;
-    setTimeout(() => {
-      btn.textContent = 'Send My Vibe →';
-      btn.style.background = '';
-      btn.disabled = false;
-      e.target.reset();
-    }, 4000);
-  }
-
-  // ACTIVE NAV LINK ON SCROLL
-  const sections = document.querySelectorAll('section[id], div[id="home"]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    document.querySelectorAll('section[id]').forEach(sec => {
-      if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
-    });
-    navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--text)' : '';
-    });
+  // EASTER EGG: Konami code → alert
+  let konamiCode = [];
+  const konami = [38,38,40,40,37,39,37,39,66,65];
+  document.addEventListener('keydown', e => {
+    konamiCode.push(e.keyCode);
+    if (konamiCode.length > 10) konamiCode.shift();
+    if (JSON.stringify(konamiCode) === JSON.stringify(konami)) {
+      alert('🎵 KONAMI CODE DETECTED.\n\nAs a reward, you have unlocked:\n\n...nothing.\n\nThe playlists remain internal.\n\nApollo is disappointed in your desperation.\n\nHave a nice day.');
+    }
   });
 </script>
 </body>
