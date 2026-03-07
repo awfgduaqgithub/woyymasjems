@@ -3,1538 +3,1709 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WOYYMASJEMS — Elite Music Curation Solutions™</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,700;1,400&family=Anton&display=swap" rel="stylesheet">
+<title>WOYYMASJEMS — Apollonian Harmonics | Elevating Human Taste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Cormorant+SC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --black: #0a0a0a;
-    --white: #f0ede8;
-    --gray: #2a2a2a;
-    --mid: #555;
-    --light: #999;
-    --gold: #c9a84c;
-    --neon: #ffdd00;
-    --concrete: #3a3a3a;
-    --border: 3px solid #0a0a0a;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background-color: var(--white);
-    color: var(--black);
-    font-family: 'Space Mono', monospace;
-    overflow-x: hidden;
-    cursor: crosshair;
-  }
-
-  /* NOISE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.5;
-  }
-
-  /* SCROLLBAR */
-  ::-webkit-scrollbar { width: 12px; }
-  ::-webkit-scrollbar-track { background: var(--white); border-left: 2px solid var(--black); }
-  ::-webkit-scrollbar-thumb { background: var(--black); }
-
-  /* MARQUEE */
-  .marquee-bar {
-    background: var(--black);
-    color: var(--gold);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    padding: 8px 0;
-    overflow: hidden;
-    white-space: nowrap;
-    border-bottom: 2px solid var(--gold);
-  }
-  .marquee-inner {
-    display: inline-block;
-    animation: marquee 28s linear infinite;
-  }
-  @keyframes marquee {
-    0% { transform: translateX(100vw); }
-    100% { transform: translateX(-100%); }
-  }
-
-  /* HEADER / NAV */
-  header {
-    background: var(--white);
-    border-bottom: var(--border);
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: stretch;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .logo-block {
-    border-right: var(--border);
-    padding: 16px 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    background: var(--white);
-    transition: background 0.2s;
-  }
-  .logo-block:hover { background: var(--black); }
-  .logo-block:hover .logo-text, .logo-block:hover .logo-sub { color: var(--gold); }
-  .logo-block:hover .apollo-bust { filter: invert(1) sepia(1) saturate(3) hue-rotate(10deg); }
-
-  .apollo-bust {
-    font-size: 36px;
-    line-height: 1;
-    image-rendering: pixelated;
-    transition: filter 0.2s;
-  }
-
-  .logo-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 0.12em;
-    color: var(--black);
-    transition: color 0.2s;
-  }
-  .logo-sub {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 7px;
-    letter-spacing: 0.3em;
-    color: var(--mid);
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  nav {
-    display: flex;
-    align-items: stretch;
-    justify-content: flex-end;
-  }
-
-  nav a {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--black);
-    text-decoration: none;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    border-left: 2px solid var(--black);
-    transition: all 0.15s;
-    position: relative;
-  }
-  nav a:hover {
-    background: var(--black);
-    color: var(--neon);
-  }
-  nav a .hover-reveal {
-    display: none;
-    position: absolute;
-    bottom: -32px;
-    left: 0;
-    background: var(--neon);
-    color: var(--black);
-    font-size: 9px;
-    padding: 4px 8px;
-    white-space: nowrap;
-    border: 2px solid var(--black);
-    z-index: 200;
-  }
-  nav a:hover .hover-reveal { display: block; }
-
-  /* HERO */
-  .hero {
-    min-height: 92vh;
-    background: var(--white);
-    display: grid;
-    grid-template-columns: 1fr 380px;
-    border-bottom: var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 39px,
-      rgba(0,0,0,0.04) 39px,
-      rgba(0,0,0,0.04) 40px
-    );
-    pointer-events: none;
-  }
-
-  .hero-content {
-    padding: 80px 60px 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-right: var(--border);
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .hero-eyebrow::before {
-    content: '';
-    display: inline-block;
-    width: 40px;
-    height: 2px;
-    background: var(--gold);
-  }
-
-  .hero-title {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(52px, 8vw, 110px);
-    line-height: 0.9;
-    letter-spacing: -0.01em;
-    color: var(--black);
-    margin-bottom: 16px;
-  }
-  .hero-title span {
-    display: block;
-    -webkit-text-stroke: 2px var(--black);
-    color: transparent;
-  }
-
-  .hero-sub {
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    line-height: 1.9;
-    color: var(--mid);
-    max-width: 520px;
-    margin-bottom: 48px;
-    border-left: 4px solid var(--gold);
-    padding-left: 20px;
-  }
-
-  .hero-cta {
-    display: inline-block;
-    background: var(--black);
-    color: var(--white);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 0.2em;
-    padding: 20px 40px;
-    text-decoration: none;
-    border: 3px solid var(--black);
-    position: relative;
-    transition: all 0.1s;
-    max-width: fit-content;
-  }
-  .hero-cta::after {
-    content: '';
-    position: absolute;
-    top: 6px; left: 6px;
-    right: -6px; bottom: -6px;
-    border: 3px solid var(--black);
-    z-index: -1;
-    transition: all 0.1s;
-  }
-  .hero-cta:hover {
-    background: var(--neon);
-    color: var(--black);
-    transform: translate(-3px, -3px);
-  }
-  .hero-cta:hover::after { top: 9px; left: 9px; }
-
-  .cta-fine {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    color: var(--light);
-    margin-top: 10px;
-    letter-spacing: 0.05em;
-  }
-
-  .hero-sidebar {
-    background: var(--black);
-    padding: 60px 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-stat {
-    border-bottom: 1px solid #333;
-    padding-bottom: 28px;
-  }
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 72px;
-    color: var(--gold);
-    line-height: 1;
-  }
-  .stat-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: #777;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
-  .stat-desc {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: #555;
-    margin-top: 8px;
-    font-style: italic;
-    line-height: 1.6;
-  }
-
-  .sunburst {
-    font-size: 80px;
-    opacity: 0.15;
-    text-align: center;
-    animation: spin-slow 20s linear infinite;
-    display: block;
-  }
-  @keyframes spin-slow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  /* DIVIDER */
-  .section-divider {
-    background: var(--black);
-    color: var(--gold);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.5em;
-    text-align: center;
-    padding: 12px;
-    border-bottom: var(--border);
-    text-transform: uppercase;
-  }
-
-  /* ABOUT STRIP */
-  .about-strip {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    border-bottom: var(--border);
-  }
-  .about-cell {
-    padding: 48px 36px;
-    border-right: var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-  .about-cell:last-child { border-right: none; }
-  .about-cell-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 120px;
-    color: rgba(0,0,0,0.06);
-    position: absolute;
-    top: -20px; right: -10px;
-    line-height: 1;
-    pointer-events: none;
-  }
-  .about-cell h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 26px;
-    letter-spacing: 0.08em;
-    color: var(--black);
-    margin-bottom: 12px;
-    position: relative;
-  }
-  .about-cell p {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    line-height: 1.9;
-    color: var(--mid);
-    position: relative;
-  }
-  .about-cell:hover {
-    background: var(--black);
-  }
-  .about-cell:hover h3, .about-cell:hover p { color: var(--white); }
-  .about-cell:hover .about-cell-num { color: rgba(255,255,255,0.05); }
-  .about-cell:hover .reveal-text { display: block; }
-  .reveal-text {
-    display: none;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    color: var(--neon);
-    margin-top: 12px;
-    font-style: italic;
-  }
-
-  /* PLAYLISTS */
-  .playlists-header {
-    padding: 80px 60px 40px;
-    border-bottom: var(--border);
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: end;
-    background: var(--black);
-  }
-
-  .playlists-header h2 {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(40px, 6vw, 80px);
-    color: var(--white);
-    line-height: 0.95;
-    letter-spacing: -0.01em;
-  }
-  .playlists-header h2 em {
-    font-style: normal;
-    -webkit-text-stroke: 1px var(--white);
-    color: transparent;
-  }
-
-  .playlist-count-badge {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 100px;
-    color: var(--gold);
-    line-height: 1;
-    opacity: 0.6;
-  }
-
-  .playlists-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    border-bottom: var(--border);
-  }
-
-  .playlist-card {
-    border-right: var(--border);
-    position: relative;
-    overflow: hidden;
-    background: var(--white);
-    transition: background 0.2s;
-    display: flex;
-    flex-direction: column;
-  }
-  .playlist-card:last-child { border-right: none; }
-
-  /* COVER IMAGE */
-  .playlist-cover {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    display: block;
-    border-bottom: var(--border);
-    filter: grayscale(0.25) contrast(1.05);
-    transition: filter 0.3s;
-  }
-  .playlist-card:hover .playlist-cover {
-    filter: grayscale(0) contrast(1.1);
-  }
-
-  /* COVER FALLBACK (if no image) */
-  .playlist-cover-fallback {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: var(--border);
-    font-size: 80px;
-    position: relative;
-    overflow: hidden;
-  }
-  .playlist-cover-fallback .playlist-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 200px;
-    position: absolute;
-    top: -40px; right: -20px;
-    color: rgba(255,255,255,0.05);
-    line-height: 1;
-  }
-
-  .playlist-card-label {
-    background: var(--black);
-    padding: 20px 28px 16px;
-    border-bottom: var(--border);
-    position: relative;
-  }
-
-  .playlist-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 26px;
-    letter-spacing: 0.05em;
-    color: var(--white);
-    position: relative;
-    z-index: 1;
-    line-height: 1;
-  }
-
-  .playlist-subtitle {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-top: 5px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .playlist-class-badge {
-    position: absolute;
-    top: 16px; right: 20px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
-    color: rgba(255,255,255,0.08);
-    line-height: 1;
-  }
-
-  /* SPOTIFY EMBED */
-  .spotify-wrap {
-    border-bottom: var(--border);
-    line-height: 0;
-    background: #000;
-  }
-  .spotify-wrap iframe {
-    display: block;
-    width: 100%;
-    border: none;
-  }
-
-  .playlist-card-body {
-    padding: 28px;
-    flex: 1;
-  }
-
-  .playlist-corp-desc {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    line-height: 1.9;
-    color: var(--mid);
-    margin-bottom: 16px;
-  }
-
-  .playlist-truth {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--light);
-    font-style: italic;
-    padding: 12px;
-    border: 1px dashed var(--light);
-    line-height: 1.7;
-    transition: all 0.2s;
-  }
-  .playlist-card:hover .playlist-truth {
-    background: var(--neon);
-    color: var(--black);
-    border-style: solid;
-    border-color: var(--black);
-  }
-
-  .playlist-meta {
-    margin-top: 16px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .tag {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 8px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border: 1.5px solid var(--black);
-    background: transparent;
-    color: var(--black);
-    transition: all 0.15s;
-  }
-  .playlist-card:hover .tag {
-    background: var(--black);
-    color: var(--neon);
-  }
-
-  .playlist-open-btn {
-    display: block;
-    margin-top: 16px;
-    background: #1DB954;
-    color: #000;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 14px;
-    letter-spacing: 0.2em;
-    text-align: center;
-    padding: 12px;
-    text-decoration: none;
-    border: 2px solid #000;
-    transition: all 0.15s;
-  }
-  .playlist-open-btn:hover {
-    background: var(--neon);
-    border-color: var(--black);
-  }
-
-  /* NOTICE BAR */
-  .notice-bar {
-    background: var(--neon);
-    border-top: var(--border);
-    border-bottom: var(--border);
-    padding: 16px 40px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .notice-bar::before { content: '⚠'; font-size: 18px; }
-
-  /* TESTIMONIALS */
-  .testimonials {
-    padding: 80px 0;
-    background: var(--white);
-    border-bottom: var(--border);
-    overflow: hidden;
-  }
-
-  .testimonials-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--light);
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    border-top: var(--border);
-    border-left: var(--border);
-  }
-
-  .testimonial {
-    padding: 40px 32px;
-    border-right: var(--border);
-    border-bottom: var(--border);
-    position: relative;
-  }
-
-  .testimonial-quote {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 80px;
-    color: rgba(0,0,0,0.06);
-    line-height: 0.8;
-    margin-bottom: 12px;
-  }
-
-  .testimonial-text {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    line-height: 1.8;
-    color: var(--black);
-    margin-bottom: 20px;
-  }
-
-  .testimonial-author {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--light);
-  }
-
-  .testimonial-disclaimer {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 8px;
-    color: var(--neon);
-    background: var(--black);
-    padding: 4px 8px;
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    display: none;
-  }
-  .testimonial:hover { background: #f5f2ed; }
-  .testimonial:hover .testimonial-disclaimer { display: block; }
-
-  /* SCROLLING CHAOS SECTION */
-  .chaos-section {
-    padding: 80px 60px;
-    border-bottom: var(--border);
-    background: var(--black);
-    position: relative;
-  }
-
-  .chaos-section h2 {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(36px, 5vw, 64px);
-    color: var(--white);
-    margin-bottom: 48px;
-    line-height: 1;
-  }
-
-  .chaos-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-  }
-
-  .chaos-item {
-    background: var(--gray);
-    padding: 32px;
-    border: 1px solid #333;
-    transition: background 0.15s;
-  }
-  .chaos-item:hover { background: #1a1a1a; }
-
-  .chaos-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    color: var(--white);
-    letter-spacing: 0.1em;
-    margin-bottom: 12px;
-  }
-
-  .chaos-body {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    line-height: 1.8;
-    color: #888;
-  }
-
-  s { color: #555; }
-  .chaos-item:hover s { color: var(--neon); text-decoration-color: var(--gold); }
-
-  .chaos-item:hover .chaos-body { color: #aaa; }
-
-  .redacted {
-    background: #555;
-    color: transparent;
-    padding: 0 4px;
-    user-select: none;
-    transition: all 0.15s;
-  }
-  .chaos-item:hover .redacted {
-    background: var(--neon);
-    color: var(--black);
-  }
-
-  /* FINE PRINT */
-  .fine-print-section {
-    padding: 60px;
-    background: var(--white);
-    border-bottom: var(--border);
-  }
-
-  .fine-print-section h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px;
-    margin-bottom: 24px;
-    letter-spacing: 0.05em;
-  }
-
-  .fine-print-body {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    line-height: 2;
-    color: var(--mid);
-    columns: 3;
-    column-gap: 40px;
-  }
-
-  .fine-print-body strong {
-    color: var(--black);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  /* TYPO SECTION */
-  .typo-section {
-    padding: 80px 60px;
-    background: var(--white);
-    border-bottom: var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-  .typo-section::before {
-    content: 'WHY';
-    font-family: 'Anton', sans-serif;
-    font-size: 400px;
-    color: rgba(0,0,0,0.03);
-    position: absolute;
-    top: -80px;
-    left: -40px;
-    pointer-events: none;
-    line-height: 1;
-  }
-
-  .typo-content { position: relative; z-index: 1; }
-
-  .typo-large {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(32px, 5vw, 64px);
-    line-height: 1.1;
-    color: var(--black);
-    margin-bottom: 32px;
-  }
-
-  .glitch {
-    position: relative;
-    display: inline-block;
-  }
-  .glitch:hover::before {
-    content: attr(data-text);
-    position: absolute;
-    top: 0; left: 2px;
-    color: var(--neon);
-    clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
-    animation: glitch 0.2s steps(2) infinite;
-  }
-  .glitch:hover::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0; left: -2px;
-    color: #ff3030;
-    clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
-    animation: glitch 0.3s steps(2) infinite reverse;
-  }
-  @keyframes glitch {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(4px); }
-  }
-
-  .typo-body {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    line-height: 2;
-    color: var(--mid);
-    max-width: 700px;
-    margin-bottom: 24px;
-  }
-
-  .typo-error {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--light);
-    font-style: italic;
-  }
-  .typo-error span { color: var(--black); font-weight: 700; }
-
-  /* FOOTER */
-  footer {
-    background: var(--black);
-    border-top: var(--border);
-  }
-
-  .footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    border-bottom: 2px solid #222;
-  }
-
-  .footer-col {
-    padding: 48px 32px;
-    border-right: 2px solid #222;
-  }
-  .footer-col:last-child { border-right: none; }
-
-  .footer-col-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
-    letter-spacing: 0.2em;
-    color: var(--gold);
-    margin-bottom: 20px;
-  }
-
-  .footer-about {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    line-height: 1.9;
-    color: #666;
-  }
-
-  .footer-links {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .footer-links li a {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: #666;
-    text-decoration: none;
-    letter-spacing: 0.08em;
-    transition: color 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .footer-links li a::before {
-    content: '→';
-    color: #333;
-    transition: color 0.15s;
-  }
-  .footer-links li a:hover { color: var(--neon); }
-  .footer-links li a:hover::before { color: var(--neon); }
-
-  .social-icons {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 8px;
-  }
-
-  .social-btn {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    padding: 8px 12px;
-    border: 1px solid #333;
-    color: #555;
-    text-decoration: none;
-    display: block;
-    transition: all 0.15s;
-    text-transform: uppercase;
-    cursor: not-allowed;
-  }
-  .social-btn:hover {
-    background: #1a1a1a;
-    color: #888;
-    border-color: #555;
-  }
-
-  .footer-bottom {
-    padding: 20px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 2px solid #111;
-  }
-
-  .copyright {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: #444;
-    letter-spacing: 0.1em;
-  }
-
-  .footer-tagline {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 13px;
-    letter-spacing: 0.3em;
-    color: #333;
-  }
-
-  /* POPUP */
-  #popup {
-    display: none;
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: var(--neon);
-    border: 3px solid var(--black);
-    padding: 20px 24px;
-    z-index: 9000;
-    max-width: 300px;
-    box-shadow: 6px 6px 0 var(--black);
-  }
-  #popup.show { display: block; }
-  .popup-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 0.1em;
-    margin-bottom: 8px;
-  }
-  .popup-body {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    line-height: 1.7;
-    margin-bottom: 12px;
-  }
-  .popup-close {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    background: var(--black);
-    color: var(--neon);
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    width: 100%;
-    transition: opacity 0.15s;
-  }
-  .popup-close:hover { opacity: 0.8; }
-
-  /* ORACLE BAND */
-  .oracle-band {
-    background: repeating-linear-gradient(
-      45deg,
-      var(--black) 0px,
-      var(--black) 10px,
-      #111 10px,
-      #111 20px
-    );
-    padding: 24px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    border-bottom: var(--border);
-  }
-  .oracle-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 0.3em;
-    color: var(--gold);
-    text-align: center;
-  }
-  .lyre-icon {
-    font-size: 28px;
-    opacity: 0.7;
-    animation: pulse-lyre 3s ease-in-out infinite;
-  }
-  @keyframes pulse-lyre {
-    0%, 100% { transform: scale(1); opacity: 0.7; }
-    50% { transform: scale(1.1); opacity: 1; }
-  }
-
-  .playlist-cover-wrap {
-    width: 100%;
-    aspect-ratio: 1;
-    max-width: 180px;
-    margin-bottom: 16px;
-    position: relative;
-    z-index: 1;
-    border: 3px solid rgba(255,255,255,0.1);
-    overflow: hidden;
-    box-shadow: 6px 6px 0 rgba(0,0,0,0.4);
-  }
-  .playlist-cover {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    filter: grayscale(0.2) contrast(1.05);
-    transition: filter 0.3s;
-  }
-  .playlist-card:hover .playlist-cover { filter: grayscale(0) contrast(1.1); }
-  .playlist-cover-fallback {
-    display: none;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-    background: #444;
-    min-height: 120px;
-  }
-
-  .spotify-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
-    background: transparent;
-    border: 2px solid var(--black);
-    color: var(--black);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-decoration: none;
-    padding: 12px 16px;
-    text-transform: uppercase;
-    transition: all 0.15s;
-    position: relative;
-  }
-  .spotify-btn::after {
-    content: '';
-    position: absolute;
-    top: 4px; left: 4px;
-    right: -4px; bottom: -4px;
-    border: 2px solid var(--black);
-    z-index: -1;
-    transition: all 0.1s;
-  }
-  .spotify-btn:hover {
-    background: #1DB954;
-    color: var(--white);
-    border-color: #1DB954;
-  }
-  .spotify-btn:hover::after { border-color: #1DB954; top: 6px; left: 6px; }
-
-  .social-btn-live {
-    cursor: pointer !important;
-    border-color: #444 !important;
-    color: #888 !important;
-  }
-  .social-btn-live:hover {
-    background: #111 !important;
-    border-color: var(--gold) !important;
-    color: var(--gold) !important;
-  }
-
-
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; }
-    .hero-sidebar { display: none; }
-    .about-strip { grid-template-columns: 1fr; }
-    .playlists-grid { grid-template-columns: 1fr; }
-    .testimonials-grid { grid-template-columns: 1fr; }
-    .chaos-grid { grid-template-columns: 1fr; }
-    .footer-top { grid-template-columns: 1fr 1fr; }
-    .fine-print-body { columns: 1; }
-    nav a .hover-reveal { display: none !important; }
-  }
+:root {
+  --gold: #D4AF37;
+  --gold-light: #F5D76E;
+  --gold-pale: #FFF8DC;
+  --gold-deep: #9A7B1A;
+  --crimson: #8B0000;
+  --crimson-bright: #C0392B;
+  --ivory: #FDFBF4;
+  --marble: #F2EDE4;
+  --marble-dark: #E8E0D0;
+  --obsidian: #0D0B07;
+  --dark: #1A1608;
+  --text-dark: #1C1A12;
+  --text-mid: #4A4030;
+  --white-gold: #FFFEF7;
+  --ray-gradient: linear-gradient(135deg, #D4AF37 0%, #F5D76E 40%, #D4AF37 70%, #9A7B1A 100%);
+  --marble-texture: repeating-linear-gradient(
+    105deg,
+    transparent 0px, transparent 8px,
+    rgba(212,175,55,0.04) 8px, rgba(212,175,55,0.04) 9px
+  ), repeating-linear-gradient(
+    -75deg,
+    transparent 0px, transparent 12px,
+    rgba(180,160,100,0.03) 12px, rgba(180,160,100,0.03) 13px
+  );
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ivory);
+  color: var(--text-dark);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ─── CUSTOM CURSOR ─── */
+#cursor {
+  position: fixed; width: 16px; height: 16px; z-index: 99999;
+  pointer-events: none; transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+}
+#cursor::before {
+  content: ''; position: absolute; inset: 0;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  animation: cursorPulse 2s ease-in-out infinite;
+}
+#cursor::after {
+  content: '✦'; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 8px; color: var(--gold);
+}
+#cursor-trail {
+  position: fixed; width: 40px; height: 40px; z-index: 99998;
+  pointer-events: none; transform: translate(-50%,-50%);
+  border: 1px solid rgba(212,175,55,0.3); border-radius: 50%;
+  transition: left 0.15s ease, top 0.15s ease;
+}
+@keyframes cursorPulse {
+  0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.5);opacity:0.6}
+}
+
+/* ─── LOADER ─── */
+#loader {
+  position: fixed; inset: 0; background: var(--obsidian);
+  z-index: 99990; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  animation: loaderFade 0.8s ease 2.8s forwards;
+}
+#loader-lyre {
+  font-size: 64px; animation: lyreAppear 1s ease 0.3s both, lyreGlow 1.5s ease 0.8s infinite alternate;
+  filter: drop-shadow(0 0 20px var(--gold));
+}
+#loader-text {
+  font-family: 'Cinzel Decorative', serif; font-size: 11px; letter-spacing: 0.5em;
+  color: var(--gold); margin-top: 24px; opacity: 0;
+  animation: fadeUp 0.8s ease 1.2s both;
+}
+#loader-bar {
+  width: 200px; height: 1px; background: rgba(212,175,55,0.2);
+  margin-top: 32px; overflow: hidden; opacity: 0;
+  animation: fadeUp 0.5s ease 1.6s both;
+}
+#loader-bar-fill {
+  height: 100%; background: var(--gold);
+  animation: loaderFill 1s ease 1.8s both;
+}
+@keyframes loaderFade { to { opacity: 0; pointer-events: none; visibility: hidden; } }
+@keyframes lyreAppear { from{transform:scale(0.3) rotate(-20deg);opacity:0} to{transform:scale(1) rotate(0deg);opacity:1} }
+@keyframes lyreGlow { from{filter:drop-shadow(0 0 20px var(--gold))} to{filter:drop-shadow(0 0 50px var(--gold-light))} }
+@keyframes loaderFill { from{width:0} to{width:100%} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* ─── LIGHT RAYS (hero bg) ─── */
+#rays-bg {
+  position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+  width: 200vw; height: 100vh; pointer-events: none; z-index: 0;
+  opacity: 0.06;
+  background: repeating-conic-gradient(
+    from 0deg at 50% -10%,
+    var(--gold) 0deg 3deg,
+    transparent 3deg 9deg
+  );
+  animation: raysRotate 120s linear infinite;
+}
+@keyframes raysRotate { to { transform: translateX(-50%) rotate(360deg); } }
+
+/* ─── MARBLE BG ─── */
+.marble-bg {
+  background-color: var(--ivory);
+  background-image: var(--marble-texture);
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 0 60px;
+  height: 72px; display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(212,175,55,0.15);
+  background: rgba(253,251,244,0.92);
+  backdrop-filter: blur(12px) saturate(1.5);
+  transition: all 0.4s ease;
+}
+nav.scrolled {
+  height: 56px;
+  background: rgba(253,251,244,0.97);
+  box-shadow: 0 2px 40px rgba(212,175,55,0.1);
+}
+.nav-logo {
+  font-family: 'Cinzel Decorative', serif; font-size: 13px;
+  letter-spacing: 0.25em; color: var(--text-dark);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--gold); }
+
+/* RADIAL SUNBURST NAV */
+.nav-center {
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+#nav-lyre {
+  width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+  cursor: none; position: relative; z-index: 10;
+  border: 1px solid rgba(212,175,55,0.4); border-radius: 50%;
+  background: rgba(212,175,55,0.06);
+  transition: all 0.3s ease;
+  font-size: 20px;
+}
+#nav-lyre:hover { background: rgba(212,175,55,0.15); border-color: var(--gold); }
+#nav-lyre.active { background: var(--gold); }
+
+.radial-menu { position: absolute; top: 50%; left: 50%; pointer-events: none; }
+.radial-item {
+  position: absolute; transform-origin: center center;
+  opacity: 0; pointer-events: none;
+  transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  white-space: nowrap;
+}
+.radial-item a {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.2em;
+  color: var(--text-dark); text-decoration: none;
+  padding: 6px 14px; border: 1px solid rgba(212,175,55,0.4);
+  background: rgba(253,251,244,0.96); backdrop-filter: blur(8px);
+  display: block; transition: all 0.2s ease;
+}
+.radial-item a:hover { background: var(--gold); color: var(--obsidian); }
+.radial-menu.open .radial-item { opacity: 1; pointer-events: auto; }
+
+.nav-right {
+  display: flex; align-items: center; gap: 24px;
+}
+.nav-tagline {
+  font-family: 'Cormorant Garamond', serif; font-size: 11px;
+  letter-spacing: 0.15em; color: rgba(100,88,55,0.7);
+  font-style: italic;
+}
+.nav-cta {
+  font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.25em;
+  color: var(--gold-deep); text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 2px;
+  transition: color 0.2s;
+}
+.nav-cta:hover { color: var(--gold); }
+
+/* ─── HERO ─── */
+#hero {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  background: var(--ivory);
+  background-image: var(--marble-texture);
+  padding: 120px 40px 80px;
+}
+.hero-laurel-left, .hero-laurel-right {
+  position: absolute; font-size: 160px; opacity: 0.06;
+  pointer-events: none; line-height: 1;
+}
+.hero-laurel-left { left: -20px; top: 50%; transform: translateY(-50%) scaleX(-1); }
+.hero-laurel-right { right: -20px; top: 50%; transform: translateY(-50%); }
+
+.hero-content {
+  text-align: center; position: relative; z-index: 2;
+  max-width: 900px; animation: heroReveal 1.2s ease 3s both;
+}
+@keyframes heroReveal {
+  from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)}
+}
+
+.hero-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.6em;
+  color: var(--gold); margin-bottom: 32px;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; display: block; width: 60px; height: 1px; background: var(--ray-gradient);
+}
+
+.hero-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(52px, 8vw, 110px);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  background: var(--ray-gradient);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 0 60px rgba(212,175,55,0.3));
+}
+
+.hero-sub {
+  font-family: 'Cormorant SC', serif; font-size: clamp(11px, 1.5vw, 14px);
+  letter-spacing: 0.3em; color: var(--text-mid);
+  margin-bottom: 40px;
+}
+
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(17px, 2.5vw, 26px);
+  font-weight: 300; font-style: italic;
+  color: var(--text-dark); max-width: 680px; margin: 0 auto 48px;
+  line-height: 1.6;
+}
+.hero-tagline strong { font-weight: 600; font-style: normal; color: var(--gold-deep); }
+
+.hero-divider {
+  display: flex; align-items: center; justify-content: center; gap: 20px;
+  margin-bottom: 48px; opacity: 0.5;
+}
+.hero-divider::before, .hero-divider::after {
+  content: ''; flex: 1; max-width: 180px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.hero-divider-icon { color: var(--gold); font-size: 18px; }
+
+.hero-cta-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.35em;
+  padding: 16px 40px; background: var(--text-dark); color: var(--gold);
+  border: 1px solid var(--gold); cursor: none;
+  transition: all 0.3s ease; text-decoration: none; display: inline-block;
+  position: relative; overflow: hidden;
+}
+.btn-primary::after {
+  content: ''; position: absolute; inset: 0;
+  background: var(--ray-gradient); opacity: 0;
+  transition: opacity 0.3s; z-index: -1;
+}
+.btn-primary:hover { color: var(--obsidian); border-color: var(--gold); }
+.btn-primary:hover::after { opacity: 1; }
+.btn-secondary {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.35em;
+  padding: 16px 40px; background: transparent; color: var(--text-dark);
+  border: 1px solid rgba(100,88,55,0.3); cursor: none;
+  transition: all 0.3s ease; text-decoration: none; display: inline-block;
+}
+.btn-secondary:hover { border-color: var(--gold); color: var(--gold-deep); }
+
+/* SCROLL INDICATOR */
+.scroll-indicator {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  animation: heroReveal 1s ease 4s both;
+}
+.scroll-text { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.4em; color: var(--gold); opacity: 0.7; }
+.scroll-arrow { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollBounce 2s ease-in-out infinite; }
+@keyframes scrollBounce { 0%,100%{transform:scaleY(1);opacity:1} 50%{transform:scaleY(1.3);opacity:0.6} }
+
+/* FLOATING SOUND WAVES (hero decoration) */
+.sound-wave {
+  position: absolute; pointer-events: none; opacity: 0.08;
+}
+.sound-wave svg { fill: none; stroke: var(--gold); }
+
+/* ─── GOLDEN DIVIDER ─── */
+.gold-divider {
+  display: flex; align-items: center; gap: 0;
+  width: 100%; height: 1px; overflow: visible;
+  margin: 0;
+}
+.gold-divider-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold) 70%, transparent 100%);
+  opacity: 0.4;
+}
+.gold-divider-center {
+  font-size: 20px; color: var(--gold); opacity: 0.6; padding: 0 20px;
+  transform: translateY(-50%); margin-top: -1px;
+}
+
+/* ─── SECTION BASE ─── */
+section { position: relative; }
+.section-inner { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+
+/* ─── MANIFESTO ─── */
+#manifesto {
+  padding: 120px 0; background: var(--obsidian);
+  background-image: repeating-linear-gradient(
+    90deg, transparent 0px, transparent 80px,
+    rgba(212,175,55,0.02) 80px, rgba(212,175,55,0.02) 81px
+  );
+  overflow: hidden;
+}
+.manifesto-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.5em;
+  color: var(--gold); opacity: 0.7; text-align: center; margin-bottom: 60px;
+}
+.manifesto-grid { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0; align-items: start; }
+.manifesto-col { padding: 0 60px; }
+.manifesto-divider-v { background: rgba(212,175,55,0.2); }
+.manifesto-headline {
+  font-family: 'Cinzel Decorative', serif; font-size: clamp(28px, 4vw, 48px);
+  color: var(--white-gold); line-height: 1.2; margin-bottom: 32px;
+  font-weight: 400;
+}
+.manifesto-headline em { color: var(--gold); font-style: normal; }
+.manifesto-body {
+  font-family: 'Cormorant Garamond', serif; font-size: 18px; line-height: 1.9;
+  color: rgba(253,251,244,0.65); font-weight: 300;
+}
+.manifesto-body strong { color: var(--gold); font-weight: 500; }
+.manifesto-stat {
+  margin-top: 48px; border-top: 1px solid rgba(212,175,55,0.15); padding-top: 32px;
+}
+.manifesto-stat-num {
+  font-family: 'Cinzel Decorative', serif; font-size: 64px;
+  background: var(--ray-gradient); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1; font-weight: 900;
+}
+.manifesto-stat-label {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.4em;
+  color: rgba(253,251,244,0.4); margin-top: 8px;
+}
+.manifesto-pillars { margin-top: 48px; display: flex; flex-direction: column; gap: 24px; }
+.pillar {
+  display: flex; gap: 20px; align-items: flex-start;
+  padding: 20px; border: 1px solid rgba(212,175,55,0.1);
+  transition: border-color 0.3s;
+}
+.pillar:hover { border-color: rgba(212,175,55,0.4); }
+.pillar-icon { font-size: 24px; flex-shrink: 0; margin-top: 4px; }
+.pillar-title {
+  font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.2em;
+  color: var(--gold); margin-bottom: 6px;
+}
+.pillar-body { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: rgba(253,251,244,0.5); line-height: 1.7; }
+
+/* ─── BUZZWORD SECTION ─── */
+#philosophy { padding: 120px 0; background: var(--marble); background-image: var(--marble-texture); }
+.philosophy-header { text-align: center; margin-bottom: 80px; }
+.section-label {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.5em;
+  color: var(--gold); display: block; margin-bottom: 20px;
+}
+.section-title {
+  font-family: 'Cinzel Decorative', serif; font-size: clamp(28px, 4vw, 50px);
+  color: var(--text-dark); line-height: 1.2; font-weight: 400; margin-bottom: 20px;
+}
+.section-title em { color: var(--gold-deep); font-style: normal; }
+.section-subtitle {
+  font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic;
+  color: var(--text-mid); max-width: 560px; margin: 0 auto; line-height: 1.6;
+}
+.philosophy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(212,175,55,0.15); }
+.philosophy-card {
+  background: var(--ivory); padding: 48px 36px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative; overflow: hidden;
+}
+.philosophy-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--ray-gradient); transform: scaleX(0); transition: transform 0.4s ease;
+}
+.philosophy-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(212,175,55,0.15); }
+.philosophy-card:hover::before { transform: scaleX(1); }
+.philosophy-card-icon { font-size: 36px; margin-bottom: 24px; }
+.philosophy-card-title {
+  font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.2em;
+  color: var(--text-dark); margin-bottom: 16px; line-height: 1.5;
+}
+.philosophy-card-body {
+  font-family: 'Cormorant Garamond', serif; font-size: 16px;
+  color: var(--text-mid); line-height: 1.8;
+}
+.philosophy-card-sarcasm {
+  margin-top: 20px; font-size: 13px; font-style: italic;
+  color: var(--gold-deep); border-top: 1px solid rgba(212,175,55,0.2);
+  padding-top: 16px; opacity: 0;
+  transition: opacity 0.4s ease 0.1s;
+}
+.philosophy-card:hover .philosophy-card-sarcasm { opacity: 1; }
+
+/* ─── PLAYLISTS ─── */
+#playlists {
+  padding: 140px 0; background: var(--obsidian);
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.08) 0%, transparent 60%);
+}
+.playlists-header { text-align: center; margin-bottom: 80px; }
+.playlists-header .section-title { color: var(--white-gold); }
+.playlists-header .section-subtitle { color: rgba(253,251,244,0.5); }
+.playlist-trinity {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px; background: rgba(212,175,55,0.1);
+}
+.playlist-card {
+  background: var(--dark); position: relative; overflow: hidden;
+  cursor: none; transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  display: flex; flex-direction: column;
+}
+.playlist-card:hover { transform: scale(1.02); z-index: 2; box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
+.playlist-cover {
+  aspect-ratio: 1; position: relative; overflow: hidden;
+}
+.playlist-cover-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s ease; filter: saturate(0.8);
+}
+.playlist-card:hover .playlist-cover-img { transform: scale(1.08); filter: saturate(1); }
+.playlist-cover-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(13,11,7,0.95) 100%);
+}
+.playlist-cover-placeholder {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  font-size: 80px; background: linear-gradient(135deg, var(--dark) 0%, #2A2010 100%);
+}
+.playlist-cover-glyph {
+  position: absolute; top: 20px; right: 20px; font-size: 28px;
+  background: rgba(13,11,7,0.7); padding: 8px 10px; border-radius: 50%;
+}
+.playlist-class-badge {
+  position: absolute; top: 20px; left: 20px;
+  font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.4em;
+  color: var(--gold); border: 1px solid var(--gold);
+  padding: 6px 12px; background: rgba(13,11,7,0.8);
+}
+.playlist-info { padding: 32px; flex: 1; display: flex; flex-direction: column; }
+.playlist-class-label {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.5em;
+  color: var(--gold); margin-bottom: 12px;
+}
+.playlist-name {
+  font-family: 'Cinzel Decorative', serif; font-size: clamp(20px, 2.5vw, 28px);
+  color: var(--white-gold); line-height: 1.2; margin-bottom: 16px; font-weight: 400;
+}
+.playlist-desc {
+  font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic;
+  color: rgba(253,251,244,0.45); line-height: 1.7; flex: 1; margin-bottom: 28px;
+}
+.playlist-meta {
+  display: flex; gap: 16px; margin-bottom: 24px;
+  font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em;
+  color: rgba(212,175,55,0.5);
+}
+.playlist-meta span { display: flex; align-items: center; gap: 6px; }
+.playlist-link {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; border: 1px solid rgba(212,175,55,0.3);
+  text-decoration: none; color: var(--gold);
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.25em;
+  transition: all 0.3s ease; background: rgba(212,175,55,0.05);
+}
+.playlist-link:hover { background: var(--gold); color: var(--obsidian); border-color: var(--gold); }
+.playlist-sarcasm {
+  font-family: 'Cormorant Garamond', serif; font-size: 12px; font-style: italic;
+  color: rgba(212,175,55,0.3); margin-top: 12px; text-align: center;
+}
+
+/* PLAYLIST TOOLTIP */
+[data-tooltip] { position: relative; }
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%);
+  background: var(--obsidian); color: var(--gold);
+  font-family: 'Cormorant Garamond', serif; font-size: 12px; font-style: italic;
+  padding: 8px 16px; white-space: nowrap; border: 1px solid rgba(212,175,55,0.3);
+  pointer-events: none; z-index: 100;
+}
+
+/* ─── SARCASM REVEAL ─── */
+#revelation { padding: 120px 0; background: var(--crimson); position: relative; overflow: hidden; }
+#revelation::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(212,175,55,0.15) 0%, transparent 60%);
+}
+.revelation-header { text-align: center; margin-bottom: 80px; position: relative; }
+.revelation-label {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.5em;
+  color: rgba(212,175,55,0.7); display: block; margin-bottom: 20px;
+}
+.revelation-title {
+  font-family: 'Cinzel Decorative', serif; font-size: clamp(28px, 4vw, 50px);
+  color: var(--white-gold); line-height: 1.2; font-weight: 400;
+}
+.confessions { display: flex; flex-direction: column; gap: 0; }
+.confession {
+  padding: 56px 60px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: grid; grid-template-columns: 80px 1fr; gap: 40px; align-items: start;
+  opacity: 0; transform: translateX(-30px); transition: all 0.7s ease;
+  position: relative;
+}
+.confession.visible { opacity: 1; transform: translateX(0); }
+.confession-num {
+  font-family: 'Cinzel Decorative', serif; font-size: 48px;
+  color: rgba(212,175,55,0.15); line-height: 1; font-weight: 900;
+  text-align: right;
+}
+.confession-content {}
+.confession-title {
+  font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.3em;
+  color: var(--gold); margin-bottom: 16px;
+}
+.confession-text {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(20px, 2.8vw, 32px);
+  color: var(--white-gold); line-height: 1.5; font-weight: 300;
+}
+.confession-text strong { font-weight: 600; font-style: italic; }
+.confession-footnote {
+  margin-top: 16px; font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; font-style: italic; color: rgba(253,251,244,0.35);
+}
+
+/* ─── TESTIMONIALS ─── */
+#testimonials { padding: 120px 0; background: var(--ivory); background-image: var(--marble-texture); }
+.testimonials-header { text-align: center; margin-bottom: 80px; }
+.testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.testimonial-card {
+  border: 1px solid rgba(212,175,55,0.2); padding: 40px 32px;
+  position: relative; background: var(--white-gold);
+  transition: all 0.4s ease;
+}
+.testimonial-card::before {
+  content: '"'; position: absolute; top: -20px; left: 24px;
+  font-family: 'Cinzel Decorative', serif; font-size: 80px;
+  color: var(--gold); line-height: 1; opacity: 0.3;
+}
+.testimonial-card:hover { border-color: var(--gold); box-shadow: 0 20px 60px rgba(212,175,55,0.1); }
+.testimonial-deity {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+}
+.deity-icon { font-size: 40px; }
+.deity-name {
+  font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.2em;
+  color: var(--text-dark);
+}
+.deity-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic;
+  color: var(--text-mid);
+}
+.testimonial-text {
+  font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic;
+  color: var(--text-dark); line-height: 1.8; margin-bottom: 20px;
+}
+.testimonial-rating { color: var(--gold); font-size: 14px; letter-spacing: 2px; }
+.testimonial-verified {
+  margin-top: 16px; font-family: 'Cinzel', serif; font-size: 9px;
+  letter-spacing: 0.3em; color: var(--gold); opacity: 0.6;
+}
+
+/* ─── PRICING ─── */
+#pricing { padding: 120px 0; background: var(--obsidian); }
+.pricing-header { text-align: center; margin-bottom: 80px; }
+.pricing-header .section-title { color: var(--white-gold); }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(212,175,55,0.1); }
+.pricing-card {
+  background: var(--dark); padding: 48px 36px; position: relative;
+  display: flex; flex-direction: column;
+  transition: transform 0.4s ease;
+}
+.pricing-card.featured {
+  background: var(--text-dark);
+  border: 1px solid var(--gold);
+  transform: translateY(-10px);
+}
+.pricing-badge {
+  font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.4em;
+  color: var(--gold); background: rgba(212,175,55,0.1);
+  padding: 6px 16px; display: inline-block; margin-bottom: 32px;
+  border: 1px solid rgba(212,175,55,0.3); align-self: flex-start;
+}
+.pricing-name {
+  font-family: 'Cinzel Decorative', serif; font-size: 24px;
+  color: var(--white-gold); margin-bottom: 8px; font-weight: 400;
+}
+.pricing-amount {
+  font-family: 'Cinzel Decorative', serif; font-size: 60px;
+  color: var(--gold); line-height: 1; font-weight: 900;
+  margin: 24px 0 8px;
+}
+.pricing-amount span { font-size: 20px; vertical-align: super; }
+.pricing-period {
+  font-family: 'Cormorant Garamond', serif; font-size: 14px; font-style: italic;
+  color: rgba(253,251,244,0.4); margin-bottom: 32px;
+}
+.pricing-features { list-style: none; margin-bottom: 40px; flex: 1; }
+.pricing-features li {
+  font-family: 'Cormorant Garamond', serif; font-size: 15px;
+  color: rgba(253,251,244,0.6); padding: 10px 0;
+  border-bottom: 1px solid rgba(212,175,55,0.08);
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.pricing-features li::before { content: '✦'; color: var(--gold); font-size: 10px; margin-top: 4px; flex-shrink: 0; }
+.pricing-btn {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.3em;
+  padding: 14px; border: 1px solid rgba(212,175,55,0.4);
+  color: var(--gold); text-align: center; cursor: none;
+  transition: all 0.3s ease; background: transparent;
+  text-decoration: none; display: block;
+}
+.pricing-btn:hover { background: var(--gold); color: var(--obsidian); }
+.pricing-card.featured .pricing-btn { background: var(--gold); color: var(--obsidian); }
+.pricing-disclaimer {
+  text-align: center; margin-top: 48px;
+  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic;
+  color: rgba(253,251,244,0.25);
+}
+
+/* ─── CONSTELLATION / MAP SECTION ─── */
+#celestial { padding: 120px 0; background: var(--obsidian); overflow: hidden; position: relative; }
+.constellation-canvas {
+  position: absolute; inset: 0; z-index: 0;
+}
+.celestial-inner { position: relative; z-index: 2; }
+.celestial-header { text-align: center; margin-bottom: 80px; }
+.celestial-header .section-title { color: var(--white-gold); }
+.celestial-map {
+  width: 100%; max-width: 800px; margin: 0 auto;
+  position: relative; height: 500px;
+}
+.constellation-node {
+  position: absolute; transform: translate(-50%, -50%);
+  cursor: none;
+}
+.node-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 20px var(--gold);
+  transition: all 0.3s ease;
+  animation: nodePulse 2s ease-in-out infinite;
+}
+.constellation-node:hover .node-dot { transform: scale(2); box-shadow: 0 0 40px var(--gold); }
+.node-label {
+  position: absolute; left: 20px; top: -8px; white-space: nowrap;
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.25em;
+  color: var(--gold); opacity: 0; transition: opacity 0.3s;
+}
+.constellation-node:hover .node-label { opacity: 1; }
+.node-tooltip {
+  position: absolute; left: 20px; top: 16px; min-width: 220px;
+  background: rgba(13,11,7,0.95); border: 1px solid rgba(212,175,55,0.3);
+  padding: 16px; pointer-events: none;
+  font-family: 'Cormorant Garamond', serif; font-size: 14px;
+  color: rgba(253,251,244,0.7); line-height: 1.6;
+  opacity: 0; transform: translateY(8px);
+  transition: all 0.3s ease; z-index: 10;
+}
+.constellation-node:hover .node-tooltip { opacity: 1; transform: translateY(0); }
+@keyframes nodePulse { 0%,100%{box-shadow:0 0 10px var(--gold)} 50%{box-shadow:0 0 30px var(--gold-light)} }
+svg.constellation-lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* ─── MARQUEE ─── */
+.marquee-wrapper {
+  overflow: hidden; border-top: 1px solid rgba(212,175,55,0.2);
+  border-bottom: 1px solid rgba(212,175,55,0.2);
+  padding: 20px 0; background: var(--obsidian);
+}
+.marquee-track {
+  display: flex; gap: 60px; animation: marqueeScroll 30s linear infinite;
+  white-space: nowrap;
+}
+.marquee-item {
+  display: flex; align-items: center; gap: 20px;
+  font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.4em;
+  color: rgba(212,175,55,0.5); flex-shrink: 0;
+}
+.marquee-item::before { content: '✦'; color: var(--gold); }
+@keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--obsidian);
+  border-top: 1px solid rgba(212,175,55,0.2);
+  padding: 80px 0 40px;
+}
+.footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px;
+  padding-bottom: 60px; border-bottom: 1px solid rgba(212,175,55,0.1);
+  margin-bottom: 40px;
+}
+.footer-brand {}
+.footer-logo {
+  font-family: 'Cinzel Decorative', serif; font-size: 18px;
+  color: var(--white-gold); letter-spacing: 0.1em; margin-bottom: 16px;
+  display: block;
+}
+.footer-tagline-text {
+  font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic;
+  color: rgba(253,251,244,0.4); line-height: 1.7; margin-bottom: 32px;
+}
+.footer-socials { display: flex; gap: 16px; }
+.social-link {
+  width: 40px; height: 40px; border: 1px solid rgba(212,175,55,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; text-decoration: none; color: var(--gold);
+  transition: all 0.3s ease;
+}
+.social-link:hover { background: var(--gold); color: var(--obsidian); border-color: var(--gold); }
+.footer-col-title {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.4em;
+  color: var(--gold); margin-bottom: 24px; display: block;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-col ul li a {
+  font-family: 'Cormorant Garamond', serif; font-size: 15px;
+  color: rgba(253,251,244,0.45); text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-col ul li a:hover { color: var(--gold); }
+.footer-col ul li .link-note {
+  font-size: 11px; font-style: italic; color: rgba(212,175,55,0.3); margin-left: 6px;
+}
+.footer-bottom {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.footer-copy {
+  font-family: 'Cormorant Garamond', serif; font-size: 13px;
+  color: rgba(253,251,244,0.25); line-height: 1.8;
+}
+.footer-legal { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-legal a {
+  font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.25em;
+  color: rgba(212,175,55,0.35); text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-legal a:hover { color: var(--gold); }
+.footer-disclaimer {
+  width: 100%; text-align: center; margin-top: 24px;
+  font-family: 'Cormorant Garamond', serif; font-size: 11px; font-style: italic;
+  color: rgba(253,251,244,0.15);
+}
+
+/* ─── PARALLAX ORNAMENTS ─── */
+.ornament-fixed {
+  position: fixed; pointer-events: none; z-index: 1; opacity: 0.04; font-size: 400px;
+  line-height: 1;
+}
+.ornament-fixed.left { left: -100px; top: 20vh; }
+.ornament-fixed.right { right: -100px; top: 50vh; }
+
+/* ─── SCROLL ANIMATIONS ─── */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-40px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(40px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+/* ─── TOOLTIP SYSTEM ─── */
+.has-tip { position: relative; }
+.has-tip::after {
+  content: attr(data-tip);
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: var(--obsidian); color: var(--gold);
+  font-family: 'Cormorant Garamond', serif; font-size: 12px; font-style: italic;
+  padding: 8px 14px; border: 1px solid rgba(212,175,55,0.3); white-space: nowrap;
+  opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 999;
+}
+.has-tip:hover::after { opacity: 1; }
+
+/* ─── HIDDEN DRAWERS ─── */
+.hidden-drawer {
+  position: fixed; left: 0; top: 50%; transform: translateY(-50%) translateX(-100%);
+  background: var(--obsidian); border: 1px solid rgba(212,175,55,0.3);
+  padding: 24px; width: 280px; z-index: 500;
+  transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+.hidden-drawer.visible { transform: translateY(-50%) translateX(0); }
+.drawer-title {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.3em;
+  color: var(--gold); margin-bottom: 12px;
+}
+.drawer-text {
+  font-family: 'Cormorant Garamond', serif; font-size: 14px; font-style: italic;
+  color: rgba(253,251,244,0.5); line-height: 1.7;
+}
+.drawer-close {
+  position: absolute; top: 12px; right: 12px; font-size: 18px;
+  color: var(--gold); cursor: none; opacity: 0.5;
+}
+.drawer-close:hover { opacity: 1; }
+
+/* ─── RESPONSIVE (minimal) ─── */
+@media(max-width: 900px) {
+  .philosophy-grid { grid-template-columns: 1fr; }
+  .playlist-trinity { grid-template-columns: 1fr; }
+  .manifesto-grid { grid-template-columns: 1fr; }
+  .manifesto-divider-v { display: none; }
+  .manifesto-col { padding: 0 20px; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  nav { padding: 0 24px; }
+  .section-inner { padding: 0 24px; }
+  .confession { grid-template-columns: 1fr; }
+  .confession-num { display: none; }
+  .hero-laurel-left, .hero-laurel-right { display: none; }
+}
+
+/* ─── GOLDEN GLOW PULSE ─── */
+@keyframes glowPulse {
+  0%,100%{text-shadow:0 0 20px rgba(212,175,55,0.3)}
+  50%{text-shadow:0 0 60px rgba(212,175,55,0.7), 0 0 100px rgba(212,175,55,0.3)}
+}
+
+/* ─── PROGRESS LINE ─── */
+#progress-line {
+  position: fixed; top: 0; left: 0; height: 2px;
+  background: var(--ray-gradient); z-index: 9999;
+  width: 0%; transition: width 0.1s linear;
+}
 </style>
 </head>
 <body>
 
-<!-- POPUP -->
-<div id="popup">
-  <div class="popup-title">STILL HERE?</div>
-  <div class="popup-body">We have exactly 3 playlists.<br>You've been scrolling for a while.<br>We admire the dedication.<br>We don't reciprocate it.</div>
-  <button class="popup-close" onclick="document.getElementById('popup').classList.remove('show')">DISMISS (WE DON'T CARE)</button>
+<!-- Progress Line -->
+<div id="progress-line"></div>
+
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+
+<!-- Loader -->
+<div id="loader">
+  <div id="loader-lyre">𝄞</div>
+  <div id="loader-text">WOYYMASJEMS — APOLLONIAN HARMONICS</div>
+  <div id="loader-bar"><div id="loader-bar-fill"></div></div>
 </div>
+
+<!-- Fixed Background Rays -->
+<div id="rays-bg"></div>
+
+<!-- Ornamental Fixed -->
+<div class="ornament-fixed left">𝄞</div>
+<div class="ornament-fixed right">♆</div>
+
+<!-- Hidden Drawer -->
+<div class="hidden-drawer" id="sideDrawer">
+  <div class="drawer-close" onclick="closeDrawer()">✕</div>
+  <div class="drawer-title">CLASSIFIED INTEL</div>
+  <div class="drawer-text">You've scrolled far enough to deserve the truth. We have three playlists. We are very proud of them. That is all.</div>
+</div>
+
+<!-- ═══════════════════════ NAVIGATION ═══════════════════════ -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">WOYY<span>MAS</span>JEMS</a>
+
+  <!-- RADIAL SUNBURST NAV -->
+  <div class="nav-center">
+    <div id="nav-lyre" onclick="toggleRadial()" data-tip="We Promise This Is Revolutionary">𝄞</div>
+    <div class="radial-menu" id="radialMenu">
+      <div class="radial-item" id="rItem1">
+        <a href="#manifesto">THE DOCTRINE</a>
+      </div>
+      <div class="radial-item" id="rItem2">
+        <a href="#philosophy">OUR PHILOSOPHY</a>
+      </div>
+      <div class="radial-item" id="rItem3">
+        <a href="#playlists">THE TRINITY</a>
+      </div>
+      <div class="radial-item" id="rItem4">
+        <a href="#revelation">CONFESSIONS</a>
+      </div>
+      <div class="radial-item" id="rItem5">
+        <a href="#testimonials">DIVINE REVIEWS</a>
+      </div>
+      <div class="radial-item" id="rItem6">
+        <a href="#pricing">INVESTMENT</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-right">
+    <span class="nav-tagline">Est. MMXXIV — By Appointment to the Gods</span>
+    <a href="#playlists" class="nav-cta has-tip" data-tip="Click If You Dare to Ascend">ASCEND NOW</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section id="hero">
+  <!-- Sound Wave SVG Decorations -->
+  <div class="sound-wave" style="top:15%;left:5%;transform:rotate(-15deg)">
+    <svg width="200" height="60" viewBox="0 0 200 60">
+      <path d="M0,30 Q10,0 20,30 Q30,60 40,30 Q50,0 60,30 Q70,60 80,30 Q90,0 100,30 Q110,60 120,30 Q130,0 140,30 Q150,60 160,30 Q170,0 180,30 Q190,60 200,30" stroke-width="2"/>
+    </svg>
+  </div>
+  <div class="sound-wave" style="bottom:20%;right:5%;transform:rotate(10deg)">
+    <svg width="240" height="80" viewBox="0 0 240 80">
+      <path d="M0,40 Q15,5 30,40 Q45,75 60,40 Q75,5 90,40 Q105,75 120,40 Q135,5 150,40 Q165,75 180,40 Q195,5 210,40 Q225,75 240,40" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <div class="hero-laurel-left">🌿</div>
+  <div class="hero-laurel-right">🌿</div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">APOLLONIAN HARMONICS</div>
+    <h1 class="hero-title">WOYYMASJEMS</h1>
+    <p class="hero-sub">EST. MMXXIV — PURVEYORS OF DIVINE AUDITORY EXPERIENCE</p>
+
+    <div class="hero-divider">
+      <div class="hero-divider-icon">✦</div>
+    </div>
+
+    <p class="hero-tagline">
+      Elevating Human Taste to <strong>Olympian Standards</strong> —<br>
+      Curated Playlists for the Discerning Elite
+    </p>
+
+    <div class="hero-cta-group">
+      <a href="#playlists" class="btn-primary has-tip" data-tip="Three playlists. That's it. That's all.">RECEIVE THE PLAYLISTS</a>
+      <a href="#manifesto" class="btn-secondary has-tip" data-tip="We wrote 4000 words about 3 playlists">OUR DOCTRINE</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span class="scroll-text">DESCEND TO ENLIGHTENMENT</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
 
 <!-- MARQUEE -->
-<div class="marquee-bar">
-  <span class="marquee-inner">
-    ✦ WOYYMASJEMS™ — ELITE CURATORS OF EXACTLY THREE PLAYLISTS SINCE THE DAWN OF INDIFFERENCE ✦ NO CUSTOMER ACCESS ✦ NO EXPANSIONS ✦ NO APOLOGIES ✦ APOLLO APPROVED (ALLEGEDLY) ✦ SPOTIFY IS THAT WAY → ✦ BY APPOINTMENT ONLY (WE DON'T TAKE APPOINTMENTS) ✦ REVOLUTIONIZING MUSIC FOR OURSELVES ✦ ALL RIGHTS HOARDED ✦ DIVINE PLAYLISTS FROM THE MOUNT OLYMPUS OF MEDIOCRITY ✦ THREE PLAYLISTS. THAT'S IT. THAT'S THE WHOLE BUSINESS. ✦ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  </span>
-</div>
-
-<!-- HEADER -->
-<header>
-  <div class="logo-block">
-    <span class="apollo-bust">𓂀</span>
-    <div class="logo-text">WOYYMASJEMS</div>
-    <div class="logo-sub">Music Curation™ / Internal Only</div>
-  </div>
-  <nav>
-    <a href="#">OUR SERVICES <span style="font-size:8px;opacity:0.5">(LTD.)</span>
-      <span class="hover-reveal">We have 3. Count them. Three.</span>
-    </a>
-    <a href="#">ABOUT US <span style="font-size:8px;opacity:0.5">(BARELY)</span>
-      <span class="hover-reveal">A company. Sort of.</span>
-    </a>
-    <a href="#">THE PLAYLISTS <span style="font-size:8px;opacity:0.5">(ALL 3)</span>
-      <span class="hover-reveal">Not for you. But scroll down.</span>
-    </a>
-    <a href="#" onclick="alert('Customer service is not a service we provide. Please contact Spotify, a licensed therapist, or Apollo himself.'); return false;">CONTACT <span style="font-size:8px;opacity:0.5">(DON\'T)</span>
-      <span class="hover-reveal">Ha.</span>
-    </a>
-  </nav>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-eyebrow">⊹ Apollo's Echo Internal Division ⊹ Est. Whenever</div>
-    <h1 class="hero-title">
-      REVOLUTIONIZING
-      <span>MUSIC</span>
-      CURATION...
-      FOR US ALONE
-    </h1>
-    <p class="hero-sub">
-      At Woyymasjems, we have pioneered a groundbreaking paradigm in sonic experience architecture. Our proprietary curation methodology leverages decades of <em>made-up expertise</em> to deliver three—precisely three—elite listening experiences.<br><br>
-      These playlists are ours. They will remain ours. They will never be yours. We are deeply sorry. We are not sorry at all.
-    </p>
-    <a href="#playlists" class="hero-cta">EXPLORE OUR 3 PLAYLISTS<br><small style="font-size:12px;letter-spacing:0.05em">(NO REFUNDS. NO EXPANSIONS.)</small></a>
-    <p class="cta-fine">* Button is decorative. The playlists are also decorative. Everything is fine.</p>
-  </div>
-  <div class="hero-sidebar">
-    <div class="hero-stat">
-      <div class="stat-num">3</div>
-      <div class="stat-label">Total Playlists. Ever.</div>
-      <div class="stat-desc">This number will not change. We have peaked. We have accepted this.</div>
-    </div>
-    <div class="hero-stat">
-      <div class="stat-num">0</div>
-      <div class="stat-label">Customer playlists delivered</div>
-      <div class="stat-desc">We interpret this as a 100% internal satisfaction rate.</div>
-    </div>
-    <div class="hero-stat">
-      <div class="stat-num">∞</div>
-      <div class="stat-label">Years we plan to hoard them</div>
-      <div class="stat-desc">Apollo is eternal. So is our indifference to your music needs.</div>
-    </div>
-    <span class="sunburst">☀</span>
-  </div>
-</section>
-
-<!-- ORACLE BAND -->
-<div class="oracle-band">
-  <span class="lyre-icon">𝄞</span>
-  <div class="oracle-text">DIVINE PLAYLISTS FROM THE MOUNT OLYMPUS OF MEDIOCRITY™</div>
-  <span class="lyre-icon">𝄞</span>
-</div>
-
-<!-- ABOUT STRIP -->
-<div class="about-strip">
-  <div class="about-cell">
-    <div class="about-cell-num">I</div>
-    <h3>OUR VISION</h3>
-    <p>We envision a world where elite sonic curation is reserved exclusively for those who created it—namely, us. Our client-focused approach<br> focuses on zero clients.</p>
-    <div class="reveal-text">⟶ THE VISION IS TO LISTEN TO MUSIC AND CALL IT A BUSINESS.</div>
-  </div>
-  <div class="about-cell">
-    <div class="about-cell-num">II</div>
-    <h3>OUR MISSION</h3>
-    <p>To curate, perfect, and internally consume exactly three musical compositions of grouped audio files, also known as playlists, with zero intention of external distribution. Ever.</p>
-    <div class="reveal-text">⟶ THE MISSION IS VIBES. THAT'S IT. GO HOME.</div>
-  </div>
-  <div class="about-cell">
-    <div class="about-cell-num">III</div>
-    <h3>OUR VALUES</h3>
-    <p>Exclusivity. Integrity. Restraint. A deeply-held corporate conviction that three is both a perfect number and a perfectly convenient excuse not to make more.</p>
-    <div class="reveal-text">⟶ WE ARE LAZY. THIS IS OUR CORE VALUE.</div>
+<div class="marquee-wrapper">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-item">SYNERGISTIC SONIC ECOSYSTEMS</span>
+    <span class="marquee-item">BESPOKE AUDITORY TRANSCENDENCE</span>
+    <span class="marquee-item">DATA-DRIVEN DIVINE INSPIRATION</span>
+    <span class="marquee-item">OMNICHANNEL HARMONIC ALIGNMENT</span>
+    <span class="marquee-item">DISRUPTIVE PLAYLIST INNOVATION</span>
+    <span class="marquee-item">PARADIGM-SHIFTING TONE CURATION</span>
+    <span class="marquee-item">VERTICAL MUSIC INTEGRATION SOLUTIONS</span>
+    <span class="marquee-item">HOLISTIC SONIC BRAND STRATEGY</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="marquee-item">SYNERGISTIC SONIC ECOSYSTEMS</span>
+    <span class="marquee-item">BESPOKE AUDITORY TRANSCENDENCE</span>
+    <span class="marquee-item">DATA-DRIVEN DIVINE INSPIRATION</span>
+    <span class="marquee-item">OMNICHANNEL HARMONIC ALIGNMENT</span>
+    <span class="marquee-item">DISRUPTIVE PLAYLIST INNOVATION</span>
+    <span class="marquee-item">PARADIGM-SHIFTING TONE CURATION</span>
+    <span class="marquee-item">VERTICAL MUSIC INTEGRATION SOLUTIONS</span>
+    <span class="marquee-item">HOLISTIC SONIC BRAND STRATEGY</span>
   </div>
 </div>
 
-<!-- SECTION DIVIDER -->
-<div class="section-divider">— THE SACRED CATALOGUE — THREE PLAYLISTS — FINAL COUNT — DO NOT PETITION FOR MORE —</div>
-
-<!-- PLAYLISTS -->
-<div id="playlists" style="background:var(--black)">
-  <div class="playlists-header">
-    <h2>OUR <em>ENTIRE</em><br>CATALOGUE</h2>
-    <div class="playlist-count-badge">3</div>
-  </div>
-
-  <div class="playlists-grid">
-
-    <!-- PLAYLIST 1 -->
-    <div class="playlist-card">
-      <div class="playlist-card-top" style="background:#1a1a1a">
-        <div class="playlist-num">I</div>
-        <div class="playlist-cover-wrap">
-          <img src="assets/playlist1.png" alt="Class A Cover" class="playlist-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="playlist-cover-fallback">⚡</div>
-        </div>
-        <div class="playlist-title">CLASS A</div>
-        <div class="playlist-subtitle">Strategic Sonic Enhancement Module Alpha</div>
-      </div>
-      <div class="playlist-card-body">
-        <p class="playlist-corp-desc">
-          Our flagship cognitive-amplification soundscape leverages proprietary frequency harmonics to synergize cross-departmental output velocity. Engineered for peak neuro-acoustic performance during high-stakes deliverable execution windows.
+<!-- ═══════════════════════ MANIFESTO ═══════════════════════ -->
+<section id="manifesto">
+  <div class="section-inner">
+    <p class="manifesto-eyebrow">§ I — THE DOCTRINE OF APOLLONIAN HARMONICS</p>
+    <div class="manifesto-grid">
+      <div class="manifesto-col reveal-left">
+        <h2 class="manifesto-headline">
+          Where <em>Sonic Excellence</em><br>Meets Olympian<br>Discernment
+        </h2>
+        <p class="manifesto-body">
+          In an era of <strong>algorithmic mediocrity</strong> and democratized taste, Woyymasjems stands apart as the singular arbiter of auditory excellence. We do not serve the masses. We do not seek scale. We exist to preserve the ancient covenant between <strong>transcendent music</strong> and those worthy of receiving it.
+          <br><br>
+          Founded upon the immutable laws of Apollonian perfection — radiant clarity, mathematical harmony, and the divine proportion — our curation process is less a service and more a <strong>sacred rite</strong>.
         </p>
-        <div class="playlist-truth">
-          ← HOVER TRUTH → It is elevator music. It is the most elevator music that has ever elevated. There is a pan flute. We don't know whose pan flute it is.
+        <div class="manifesto-stat">
+          <div class="manifesto-stat-num">∞</div>
+          <div class="manifesto-stat-label">HOURS SPENT ACHIEVING THREE PERFECT PLAYLISTS</div>
         </div>
-        <div class="playlist-meta">
-          <span class="tag">Internal Only</span>
-          <span class="tag">87% Pan Flute</span>
+      </div>
+      <div class="manifesto-divider-v"></div>
+      <div class="manifesto-col reveal-right">
+        <div class="manifesto-pillars">
+          <div class="pillar">
+            <div class="pillar-icon">☉</div>
+            <div>
+              <div class="pillar-title">APOLLONIAN CLARITY</div>
+              <div class="pillar-body">Every track selected under the full luminance of rational perfection. No guilty pleasures permitted. No commercial considerations tolerated. Only the sunlit ideal.</div>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">♆</div>
+            <div>
+              <div class="pillar-title">HARMONIC SOVEREIGNTY</div>
+              <div class="pillar-body">Our playlists are sovereign entities. They answer to no algorithm, no trend cycle, no democratized preference. They simply <em>are</em>, and you are privileged to listen.</div>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">⚖</div>
+            <div>
+              <div class="pillar-title">DIVINE PROPORTION</div>
+              <div class="pillar-body">Three playlists. Not four. Not two. Three. The trinity of perfect forms. Any more would dilute the sanctity. Any less would be insufficient. We have done the math.</div>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🏛</div>
+            <div>
+              <div class="pillar-title">INSTITUTIONAL GATEKEEPING</div>
+              <div class="pillar-body">Access to superior taste is not a right — it is an earned privilege. Our curators have listened so you don't have to make bad choices. You're welcome.</div>
+            </div>
+          </div>
         </div>
-        <a href="https://open.spotify.com/playlist/45XWeej3Tg12mwu9hdKLJX?si=2ae0283c01224318" target="_blank" class="spotify-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-          LISTEN ON SPOTIFY <span style="font-size:8px;opacity:0.6">(we can't stop you)</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- PLAYLIST 2 -->
-    <div class="playlist-card">
-      <div class="playlist-card-top" style="background:#1a1a1a">
-        <div class="playlist-num">II</div>
-        <div class="playlist-cover-wrap">
-          <img src="assets/playlist2.png" alt="Class B Cover" class="playlist-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="playlist-cover-fallback">⚡</div>
-        </div>
-        <div class="playlist-title">CLASS B</div>
-        <div class="playlist-subtitle">Motivational Paradigm Accelerator Suite B</div>
-      </div>
-      <div class="playlist-card-body">
-        <p class="playlist-corp-desc">
-          A dynamically-curated high-velocity auditory experience designed to catalyze cross-functional momentum and empower stakeholder-facing initiatives with maximum sonic fortitude and guitar-forward leadership.
-        </p>
-        <div class="playlist-truth">
-          ← HOVER TRUTH → It's 80s rock. Exclusively. Someone added two Bonnie Tyler songs and we are at peace with this. Eyes closed, fist raised, no regrets.
-        </div>
-        <div class="playlist-meta">
-          <span class="tag">Internal Only</span>
-          <span class="tag">2x Bonnie Tyler</span>
-        </div>
-        <a href="https://open.spotify.com/playlist/0RYMdI4CWm0HqpBPQl0p6K?si=71ed57b228ea45e2" target="_blank" class="spotify-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-          LISTEN ON SPOTIFY <span style="font-size:8px;opacity:0.6">(we can't stop you)</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- PLAYLIST 3 -->
-    <div class="playlist-card">
-      <div class="playlist-card-top" style="background:#222">
-        <div class="playlist-num">III</div>
-        <div class="playlist-cover-wrap">
-          <img src="assets/playlist3.png" alt="Class C Cover" class="playlist-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="playlist-cover-fallback">🌿</div>
-        </div>
-        <div class="playlist-title">CLASS C</div>
-        <div class="playlist-subtitle">Transcendental Resonance Framework Gamma</div>
-      </div>
-      <div class="playlist-card-body">
-        <p class="playlist-corp-desc">
-          An avant-garde auditory portfolio channelling the oracular frequencies of the divine. Inspired by Apollo's prophetic gift, this suite pushes the boundary of what music can be—and perhaps what music should be.
-        </p>
-        <div class="playlist-truth">
-          ← HOVER TRUTH → It is bird sounds. Forty-seven consecutive minutes of bird sounds. Someone thought they heard a prophecy in the middle. We have not verified this.
-        </div>
-        <div class="playlist-meta">
-          <span class="tag">Internal Only</span>
-          <span class="tag">47 min bird</span>
-        </div>
-        <a href="https://open.spotify.com/playlist/4PpIlJiTPoxaKodXE58bj7?si=4229bdf6007d44f4" target="_blank" class="spotify-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-          LISTEN ON SPOTIFY <span style="font-size:8px;opacity:0.6">(we can't stop you)</span>
-        </a>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- NOTICE BAR -->
-<div class="notice-bar">
-  IMPORTANT CORPORATE NOTICE: These playlists are so elite, we have decided to hoard them forever. Any attempt to request access will be met with dignified silence and possibly a passive-aggressive FAQ.
-</div>
-
-<!-- TESTIMONIALS -->
-<section class="testimonials">
-  <div class="testimonials-label">⊹ What Our Non-Clients Didn't Say ⊹</div>
-  <div class="testimonials-grid">
-
-    <div class="testimonial">
-      <div class="testimonial-quote">"</div>
-      <div class="testimonial-text">
-        "Woyymasjems completely revolutionized my relationship with music. Their three playlists changed everything about my life, my career, and my understanding of the human condition."
-      </div>
-      <div class="testimonial-author">— J. Pemberton, Fictional Client, Definitely Real</div>
-      <div class="testimonial-disclaimer">THIS PERSON DOES NOT EXIST</div>
-    </div>
-
-    <div class="testimonial">
-      <div class="testimonial-quote">"</div>
-      <div class="testimonial-text">
-        "I asked for a custom playlist. They sent me a PDF explaining why that wasn't going to happen. It was the most well-formatted rejection I've ever received. Five stars."
-      </div>
-      <div class="testimonial-author">— Anonymous, Location Unknown</div>
-      <div class="testimonial-disclaimer">THE PDF WAS ALSO FAKE</div>
-    </div>
-
-    <div class="testimonial">
-      <div class="testimonial-quote">"</div>
-      <div class="testimonial-text">
-        "The bird sounds playlist cured my anxiety, aligned my chakras, and taught me three new species of warbler. I have never spoken to anyone at Woyymasjems. I never will."
-      </div>
-      <div class="testimonial-author">— Dr. P. Laurel, Ornithology Enthusiast</div>
-      <div class="testimonial-disclaimer">SAID NO ONE. EVER.</div>
-    </div>
-
-    <div class="testimonial">
-      <div class="testimonial-quote">"</div>
-      <div class="testimonial-text">
-        "I tried to contact their customer service department. The auto-reply said: 'We don't do that here. Try Spotify.' I respect the honesty. Truly a visionary company."
-      </div>
-      <div class="testimonial-author">— H. Thrace, Former Optimist</div>
-      <div class="testimonial-disclaimer">THE AUTO-REPLY IS REAL THOUGH</div>
-    </div>
-
-    <div class="testimonial">
-      <div class="testimonial-quote">"</div>
-      <div class="testimonial-text">
-        "As a god of music myself, I find Woyymasjems' restraint deeply offensive yet paradoxically admirable. The elevator music, however, must be destroyed."
-      </div>
-      <div class="testimonial-author">— Apollo, Greek Deity, Olympus Heights</div>
-      <div class="testimonial-disclaimer">WE CANNOT CONFIRM APOLLO'S ENDORSEMENT</div>
-    </div>
-
-    <div class="testimonial">
-      <div class="testimonial-quote">"</div>
-      <div class="testimonial-text">
-        "This changed my life—" [TESTIMONIAL ENDS HERE. WE RAN OUT OF ENTHUSIASM. PLEASE SEE SPOTIFY FOR CONTINUED SERVICE.]
-      </div>
-      <div class="testimonial-author">— Unknown, Somewhere</div>
-      <div class="testimonial-disclaimer">...SAID NO ONE EVER</div>
-    </div>
-
-  </div>
-</section>
-
-<!-- CHAOS SECTION -->
-<section class="chaos-section">
-  <h2>WHY CHOOSE US<br><span style="color:var(--gold);-webkit-text-stroke:1px var(--gold);color:transparent">GREAT QUESTION</span></h2>
-
-  <div class="chaos-grid">
-    <div class="chaos-item">
-      <div class="chaos-title">WORLD-CLASS SERVICE</div>
-      <div class="chaos-body">
-        We deliver <s>customer support</s> a dignified redirect to Spotify. Our team is <s>standing by 24/7</s> not standing by at all. Customer satisfaction is our <s>top priority</s> <span class="redacted">none of our priorities</span>.
-      </div>
-    </div>
-    <div class="chaos-item">
-      <div class="chaos-title">INNOVATIVE SOLUTIONS</div>
-      <div class="chaos-body">
-        Our <s>cutting-edge AI curation technology</s> guy with a laptop selected these songs over a long weekend. We use <s>machine learning</s> <span class="redacted">a YouTube shuffle button</span> to ensure optimal sonic alignment.
-      </div>
-    </div>
-    <div class="chaos-item">
-      <div class="chaos-title">SCALABLE INFRASTRUCTURE</div>
-      <div class="chaos-body">
-        Our platform is <s>infinitely scalable</s> a shared folder. We are <s>prepared for enterprise-level demand</s> deeply unprepared. Our <s>robust pipeline</s> <span class="redacted">has three playlists in it. Please stop asking.</span>
-      </div>
-    </div>
-    <div class="chaos-item">
-      <div class="chaos-title">CLIENT-FOCUSED CURATION</div>
-      <div class="chaos-body">
-        Every playlist is crafted with <s>our clients' needs at heart</s> no clients in mind whatsoever. We are <s>listening to your feedback</s> <span class="redacted">aggressively not reading our emails</span>.
       </div>
     </div>
   </div>
 </section>
 
-<!-- TYPO SECTION -->
-<section class="typo-section">
-  <div class="typo-content">
-    <h2 class="typo-large">
-      <span class="glitch" data-text="EXCELLENCE">EXCELLENCE</span> IN EVERYTHING
-      <br>WE <span class="glitch" data-text="DO FOR OURSELVES">DO FOR OURSELVES</span>
-    </h2>
-    <p class="typo-body">
-      As a company, we have committed fully to a philosophy of selective excellence—excellent for us, nonexistent for everyone else. We beleive [<em>sic</em>] in the power of muzik [<em>sic</em>] to transform the internall [<em>sic</em>] corporate environment.
-      <br><br>
-      Our qualety [<em>sic</em>] assurance team has reviewd [<em>sic</em>] all three playlists and confirms: they are fine. They're fine. The birds are fine. The elevator is fine. Bonnie Tyler is eternal.
-    </p>
-    <p class="typo-error">
-      ERROR: Additional playlists were attempted in Q3 2024.<br>
-      <span>STATUS: Abandoned. We got tired.</span><br>
-      ERROR: Customer-facing version planned for 2025.<br>
-      <span>STATUS: Postponed indefinitely. See Apollo for ETA.</span>
+<!-- ═══════════════════════ PHILOSOPHY (BUZZWORDS) ═══════════════════════ -->
+<section id="philosophy">
+  <div class="section-inner">
+    <div class="philosophy-header reveal">
+      <span class="section-label">§ II — STRATEGIC SONIC POSITIONING</span>
+      <h2 class="section-title">Our <em>Proprietary</em> Methodology</h2>
+      <p class="section-subtitle">A rigorously developed framework for auditory excellence, backed by divine inspiration and absolutely no data.</p>
+    </div>
+    <div class="philosophy-grid">
+      <div class="philosophy-card reveal">
+        <div class="philosophy-card-icon">🔱</div>
+        <div class="philosophy-card-title">SYNERGISTIC SONIC ECOSYSTEM DEVELOPMENT</div>
+        <div class="philosophy-card-body">We leverage cross-dimensional harmonic touchpoints to architect immersive aural journeys that resonate with the discerning listener's highest vibrational frequency and brand identity aspirations.</div>
+        <div class="philosophy-card-sarcasm">Translation: We listened to a lot of music and kept the good stuff.</div>
+      </div>
+      <div class="philosophy-card reveal" style="transition-delay:0.1s">
+        <div class="philosophy-card-icon">🌐</div>
+        <div class="philosophy-card-title">OMNICHANNEL TASTE ARCHITECTURE</div>
+        <div class="philosophy-card-body">Through deep neural aesthetic profiling and proprietary Apollonian resonance mapping, we identify the precise sonic coordinates of transcendence across all experiential verticals and preference matrices.</div>
+        <div class="philosophy-card-sarcasm">We have one channel: Spotify. One channel is enough when you're this good.</div>
+      </div>
+      <div class="philosophy-card reveal" style="transition-delay:0.2s">
+        <div class="philosophy-card-icon">📊</div>
+        <div class="philosophy-card-title">DATA-DRIVEN DIVINE INSPIRATION</div>
+        <div class="philosophy-card-body">Harnessing both quantitative celestial analytics and qualitative olympian insight, our curators synthesize multi-modal sensory data streams into singularly perfect playlist experiences.</div>
+        <div class="philosophy-card-sarcasm">The data is vibes. The divinity is also vibes. Vibes are data.</div>
+      </div>
+      <div class="philosophy-card reveal" style="transition-delay:0.1s">
+        <div class="philosophy-card-icon">♾</div>
+        <div class="philosophy-card-title">SCALABLE TRANSCENDENCE DELIVERY</div>
+        <div class="philosophy-card-body">Our proprietary SaaS-adjacent (Sounds as a Service) model ensures frictionless deployment of superior auditory content across all compatible listening infrastructure and consciousness platforms.</div>
+        <div class="philosophy-card-sarcasm">It's a Spotify link. It is extremely scalable. Zero servers required.</div>
+      </div>
+      <div class="philosophy-card reveal" style="transition-delay:0.2s">
+        <div class="philosophy-card-icon">🎯</div>
+        <div class="philosophy-card-title">HYPER-TARGETED AESTHETIC PRECISION</div>
+        <div class="philosophy-card-body">Employing next-generation AI-adjacent human intuition, we achieve unparalleled granularity in taste segmentation, delivering bespoke sonic profiles to each tier of the Apollonian listener hierarchy.</div>
+        <div class="philosophy-card-sarcasm">We made three playlists. Class A, B, and C. That's the segmentation.</div>
+      </div>
+      <div class="philosophy-card reveal" style="transition-delay:0.3s">
+        <div class="philosophy-card-icon">🏆</div>
+        <div class="philosophy-card-title">THOUGHT LEADERSHIP THROUGH AUDITORY GATEKEEPING</div>
+        <div class="philosophy-card-body">As the definitive authority on sonic excellence, Woyymasjems assumes fiduciary responsibility for the global taste ecosystem, stewarding humanity's auditory future with appropriate gravity and self-regard.</div>
+        <div class="philosophy-card-sarcasm">We take this very seriously. Possibly too seriously. Probably too seriously.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ PLAYLISTS ═══════════════════════ -->
+<section id="playlists">
+  <div class="section-inner">
+    <div class="playlists-header reveal">
+      <span class="section-label" style="color:var(--gold)">§ III — THE HOLY TRINITY OF PLAYLISTS</span>
+      <h2 class="section-title" style="color:var(--white-gold)">Three Playlists.<br><em>No More. No Less.</em></h2>
+      <p class="section-subtitle" style="color:rgba(253,251,244,0.45)">We curate exactly three (3) perfect playlists for ourselves and refuse to do more because excellence cannot be commodified.</p>
+    </div>
+
+    <div class="playlist-trinity">
+
+      <!-- CLASS A -->
+      <div class="playlist-card reveal-left">
+        <div class="playlist-cover">
+          <img class="playlist-cover-img"
+               src="playlist1.png"
+               alt="Class A Playlist Cover"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="playlist-cover-placeholder" style="display:none;">🔱</div>
+          <div class="playlist-cover-overlay"></div>
+          <div class="playlist-cover-glyph">☉</div>
+          <div class="playlist-class-badge">CLASS A</div>
+        </div>
+        <div class="playlist-info">
+          <div class="playlist-class-label">TIER I — APOLLONIAN APEX</div>
+          <h3 class="playlist-name">The Olympian Collection</h3>
+          <p class="playlist-desc">Reserved for those who have transcended ordinary auditory experience. These tracks were approved by a council of immortals (us) after extensive deliberation lasting several eternities.</p>
+          <div class="playlist-meta">
+            <span>✦ DIVINE GRADE</span>
+            <span>✦ CURATED BY GODS</span>
+          </div>
+          <a href="https://open.spotify.com/playlist/45XWeej3Tg12mwu9hdKLJX?si=2ae0283c01224318"
+             target="_blank" class="playlist-link" data-tooltip="We Promise This Is Worth It">
+            <span>OPEN IN SPOTIFY</span>
+            <span>→</span>
+          </a>
+          <div class="playlist-sarcasm">Not for the faint of ear</div>
+        </div>
+      </div>
+
+      <!-- CLASS B -->
+      <div class="playlist-card reveal" style="transition-delay:0.15s">
+        <div class="playlist-cover">
+          <img class="playlist-cover-img"
+               src="playlist2.png"
+               alt="Class B Playlist Cover"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="playlist-cover-placeholder" style="display:none;">⚡</div>
+          <div class="playlist-cover-overlay"></div>
+          <div class="playlist-cover-glyph">♆</div>
+          <div class="playlist-class-badge">CLASS B</div>
+        </div>
+        <div class="playlist-info">
+          <div class="playlist-class-label">TIER II — DEMIGOD FREQUENCY</div>
+          <h3 class="playlist-name">The Delphi Selection</h3>
+          <p class="playlist-desc">For those on the ascent. Still aspiring, but showing sufficient promise. Consider this your initiation into the harmonic mysteries. We are watching your progress.</p>
+          <div class="playlist-meta">
+            <span>✦ ELEVATED GRADE</span>
+            <span>✦ ORACLE APPROVED</span>
+          </div>
+          <a href="https://open.spotify.com/playlist/0RYMdI4CWm0HqpBPQl0p6K?si=71ed57b228ea45e2"
+             target="_blank" class="playlist-link" data-tooltip="You're Almost Worthy">
+            <span>OPEN IN SPOTIFY</span>
+            <span>→</span>
+          </a>
+          <div class="playlist-sarcasm">You'll understand it someday</div>
+        </div>
+      </div>
+
+      <!-- CLASS C -->
+      <div class="playlist-card reveal-right" style="transition-delay:0.3s">
+        <div class="playlist-cover">
+          <img class="playlist-cover-img"
+               src="playlist3.png"
+               alt="Class C Playlist Cover"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="playlist-cover-placeholder" style="display:none;">🌿</div>
+          <div class="playlist-cover-overlay"></div>
+          <div class="playlist-cover-glyph">🏛</div>
+          <div class="playlist-class-badge">CLASS C</div>
+        </div>
+        <div class="playlist-info">
+          <div class="playlist-class-label">TIER III — MORTAL GATEWAY</div>
+          <h3 class="playlist-name">The Mortal Threshold</h3>
+          <p class="playlist-desc">We graciously offer this playlist to general humanity as a gesture of benevolence. Do not mistake its accessibility for diminished quality. It is still vastly superior to whatever you were listening to before.</p>
+          <div class="playlist-meta">
+            <span>✦ MORTAL GRADE</span>
+            <span>✦ ACCESSIBLE DIVINITY</span>
+          </div>
+          <a href="https://open.spotify.com/playlist/4PpIlJiTPoxaKodXE58bj7?si=4229bdf6007d44f4"
+             target="_blank" class="playlist-link" data-tooltip="Start Here, Mortal">
+            <span>OPEN IN SPOTIFY</span>
+            <span>→</span>
+          </a>
+          <div class="playlist-sarcasm">Still better than your shuffle</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:40px;font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:rgba(212,175,55,0.4);">
+      * Customer requests for additional playlists are politely declined since 2024. This policy is final and non-negotiable and we have zero regrets.
     </p>
   </div>
 </section>
 
-<!-- FINE PRINT -->
-<section class="fine-print-section">
-  <h3>IMPORTANT DISCLAIMERS</h3>
-  <div class="fine-print-body">
-    <strong>PLAYLIST EXCLUSIVITY NOTICE:</strong> By viewing this website you acknowledge that the playlists described herein are the exclusive intellectual and spiritual property of Woyymasjems LLC and Apollo's Echo Internal Division, a fictional subsidiary. Any attempt to request, license, stream, hum, or spiritually access these playlists without written authorization (which will not be granted) constitutes a breach of vibes. <strong>REGARDING CUSTOMER SERVICE:</strong> Woyymasjems does not provide, offer, imply, or dream about customer service. If you are experiencing a music emergency, please contact Spotify, Apple Music, or the nearest oracle. We are not responsible for oracle accuracy. <strong>REGARDING THE PLAYLISTS THEMSELVES:</strong> Playlist 1 (Ambient Vibes) contains a pan flute of unknown origin. We have accepted this. Playlist 2 (Epic Anthems) was tested on zero focus groups because we have no groups to focus. Playlist 3 (Mystical Melodies) consists of 47 minutes of recorded birdsong. At minute 31, something unusual was captured. We do not discuss this. <strong>DIVINE ENDORSEMENT NOTICE:</strong> Any reference to Apollo, Greek deity of music, sun, and prophecy, is satirical and does not constitute divine endorsement of our services. However, we remain open to the possibility. <strong>EXPANSION POLICY:</strong> There will be no Playlist 4. This is final. This is policy. This is also frankly a relief. <strong>DATA POLICY:</strong> We collect your data. We then ignore it entirely. It sits in a folder next to Playlist 3. No one opens either. <strong>BY READING THIS:</strong> You agree to nothing. Absolutely nothing. This is legally meaningless. Have a good day. Or don't. We're a playlist company. What do you want from us.
+<!-- ═══════════════════════ CONSTELLATION MAP ═══════════════════════ -->
+<section id="celestial">
+  <canvas class="constellation-canvas" id="starCanvas"></canvas>
+  <div class="celestial-inner section-inner">
+    <div class="celestial-header reveal">
+      <span class="section-label" style="color:var(--gold)">§ IV — THE OLYMPIAN TOPOLOGY</span>
+      <h2 class="section-title">Navigate Our<br><em>Sonic Universe</em></h2>
+    </div>
+    <div class="celestial-map" id="celestialMap">
+      <svg class="constellation-lines" id="constLines"></svg>
+
+      <div class="constellation-node" style="left:50%;top:20%">
+        <div class="node-dot"></div>
+        <div class="node-label">MOUNT OLYMPUS</div>
+        <div class="node-tooltip">The apex. Class A resides here. Not everyone makes it.</div>
+      </div>
+      <div class="constellation-node" style="left:25%;top:40%">
+        <div class="node-dot"></div>
+        <div class="node-label">DELPHI</div>
+        <div class="node-tooltip">The oracle's domain. Class B playlist lives here. Seek wisdom.</div>
+      </div>
+      <div class="constellation-node" style="left:75%;top:40%">
+        <div class="node-dot"></div>
+        <div class="node-label">ELYSIUM</div>
+        <div class="node-tooltip">The blessed fields. Reserved for those who truly listened.</div>
+      </div>
+      <div class="constellation-node" style="left:15%;top:70%">
+        <div class="node-dot"></div>
+        <div class="node-label">THE THRESHOLD</div>
+        <div class="node-tooltip">Where mortals begin. Class C awaits here. Start your journey.</div>
+      </div>
+      <div class="constellation-node" style="left:85%;top:70%">
+        <div class="node-dot"></div>
+        <div class="node-label">TEMPLE OF APOLLO</div>
+        <div class="node-tooltip">Where the curation happens. Entry: by divine appointment only.</div>
+      </div>
+      <div class="constellation-node" style="left:50%;top:80%">
+        <div class="node-dot"></div>
+        <div class="node-label">THE AGORA</div>
+        <div class="node-tooltip">Where lesser playlists are rejected. We come here often.</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-top">
-    <div class="footer-col">
-      <div class="footer-col-title">WOYYMASJEMS™</div>
-      <p class="footer-about">
-        Apollo's Echo Internal Division.<br>
-        Curators of Exactly Three Things.<br>
-        Not For You. Not For Anyone.<br>
-        Deeply Sorry. Not Sorry.<br><br>
-        ☀ Blessed by an indifferent sun.<br>
-        𝄞 Endorsed by a lyre that won't tune.<br>
-        𓂀 Watched over by a pixelated bust.
+<!-- MARQUEE 2 -->
+<div class="marquee-wrapper">
+  <div class="marquee-track" style="animation-direction:reverse">
+    <span class="marquee-item">CUSTOMER REQUESTS? POLITELY DECLINED SINCE 2024</span>
+    <span class="marquee-item">OUR MISSION: TO GATEKEEP GOOD TASTE FROM THE MASSES</span>
+    <span class="marquee-item">WE CURATE THREE PLAYLISTS AND REFUSE TO DO MORE</span>
+    <span class="marquee-item">NOT ACTUALLY AVAILABLE FOR HIRE</span>
+    <span class="marquee-item">EXCELLENCE CANNOT BE COMMODIFIED</span>
+    <span class="marquee-item">WE ARE TOO BUSY BEING SUPERIOR</span>
+    <!-- Duplicate -->
+    <span class="marquee-item">CUSTOMER REQUESTS? POLITELY DECLINED SINCE 2024</span>
+    <span class="marquee-item">OUR MISSION: TO GATEKEEP GOOD TASTE FROM THE MASSES</span>
+    <span class="marquee-item">WE CURATE THREE PLAYLISTS AND REFUSE TO DO MORE</span>
+    <span class="marquee-item">NOT ACTUALLY AVAILABLE FOR HIRE</span>
+    <span class="marquee-item">EXCELLENCE CANNOT BE COMMODIFIED</span>
+    <span class="marquee-item">WE ARE TOO BUSY BEING SUPERIOR</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════ SARCASM REVELATION ═══════════════════════ -->
+<section id="revelation">
+  <div class="section-inner">
+    <div class="revelation-header reveal">
+      <span class="revelation-label">§ V — CONFESSIONS OF APOLLONIAN HARMONICS</span>
+      <h2 class="revelation-title">The Truth,<br>Delivered With<br>Appropriate Superiority</h2>
+    </div>
+    <div class="confessions">
+      <div class="confession">
+        <div class="confession-num">01</div>
+        <div class="confession-content">
+          <div class="confession-title">ON SCOPE</div>
+          <div class="confession-text">We curate exactly <strong>three (3) perfect playlists</strong> for ourselves and refuse to do more, because excellence cannot be commodified and also we are very comfortable.</div>
+          <div class="confession-footnote">* This is not laziness. This is philosophy.</div>
+        </div>
+      </div>
+      <div class="confession">
+        <div class="confession-num">02</div>
+        <div class="confession-content">
+          <div class="confession-title">ON CLIENTELE</div>
+          <div class="confession-text"><strong>Customer requests?</strong> Politely declined since 2024. If you have to ask what's on the playlist, you are not ready for what is on the playlist.</div>
+          <div class="confession-footnote">* We have never had a customer. We consider this a success.</div>
+        </div>
+      </div>
+      <div class="confession">
+        <div class="confession-num">03</div>
+        <div class="confession-content">
+          <div class="confession-title">ON MISSION</div>
+          <div class="confession-text">Our mission: To <strong>gatekeep good taste</strong> from the masses, because democratized access to superior music only dilutes its transformative potency and honestly the queue is long enough.</div>
+          <div class="confession-footnote">* Why pay for playlists when we already decided the best ones exist?</div>
+        </div>
+      </div>
+      <div class="confession">
+        <div class="confession-num">04</div>
+        <div class="confession-content">
+          <div class="confession-title">ON AVAILABILITY</div>
+          <div class="confession-text">Not actually available for hire — <strong>we're too busy being superior.</strong> Should this change, we will announce it through channels you probably don't have access to.</div>
+          <div class="confession-footnote">* Not actually available for hire. We promise.</div>
+        </div>
+      </div>
+      <div class="confession">
+        <div class="confession-num">05</div>
+        <div class="confession-content">
+          <div class="confession-title">ON PRICING</div>
+          <div class="confession-text">Our pricing structure is elegantly simple: <strong>Infinite for you, free for us.</strong> This reflects our fundamental belief that the value of perfect taste transcends conventional monetary frameworks.</div>
+          <div class="confession-footnote">* The playlists are literally free. It's Spotify.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ TESTIMONIALS ═══════════════════════ -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="testimonials-header reveal">
+      <span class="section-label">§ VI — DIVINE ENDORSEMENTS</span>
+      <h2 class="section-title">What the <em>Gods</em> Say</h2>
+      <p class="section-subtitle">Unsolicited testimonials from verified deities and mythological entities. All quotes are authentic, real, and not made up at all.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-deity">
+          <div class="deity-icon">⚡</div>
+          <div>
+            <div class="deity-name">ZEUS OLYMPIOS</div>
+            <div class="deity-title">King of the Gods, Thunder Sovereign</div>
+          </div>
+        </div>
+        <p class="testimonial-text">"Finally, music worthy of thunder. I have destroyed civilizations for lesser playlists. The Class A collection? Acceptable."</p>
+        <div class="testimonial-rating">★★★★★</div>
+        <div class="testimonial-verified">✦ VERIFIED DEITY — MOUNT OLYMPUS, GR</div>
+      </div>
+      <div class="testimonial-card reveal" style="transition-delay:0.1s">
+        <div class="testimonial-deity">
+          <div class="deity-icon">☉</div>
+          <div>
+            <div class="deity-name">APOLLO PHOEBUS</div>
+            <div class="deity-title">God of Music, Light & Prophecy</div>
+          </div>
+        </div>
+        <p class="testimonial-text">"I literally invented music. These playlists are the first thing I've heard since antiquity that doesn't make me wince. You may continue existing."</p>
+        <div class="testimonial-rating">★★★★★</div>
+        <div class="testimonial-verified">✦ VERIFIED GOD — DELPHI ORACLE COMPLEX</div>
+      </div>
+      <div class="testimonial-card reveal" style="transition-delay:0.2s">
+        <div class="testimonial-deity">
+          <div class="deity-icon">🦅</div>
+          <div>
+            <div class="deity-name">HERMES TRISMEGISTUS</div>
+            <div class="deity-title">Messenger of Gods, Speed Curator</div>
+          </div>
+        </div>
+        <p class="testimonial-text">"I move between worlds at the speed of thought. Nothing has made me pause — until the Class B playlist. I stayed for three songs. That is geological time for me."</p>
+        <div class="testimonial-rating">★★★★★</div>
+        <div class="testimonial-verified">✦ VERIFIED MESSENGER — CROSSROADS, COSMOS</div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="testimonial-deity">
+          <div class="deity-icon">🌊</div>
+          <div>
+            <div class="deity-name">POSEIDON EARTHSHAKER</div>
+            <div class="deity-title">God of Seas, Earthquakes & Playlists</div>
+          </div>
+        </div>
+        <p class="testimonial-text">"I caused seventeen floods listening to substandard music. Since discovering Woyymasjems, the floods have decreased to a manageable four per annum. Improvement noted."</p>
+        <div class="testimonial-rating">★★★★★</div>
+        <div class="testimonial-verified">✦ VERIFIED DEITY — AEGEAN SEA, DEEP</div>
+      </div>
+      <div class="testimonial-card reveal" style="transition-delay:0.1s">
+        <div class="testimonial-deity">
+          <div class="deity-icon">🌙</div>
+          <div>
+            <div class="deity-name">ARTEMIS PHOEBE</div>
+            <div class="deity-title">Goddess of the Hunt, Moon Curator</div>
+          </div>
+        </div>
+        <p class="testimonial-text">"I hunt alone. I curate alone. I appreciate that Woyymasjems understands the sanctity of doing three things extremely well rather than many things adequately."</p>
+        <div class="testimonial-rating">★★★★★</div>
+        <div class="testimonial-verified">✦ VERIFIED HUNTRESS — ARTEMISION, EPHESUS</div>
+      </div>
+      <div class="testimonial-card reveal" style="transition-delay:0.2s">
+        <div class="testimonial-deity">
+          <div class="deity-icon">🍷</div>
+          <div>
+            <div class="deity-name">DIONYSUS BACCHUS</div>
+            <div class="deity-title">God of Festivity, Ecstasy & Reviews</div>
+          </div>
+        </div>
+        <p class="testimonial-text">"I have been to every party since the dawn of time. The music is always wrong. Class C playlist is the first thing I've heard that made me want to stay sober. Alarming. Wonderful."</p>
+        <div class="testimonial-rating">★★★★★</div>
+        <div class="testimonial-verified">✦ VERIFIED REVELLER — WHEREVER THE PARTY IS</div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:48px;font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--text-mid);">
+      * All testimonials are real. The deities involved cannot be reached for comment as they are gods.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════ PRICING ═══════════════════════ -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="pricing-header reveal">
+      <span class="section-label" style="color:var(--gold)">§ VII — THE INVESTMENT TIERS</span>
+      <h2 class="section-title" style="color:var(--white-gold)">Pricing as <em>Philosophical</em> Statement</h2>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(253,251,244,0.4);text-align:center;margin-top:16px;">
+        We have given considerable thought to our pricing. Here is what we decided.
       </p>
     </div>
-    <div class="footer-col">
-      <div class="footer-col-title">QUICK LINKS</div>
-      <ul class="footer-links">
-        <li><a href="#">The 3 Playlists</a></li>
-        <li><a href="#">About (Barely)</a></li>
-        <li><a href="#" onclick="alert('We do not offer services to the public. We barely offer them to ourselves.'); return false;">Services (Ha)</a></li>
-        <li><a href="#" onclick="alert('FAQ: Q: Can I access the playlists? A: No. Q: Will you ever make more? A: No. Q: Why not? A: Three is enough. Three is everything.'); return false;">FAQ (1 Answer)</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-title">LEGAL (SORT OF)</div>
-      <ul class="footer-links">
-        <li><a href="#" onclick="alert('Privacy Policy: We don\'t care about your data. It\'s in a folder. We haven\'t opened it. Thank you for your privacy.'); return false;">Privacy Policy (We Don't Care)</a></li>
-        <li><a href="#" onclick="alert('TERMS OF SERVICE: By reading this, you agree to nothing. Nothing at all. Good day.'); return false;">Terms of Service (Nothing)</a></li>
-        <li><a href="#">Refund Policy (Impossible)</a></li>
-        <li><a href="#">Cookie Policy (What Cookies)</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-title">REACH US (DON'T)</div>
-      <div class="social-icons">
-        <a href="https://whatsapp.com/channel/0029VbBf38LB4hdSqbyGC51e" target="_blank" class="social-btn social-btn-live">WHATSAPP<br><span style="color:var(--neon);font-size:8px">(non-complaints only)</span></a>
-        <a href="https://discord.com/invite/CQFPydd9Wx" target="_blank" class="social-btn social-btn-live">DISCORD<br><span style="color:var(--neon);font-size:8px">(our echo chamber)</span></a>
-        <a href="#" class="social-btn" title="Goes nowhere" onclick="alert('This link goes nowhere. Much like our company vision.'); return false;">TWITTER<br>(abandoned)</a>
-        <a href="#" class="social-btn" title="Also goes nowhere" onclick="alert('3 posts. 2 are the same photo. We regret nothing.'); return false;">INSTAGRAM<br>(3 posts)</a>
+    <div class="pricing-grid">
+      <div class="pricing-card reveal-left">
+        <div class="pricing-badge">FOR MORTALS</div>
+        <div class="pricing-name">The Threshold</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:15px;color:rgba(253,251,244,0.4);font-style:italic;">Access to Class C. A generous gift.</p>
+        <div class="pricing-amount"><span></span>Free</div>
+        <div class="pricing-period">Because it's Spotify, obviously</div>
+        <ul class="pricing-features">
+          <li>Class C Playlist Access</li>
+          <li>The privilege of our taste</li>
+          <li>Bragging rights (limited)</li>
+          <li>Zero customer support</li>
+          <li>Our silent judgement, always</li>
+        </ul>
+        <a href="https://open.spotify.com/playlist/4PpIlJiTPoxaKodXE58bj7?si=4229bdf6007d44f4"
+           target="_blank" class="pricing-btn">BEGIN YOUR ASCENT</a>
+      </div>
+      <div class="pricing-card featured reveal">
+        <div class="pricing-badge">FOR THE ASCENDING</div>
+        <div class="pricing-name">The Delphi Tier</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:15px;color:rgba(253,251,244,0.6);font-style:italic;">Classes B & C. You've earned this.</p>
+        <div class="pricing-amount" style="font-size:40px;padding-top:10px">Also<br>Free</div>
+        <div class="pricing-period">Spotify continues to be free</div>
+        <ul class="pricing-features">
+          <li>Class B + C Playlist Access</li>
+          <li>Implied social sophistication</li>
+          <li>Elevated listening posture</li>
+          <li>Zero customer support (firm)</li>
+          <li>Our grudging respect</li>
+        </ul>
+        <a href="https://open.spotify.com/playlist/0RYMdI4CWm0HqpBPQl0p6K?si=71ed57b228ea45e2"
+           target="_blank" class="pricing-btn">CLAIM YOUR TIER</a>
+      </div>
+      <div class="pricing-card reveal-right">
+        <div class="pricing-badge">FOR THE DIVINE</div>
+        <div class="pricing-name">The Olympian</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:15px;color:rgba(253,251,244,0.4);font-style:italic;">All three. The complete trinity.</p>
+        <div class="pricing-amount" style="font-size:30px;padding-top:10px">Still<br>Actually<br>Free</div>
+        <div class="pricing-period">We cannot stress this enough</div>
+        <ul class="pricing-features">
+          <li>All Three Sacred Playlists</li>
+          <li>Full Apollonian immersion</li>
+          <li>Honorary divine classification</li>
+          <li>Zero customer support (eternal)</li>
+          <li>Our maximum available approval</li>
+        </ul>
+        <a href="https://open.spotify.com/playlist/45XWeej3Tg12mwu9hdKLJX?si=2ae0283c01224318"
+           target="_blank" class="pricing-btn">ACHIEVE TRANSCENDENCE</a>
       </div>
     </div>
+    <p class="pricing-disclaimer">
+      * Pricing is subject to change in the event that we decide money is interesting after all.<br>
+      Currently, we do not find money interesting. The playlists remain free. This is unlikely to change.
+    </p>
   </div>
-  <div class="footer-bottom">
-    <div class="copyright">© 2026 Apollo's Echo — All Rights Reserved (To Ourselves) — Woyymasjems™ is a registered trademark of Not Your Business Inc.</div>
-    <div class="footer-tagline">THREE PLAYLISTS. ZERO REGRETS. INFINITE INDIFFERENCE.</div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">𝄞 WOYYMASJEMS</span>
+        <p class="footer-tagline-text">
+          Apollonian Harmonics Division<br>
+          Purveyors of Superior Auditory Experience<br>
+          <em>Est. MMXXIV — Not Available for Hire</em>
+        </p>
+        <div class="footer-socials">
+          <a href="https://whatsapp.com/channel/0029VbBf38LB4hdSqbyGC51e"
+             target="_blank" class="social-link has-tip" data-tip="Join for Divine Updates">☿</a>
+          <a href="https://discord.com/invite/CQFPydd9Wx"
+             target="_blank" class="social-link has-tip" data-tip="For the Chosen Few">⚡</a>
+          <a href="https://open.spotify.com/playlist/45XWeej3Tg12mwu9hdKLJX?si=2ae0283c01224318"
+             target="_blank" class="social-link has-tip" data-tip="The Sacred Archive">♪</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-col-title">SACRED LINKS</span>
+        <ul>
+          <li><a href="#manifesto">The Doctrine</a></li>
+          <li><a href="#philosophy">Our Philosophy <span class="link-note">(corporate)</span></a></li>
+          <li><a href="#playlists">The Trinity</a></li>
+          <li><a href="#revelation">Confessions</a></li>
+          <li><a href="#testimonials">Divine Reviews</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-col-title">THE PLAYLISTS</span>
+        <ul>
+          <li><a href="https://open.spotify.com/playlist/45XWeej3Tg12mwu9hdKLJX?si=2ae0283c01224318" target="_blank">Class A — Olympian</a></li>
+          <li><a href="https://open.spotify.com/playlist/0RYMdI4CWm0HqpBPQl0p6K?si=71ed57b228ea45e2" target="_blank">Class B — Delphi</a></li>
+          <li><a href="https://open.spotify.com/playlist/4PpIlJiTPoxaKodXE58bj7?si=4229bdf6007d44f4" target="_blank">Class C — Threshold</a></li>
+          <li><a href="#" onclick="return false;">Class D <span class="link-note">(does not exist)</span></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-col-title">COMMUNITY</span>
+        <ul>
+          <li><a href="https://whatsapp.com/channel/0029VbBf38LB4hdSqbyGC51e" target="_blank">WhatsApp Channel <span class="link-note">(divine updates)</span></a></li>
+          <li><a href="https://discord.com/invite/CQFPydd9Wx" target="_blank">Discord Server <span class="link-note">(chosen few)</span></a></li>
+          <li><a href="#" onclick="return false;">Newsletter <span class="link-note">(not real)</span></a></li>
+          <li><a href="#" onclick="return false;">Careers <span class="link-note">(closed eternally)</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">
+        © 2026 Apollonian Harmonics | Empowering Excellence | All Playlists Reserved<br>
+        <em>A subsidiary of Mount Olympus Creative Group — Operated from a Location We Won't Disclose</em>
+      </p>
+      <div class="footer-legal">
+        <a href="#" onclick="return false;">Privacy Policy <span style="font-style:italic;color:rgba(212,175,55,0.2)">(We Don't Care)</span></a>
+        <a href="#" onclick="return false;">Terms of Service <span style="font-style:italic;color:rgba(212,175,55,0.2)">(Terms? What Terms?)</span></a>
+        <a href="#" onclick="return false;">Cookie Policy <span style="font-style:italic;color:rgba(212,175,55,0.2)">(We Eat Them)</span></a>
+        <a href="#" onclick="return false;">Refund Policy <span style="font-style:italic;color:rgba(212,175,55,0.2)">(Of What?)</span></a>
+      </div>
+    </div>
+
+    <p class="footer-disclaimer">
+      * Woyymasjems is not responsible for improved taste, existential contentment, or involuntary membership in an elite listening class. These are side effects of excellence and should be welcomed. The playlists are free on Spotify. We are not affiliated with Spotify. Spotify is merely our chosen vessel. The gods have no official position on Spotify but Apollo uses it. All deity testimonials obtained via oracle and cannot be independently verified by conventional means. Not actually available for hire. We really mean this.
+    </p>
   </div>
 </footer>
 
 <script>
-  // POPUP on scroll depth
-  let popupShown = false;
-  let popup2Shown = false;
-  window.addEventListener('scroll', () => {
-    const scrollPct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-    if (scrollPct > 0.45 && !popupShown) {
-      popupShown = true;
-      document.getElementById('popup').classList.add('show');
+// ─── CURSOR ───
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursor-trail');
+let mx = 0, my = 0, tx = 0, ty = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+});
+function animTrail() {
+  tx += (mx - tx) * 0.12; ty += (my - ty) * 0.12;
+  trail.style.left = tx + 'px'; trail.style.top = ty + 'px';
+  requestAnimationFrame(animTrail);
+}
+animTrail();
+
+// ─── PROGRESS BAR ───
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('progress-line').style.width = pct + '%';
+});
+
+// ─── NAV SCROLL ───
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// ─── RADIAL NAV ───
+let radialOpen = false;
+const lyre = document.getElementById('nav-lyre');
+const menu = document.getElementById('radialMenu');
+const items = menu.querySelectorAll('.radial-item');
+const angles = [-110, -60, -10, 10, 60, 110]; // degrees spreading left and right
+const radius = 120;
+
+function positionItems() {
+  items.forEach((item, i) => {
+    const angle = (angles[i] - 90) * Math.PI / 180;
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+    item.style.left = x + 'px';
+    item.style.top = y + 'px';
+    item.style.transform = 'translate(-50%, -50%)';
+    item.style.transitionDelay = radialOpen ? (i * 0.05) + 's' : ((items.length - 1 - i) * 0.03) + 's';
+  });
+}
+positionItems();
+
+function toggleRadial() {
+  radialOpen = !radialOpen;
+  menu.classList.toggle('open', radialOpen);
+  lyre.classList.toggle('active', radialOpen);
+  items.forEach(item => { item.style.pointerEvents = radialOpen ? 'auto' : 'none'; });
+}
+document.addEventListener('click', e => {
+  if (radialOpen && !lyre.contains(e.target) && !menu.contains(e.target)) {
+    radialOpen = false;
+    menu.classList.remove('open');
+    lyre.classList.remove('active');
+  }
+});
+menu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    radialOpen = false;
+    menu.classList.remove('open');
+    lyre.classList.remove('active');
+  });
+});
+
+// ─── SCROLL REVEALS ───
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .confession');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+revealEls.forEach(el => observer.observe(el));
+
+// ─── HIDDEN DRAWER (appears at scroll position) ───
+let drawerShown = false;
+window.addEventListener('scroll', () => {
+  const revPos = document.getElementById('revelation');
+  if (revPos) {
+    const rect = revPos.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.5 && !drawerShown) {
+      drawerShown = true;
+      document.getElementById('sideDrawer').classList.add('visible');
+      setTimeout(() => document.getElementById('sideDrawer').classList.remove('visible'), 5000);
     }
-    if (scrollPct > 0.85 && !popup2Shown) {
-      popup2Shown = true;
-      document.querySelector('#popup .popup-title').textContent = 'YOU\'RE STILL HERE?';
-      document.querySelector('#popup .popup-body').textContent = 'We respect the commitment. We do not share it. There is nothing more to see. There never was. Go listen to Spotify.';
-      document.getElementById('popup').classList.add('show');
-    }
+  }
+});
+function closeDrawer() { document.getElementById('sideDrawer').classList.remove('visible'); }
+
+// ─── STAR CANVAS ───
+const canvas = document.getElementById('starCanvas');
+const ctx = canvas.getContext('2d');
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const stars = Array.from({length: 200}, () => ({
+  x: Math.random(), y: Math.random(),
+  r: Math.random() * 1.5 + 0.3,
+  o: Math.random() * 0.6 + 0.1,
+  s: Math.random() * 0.002 + 0.001,
+  t: Math.random() * Math.PI * 2
+}));
+
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const t = Date.now() * 0.001;
+  stars.forEach(s => {
+    const opacity = s.o * (0.6 + 0.4 * Math.sin(t * s.s * 100 + s.t));
+    ctx.beginPath();
+    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(212,175,55,${opacity})`;
+    ctx.fill();
   });
 
-  // RANDOM GLITCH on logo
-  setInterval(() => {
-    const logo = document.querySelector('.logo-text');
-    if (Math.random() > 0.92) {
-      logo.style.letterSpacing = '0.3em';
-      logo.style.color = '#ffdd00';
-      setTimeout(() => {
-        logo.style.letterSpacing = '0.12em';
-        logo.style.color = '';
-      }, 120);
-    }
-  }, 2000);
-
-  // EASTER EGG: Konami code → alert
-  let konamiCode = [];
-  const konami = [38,38,40,40,37,39,37,39,66,65];
-  document.addEventListener('keydown', e => {
-    konamiCode.push(e.keyCode);
-    if (konamiCode.length > 10) konamiCode.shift();
-    if (JSON.stringify(konamiCode) === JSON.stringify(konami)) {
-      alert('🎵 KONAMI CODE DETECTED.\n\nAs a reward, you have unlocked:\n\n...nothing.\n\nThe playlists remain internal.\n\nApollo is disappointed in your desperation.\n\nHave a nice day.');
-    }
+  // Constellation lines
+  const nodes = [
+    {x:0.5,y:0.2},{x:0.25,y:0.4},{x:0.75,y:0.4},
+    {x:0.15,y:0.7},{x:0.85,y:0.7},{x:0.5,y:0.8}
+  ];
+  const connections = [[0,1],[0,2],[1,3],[2,4],[3,5],[4,5],[1,2]];
+  ctx.strokeStyle = 'rgba(212,175,55,0.12)';
+  ctx.lineWidth = 1;
+  connections.forEach(([a,b]) => {
+    ctx.beginPath();
+    ctx.moveTo(nodes[a].x * canvas.width, nodes[a].y * canvas.height);
+    ctx.lineTo(nodes[b].x * canvas.width, nodes[b].y * canvas.height);
+    ctx.stroke();
   });
+
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// ─── PARALLAX RAYS ON SCROLL ───
+window.addEventListener('scroll', () => {
+  const rays = document.getElementById('rays-bg');
+  rays.style.transform = `translateX(-50%) rotate(${window.scrollY * 0.02}deg)`;
+});
+
+// ─── SMOOTH HOVER SOUNDS (visual feedback on interactive elements) ───
+document.querySelectorAll('.btn-primary, .btn-secondary, .playlist-link, .pricing-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    el.style.transform = 'translateY(-2px)';
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.transform = '';
+  });
+});
+
+// ─── STAGGERED MARQUEE CLONE ───
+// Already duplicated in HTML for seamless loop
+
+// ─── CONFESSION NUMBERS GLOW ───
+document.querySelectorAll('.confession-num').forEach(num => {
+  const parent = num.parentElement;
+  const io = new IntersectionObserver(e => {
+    if (e[0].isIntersecting) {
+      num.style.color = 'rgba(212,175,55,0.3)';
+      num.style.transition = 'color 0.5s ease';
+    }
+  }, {threshold: 0.5});
+  io.observe(parent);
+});
 </script>
 </body>
 </html>
