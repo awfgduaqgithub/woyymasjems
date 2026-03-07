@@ -146,7 +146,7 @@ nav.scrolled {
 }
 .nav-logo span { color: var(--gold); }
 
-/* RADIAL SUNBURST NAV */
+/* ─── NAV LYRE BUTTON ─── */
 .nav-center {
   position: relative; display: flex; align-items: center; justify-content: center;
 }
@@ -158,25 +158,160 @@ nav.scrolled {
   transition: all 0.3s ease;
   font-size: 20px;
 }
-#nav-lyre:hover { background: rgba(212,175,55,0.15); border-color: var(--gold); }
-#nav-lyre.active { background: var(--gold); }
+#nav-lyre:hover { background: rgba(212,175,55,0.15); border-color: var(--gold); transform: scale(1.1); }
+#nav-lyre.active { background: var(--gold); color: var(--obsidian); }
 
-.radial-menu { position: absolute; top: 50%; left: 50%; pointer-events: none; }
-.radial-item {
-  position: absolute; transform-origin: center center;
+/* ─── CELESTIAL MAP OVERLAY ─── */
+#celestial-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: radial-gradient(ellipse at 50% 40%, #0f0c02 0%, #07060100 100%);
+  background-color: #070501;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
   opacity: 0; pointer-events: none;
-  transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
-  white-space: nowrap;
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1);
 }
-.radial-item a {
-  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.2em;
-  color: var(--text-dark); text-decoration: none;
-  padding: 6px 14px; border: 1px solid rgba(212,175,55,0.4);
-  background: rgba(253,251,244,0.96); backdrop-filter: blur(8px);
-  display: block; transition: all 0.2s ease;
+#celestial-overlay.open {
+  opacity: 1; pointer-events: auto;
 }
-.radial-item a:hover { background: var(--gold); color: var(--obsidian); }
-.radial-menu.open .radial-item { opacity: 1; pointer-events: auto; }
+#celestial-overlay.open #overlay-canvas { animation: canvasFadeIn 1s ease both; }
+
+/* CLOSE BUTTON */
+#overlay-close {
+  position: absolute; top: 36px; right: 48px;
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.4em;
+  color: rgba(212,175,55,0.5); cursor: none;
+  display: flex; align-items: center; gap: 10px;
+  transition: color 0.2s;
+  z-index: 10;
+}
+#overlay-close:hover { color: var(--gold); }
+#overlay-close::before {
+  content: '✕'; font-size: 16px;
+}
+
+/* OVERLAY HEADER */
+#overlay-header {
+  position: absolute; top: 36px; left: 50%; transform: translateX(-50%);
+  text-align: center; z-index: 10;
+  opacity: 0; animation: none;
+}
+#celestial-overlay.open #overlay-header {
+  animation: fadeUp 0.7s ease 0.3s both;
+}
+#overlay-header-label {
+  font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.6em;
+  color: rgba(212,175,55,0.5); display: block; margin-bottom: 8px;
+}
+#overlay-header-title {
+  font-family: 'Cinzel Decorative', serif; font-size: 20px;
+  color: var(--white-gold); font-weight: 400; letter-spacing: 0.1em;
+}
+
+/* THE CANVAS */
+#overlay-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+}
+
+/* MAP NODES CONTAINER */
+#overlay-nodes {
+  position: absolute; inset: 0;
+  opacity: 0;
+}
+#celestial-overlay.open #overlay-nodes {
+  animation: fadeUp 0.5s ease 0.5s both;
+}
+
+/* INDIVIDUAL NODE */
+.map-node {
+  position: absolute; transform: translate(-50%, -50%);
+  cursor: none; z-index: 5;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+/* Outer ring */
+.map-node-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(212,175,55,0.25);
+  animation: ringPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+.map-node:nth-child(1) .map-node-ring { animation-delay: 0s; }
+.map-node:nth-child(2) .map-node-ring { animation-delay: 0.4s; }
+.map-node:nth-child(3) .map-node-ring { animation-delay: 0.8s; }
+.map-node:nth-child(4) .map-node-ring { animation-delay: 1.2s; }
+.map-node:nth-child(5) .map-node-ring { animation-delay: 1.6s; }
+.map-node:nth-child(6) .map-node-ring { animation-delay: 2.0s; }
+
+@keyframes ringPulse {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  50%  { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1);   opacity: 0.5; }
+}
+
+/* The dot itself */
+.map-node-dot {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--gold-light), var(--gold-deep));
+  box-shadow: 0 0 20px var(--gold), 0 0 50px rgba(212,175,55,0.3);
+  transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative; z-index: 2;
+  flex-shrink: 0;
+}
+.map-node:hover .map-node-dot {
+  transform: scale(2.2);
+  box-shadow: 0 0 40px var(--gold-light), 0 0 100px rgba(212,175,55,0.6), 0 0 160px rgba(212,175,55,0.2);
+}
+
+/* Label */
+.map-node-label {
+  margin-top: 18px; text-align: center;
+  transition: all 0.3s ease;
+}
+.map-node-name {
+  font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.35em;
+  color: rgba(212,175,55,0.7); display: block;
+  transition: color 0.2s;
+}
+.map-node-desc {
+  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic;
+  color: rgba(253,251,244,0.3); display: block; margin-top: 4px;
+  max-width: 160px; line-height: 1.4;
+  transition: color 0.2s;
+}
+.map-node:hover .map-node-name { color: var(--gold-light); }
+.map-node:hover .map-node-desc { color: rgba(253,251,244,0.6); }
+
+/* Section key */
+.map-node-key {
+  font-family: 'Cinzel Decorative', serif; font-size: 9px;
+  color: rgba(212,175,55,0.35); display: block; margin-top: 6px;
+  letter-spacing: 0.2em;
+  transition: color 0.2s;
+}
+.map-node:hover .map-node-key { color: var(--gold); }
+
+/* Hover glyph */
+.map-node-glyph {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  font-size: 11px; color: var(--obsidian); z-index: 3;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1) 0.05s;
+}
+.map-node:hover .map-node-glyph { transform: translate(-50%, -50%) scale(1); }
+
+/* FOOTER HINT */
+#overlay-footer {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic;
+  color: rgba(212,175,55,0.3); text-align: center; white-space: nowrap;
+  z-index: 10;
+  opacity: 0;
+}
+#celestial-overlay.open #overlay-footer { animation: fadeUp 0.7s ease 0.8s both; }
+
+@keyframes canvasFadeIn { from{opacity:0} to{opacity:1} }
 
 .nav-right {
   display: flex; align-items: center; gap: 24px;
@@ -868,6 +1003,89 @@ footer {
   <div id="loader-bar"><div id="loader-bar-fill"></div></div>
 </div>
 
+<!-- ═══════════════════════ CELESTIAL MAP OVERLAY ═══════════════════════ -->
+<div id="celestial-overlay">
+  <canvas id="overlay-canvas"></canvas>
+
+  <div id="overlay-header">
+    <span id="overlay-header-label">APOLLONIAN NAVIGATION SYSTEM</span>
+    <div id="overlay-header-title">𝄞 &nbsp; CHOOSE YOUR DESTINATION &nbsp; 𝄞</div>
+  </div>
+
+  <div id="overlay-nodes">
+
+    <!-- Node 1: THE DOCTRINE — top center -->
+    <div class="map-node" style="left:50%;top:18%;" onclick="navigateTo('manifesto')">
+      <div class="map-node-ring" style="width:70px;height:70px;margin:-35px 0 0 -35px;position:absolute;top:11px;left:11px;"></div>
+      <div class="map-node-dot"><span class="map-node-glyph">🏛</span></div>
+      <div class="map-node-label">
+        <span class="map-node-name">MOUNT OLYMPUS</span>
+        <span class="map-node-desc">The Doctrine & Manifesto</span>
+        <span class="map-node-key">§ I — THE DOCTRINE</span>
+      </div>
+    </div>
+
+    <!-- Node 2: PHILOSOPHY — upper left -->
+    <div class="map-node" style="left:22%;top:35%;" onclick="navigateTo('philosophy')">
+      <div class="map-node-ring" style="width:70px;height:70px;margin:-35px 0 0 -35px;position:absolute;top:11px;left:11px;"></div>
+      <div class="map-node-dot"><span class="map-node-glyph">⚖</span></div>
+      <div class="map-node-label">
+        <span class="map-node-name">TEMPLE OF WISDOM</span>
+        <span class="map-node-desc">Our Sacred Philosophy</span>
+        <span class="map-node-key">§ II — PHILOSOPHY</span>
+      </div>
+    </div>
+
+    <!-- Node 3: PLAYLISTS — upper right -->
+    <div class="map-node" style="left:78%;top:35%;" onclick="navigateTo('playlists')">
+      <div class="map-node-ring" style="width:70px;height:70px;margin:-35px 0 0 -35px;position:absolute;top:11px;left:11px;"></div>
+      <div class="map-node-dot"><span class="map-node-glyph">♪</span></div>
+      <div class="map-node-label">
+        <span class="map-node-name">THE HOLY TRINITY</span>
+        <span class="map-node-desc">Three Playlists. No More.</span>
+        <span class="map-node-key">§ III — THE PLAYLISTS</span>
+      </div>
+    </div>
+
+    <!-- Node 4: REVELATION — lower left -->
+    <div class="map-node" style="left:20%;top:65%;" onclick="navigateTo('revelation')">
+      <div class="map-node-ring" style="width:70px;height:70px;margin:-35px 0 0 -35px;position:absolute;top:11px;left:11px;"></div>
+      <div class="map-node-dot"><span class="map-node-glyph">⚡</span></div>
+      <div class="map-node-label">
+        <span class="map-node-name">DELPHI — THE ORACLE</span>
+        <span class="map-node-desc">Our Confessions</span>
+        <span class="map-node-key">§ V — REVELATIONS</span>
+      </div>
+    </div>
+
+    <!-- Node 5: TESTIMONIALS — lower right -->
+    <div class="map-node" style="left:80%;top:65%;" onclick="navigateTo('testimonials')">
+      <div class="map-node-ring" style="width:70px;height:70px;margin:-35px 0 0 -35px;position:absolute;top:11px;left:11px;"></div>
+      <div class="map-node-dot"><span class="map-node-glyph">☉</span></div>
+      <div class="map-node-label">
+        <span class="map-node-name">HALL OF THE GODS</span>
+        <span class="map-node-desc">Divine Endorsements</span>
+        <span class="map-node-key">§ VI — TESTIMONIALS</span>
+      </div>
+    </div>
+
+    <!-- Node 6: PRICING — bottom center -->
+    <div class="map-node" style="left:50%;top:82%;" onclick="navigateTo('pricing')">
+      <div class="map-node-ring" style="width:70px;height:70px;margin:-35px 0 0 -35px;position:absolute;top:11px;left:11px;"></div>
+      <div class="map-node-dot"><span class="map-node-glyph">∞</span></div>
+      <div class="map-node-label">
+        <span class="map-node-name">THE TREASURY</span>
+        <span class="map-node-desc">Pricing (Spoiler: Free)</span>
+        <span class="map-node-key">§ VII — INVESTMENT</span>
+      </div>
+    </div>
+
+  </div><!-- /overlay-nodes -->
+
+  <div id="overlay-footer">Click any star to ascend &nbsp;✦&nbsp; Press ESC to return to the mortal realm</div>
+  <div id="overlay-close" onclick="closeCelestialMap()">CLOSE MAP</div>
+</div>
+
 <!-- Fixed Background Rays -->
 <div id="rays-bg"></div>
 
@@ -888,28 +1106,8 @@ footer {
 
   <!-- RADIAL SUNBURST NAV -->
   <div class="nav-center">
-    <div id="nav-lyre" onclick="toggleRadial()" data-tip="We Promise This Is Revolutionary">𝄞</div>
-    <div class="radial-menu" id="radialMenu">
-      <div class="radial-item" id="rItem1">
-        <a href="#manifesto">THE DOCTRINE</a>
-      </div>
-      <div class="radial-item" id="rItem2">
-        <a href="#philosophy">OUR PHILOSOPHY</a>
-      </div>
-      <div class="radial-item" id="rItem3">
-        <a href="#playlists">THE TRINITY</a>
-      </div>
-      <div class="radial-item" id="rItem4">
-        <a href="#revelation">CONFESSIONS</a>
-      </div>
-      <div class="radial-item" id="rItem5">
-        <a href="#testimonials">DIVINE REVIEWS</a>
-      </div>
-      <div class="radial-item" id="rItem6">
-        <a href="#pricing">INVESTMENT</a>
-      </div>
-    </div>
-  </div>
+    <div id="nav-lyre" onclick="openCelestialMap()" title="Navigate the Cosmos">𝄞</div>
+</div>
 
   <div class="nav-right">
     <span class="nav-tagline">Est. MMXXIV — By Appointment to the Gods</span>
